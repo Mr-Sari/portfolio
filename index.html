@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#07090d" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- seo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Inter:wght@400..700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    />
+    <script>
+      // Apply saved or system theme and language before first paint (no flash).
+      (function () {
+        var d = document.documentElement;
+        var theme, locale;
+        try {
+          theme = localStorage.getItem('portfolio-theme');
+          locale = localStorage.getItem('portfolio-locale');
+        } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        if (theme === 'dark') d.classList.add('dark');
+        d.style.colorScheme = theme;
+        if (locale === 'ar') {
+          d.lang = 'ar';
+          d.dir = 'rtl';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui, sans-serif">
+        Sari Owaid Alsulami — Data Analyst &amp; AI Engineer. Email: sarialsulami@gmail.com ·
+        <a href="https://www.linkedin.com/in/sari-alsulami">LinkedIn</a> ·
+        <a href="https://github.com/Mr-Sari">GitHub</a>
+      </p>
+    </noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
