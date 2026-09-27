@@ -56,7 +56,7 @@ const en = {
   },
   about: {
     kicker: '01 — About',
-    title: 'Analytics, engineering and applied AI.',
+    title: 'Data analysis first, amplified by AI.',
     focus: 'Focus areas',
     languages: 'Languages',
   },
@@ -197,7 +197,7 @@ const ar: Strings = {
   },
   about: {
     kicker: '01 — نبذة',
-    title: 'تحليلات، هندسة بيانات، وذكاء اصطناعي تطبيقي.',
+    title: 'تحليل البيانات أولًا، والذكاء الاصطناعي لتعزيزه.',
     focus: 'مجالات التركيز',
     languages: 'اللغات',
   },

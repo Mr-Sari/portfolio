@@ -12,12 +12,12 @@ export const portfolioData: PortfolioData = {
     shortName: 'Sari Alsulami',
     initials: 'SA',
     title: 'Data Analyst & AI Engineer',
-    headline: 'Turning data into insight, and insight into AI systems.',
+    headline: 'Turning data into actionable insights and data-driven decisions.',
     location: 'Saudi Arabia',
     email: 'sarialsulami@gmail.com',
     phone: '+966 54 934 4220',
     summary:
-      'Data Analyst and AI Engineer specializing in Machine Learning, NLP, and LLMs. Experienced in building AI solutions, RAG pipelines, and analytics platforms that turn data into insights, with a strong background in data engineering, automation, and decision systems in government and enterprise environments.',
+      'Data Analyst specializing in data analysis and business intelligence: interactive dashboards, KPI development, data processing and transformation, and analytical reporting with Power BI, SQL, Python and Excel. Also experienced in data engineering, automation, and applying AI and large language models (LLMs) to build more efficient analytical solutions.',
     linkedin: 'https://www.linkedin.com/in/sari-alsulami',
     github: 'https://github.com/Mr-Sari',
     resume: 'assets/Sari-Owaid-Alsulami-Resume.pdf',
@@ -29,31 +29,15 @@ export const portfolioData: PortfolioData = {
 
   about: {
     paragraphs: [
-      "I'm a Data Analyst and AI Engineer based in Saudi Arabia, with a Bachelor's degree in Data Science from the University of Jeddah. My work sits where analytics, data engineering and applied AI meet.",
-      'Professionally, I have worked in government and enterprise settings — Holy Makkah Municipality, Saudi Ground Services and the National Center of Meteorology — building Power BI dashboards, SQL data views, reporting automation and internal platforms such as Maarefah Plus.',
-      'Alongside that work I build AI systems end to end: a retrieval-augmented generation (RAG) Q&A system, an LLM-powered resume and job-matching assistant, and a computer-vision pipeline for car damage analysis. My focus is on Machine Learning, NLP and LLMs applied to real decision-making.',
+      "I'm a Data Analyst with a Bachelor's degree in Data Science from the University of Jeddah, focused on turning data into clear insights that support decisions through dashboards, KPIs and analytical reports.",
+      'At Holy Makkah Municipality, Saudi Ground Services and the National Center of Meteorology I designed 25+ dashboards and reporting solutions, built SQL database views, and automated report processing.',
+      'I apply AI and large language models (LLMs) to make analysis more efficient — from RAG systems that answer questions over documents to automated information extraction and analysis.',
     ],
     focusAreas: [
-      {
-        title: 'AI & LLM Systems',
-        description: 'RAG pipelines, LLM applications with structured outputs, and prompt engineering.',
-        icon: 'brain',
-      },
-      {
-        title: 'Machine Learning & Vision',
-        description: 'Deep learning models for detection and classification, from dataset to deployed app.',
-        icon: 'scan',
-      },
-      {
-        title: 'Data Engineering',
-        description: 'ETL pipelines, SQL optimization, DuckDB and SQLite, containerized with Docker.',
-        icon: 'workflow',
-      },
-      {
-        title: 'Business Intelligence',
-        description: 'Power BI dashboards, KPI tracking and automated executive reporting.',
-        icon: 'dashboard',
-      },
+      { title: 'Data Analysis & BI', description: 'Interactive Power BI dashboards, KPIs and analytical reporting.', icon: 'dashboard' },
+      { title: 'Data Processing & Engineering', description: 'SQL, Python, ETL pipelines and report automation.', icon: 'workflow' },
+      { title: 'AI & LLMs', description: 'LLM applications and RAG systems that support analysis.', icon: 'brain' },
+      { title: 'Machine Learning', description: 'Classification and detection models, from data to deployment.', icon: 'scan' },
     ],
     stats: [
       { value: '25+', label: 'Dashboards & reporting solutions', source: '10+ at Holy Makkah Municipality, 15+ at SGS' },

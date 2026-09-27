@@ -9,7 +9,7 @@ import { Button, LinkButton } from './ui/Button';
 import { ease } from './ui/motion';
 
 // Icon keys of the skills highlighted in the hero (stable across languages).
-const heroSkills = ['python', 'sql', 'powerbi', 'sparkles', 'search', 'eye', 'duckdb', 'docker'];
+const heroSkills = ['powerbi', 'sql', 'python', 'excel', 'gauge', 'workflow', 'sparkles', 'search'];
 
 export function Hero() {
   const { t, data } = useLanguage();
@@ -124,8 +124,8 @@ function ProfileCard() {
     { k: 'name', v: personal.shortName },
     { k: 'role', v: personal.title },
     { k: 'current', v: `${current.role} @ ${current.company}` },
-    { k: 'focus', v: ['Machine Learning', 'NLP', 'LLMs', 'RAG'] },
-    { k: 'stack', v: ['Python', 'SQL', 'Power BI', 'Docker'] },
+    { k: 'focus', v: ['Data Analysis', 'BI', 'KPIs', 'AI & LLMs'] },
+    { k: 'stack', v: ['Power BI', 'SQL', 'Python', 'Excel'] },
     { k: 'education', v: `${degree.degree}, ${degree.institution}` },
   ];
 
