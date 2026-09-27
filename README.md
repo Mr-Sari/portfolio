@@ -3,8 +3,9 @@
 Personal portfolio and interactive resume for **Sari Owaid Alsulami, Data Analyst & AI Engineer**.
 A one-page site built with React, TypeScript, Vite, Tailwind CSS v4 and Framer Motion.
 
-All personal and professional content comes from one typed data file,
-[`src/data/portfolioData.ts`](src/data/portfolioData.ts), extracted from the CV in
+The site is **Arabic by default** (RTL), with an English toggle. All personal and professional
+content comes from two typed data files: [`src/data/portfolioData.ar.ts`](src/data/portfolioData.ar.ts)
+(Arabic, concise) and [`src/data/portfolioData.ts`](src/data/portfolioData.ts) (English), both extracted from the CV in
 [`public/assets/Sari-Owaid-Alsulami-Resume.pdf`](public/assets/Sari-Owaid-Alsulami-Resume.pdf).
 Components render that data; none of them hard-code CV content.
 
@@ -13,7 +14,7 @@ Components render that data; none of them hard-code CV content.
 - **Sections:** Hero, About, Projects (filterable, with detail modal), Experience timeline,
   Skills, Education, Certifications, Contact, Footer
 - **Theme:** dark / light, following the system preference on first visit, saved per visitor, no flash on load
-- **Language:** English (default) / Arabic interface toggle with full RTL layout
+- **Language:** Arabic (default, RTL) / English toggle covering both the interface and the content
 - **Navigation:** sticky glass navbar, active-section indicator, smooth scrolling, animated mobile menu,
   reading-progress bar, back-to-top button
 - **Motion:** entrance, scroll-reveal, filter, timeline, modal and hover animations, all
@@ -44,7 +45,8 @@ Components render that data; none of them hard-code CV content.
     ├── index.css               # Tailwind v4, design tokens (light/dark), utilities
     ├── data/
     │   ├── types.ts            # Content model
-    │   └── portfolioData.ts    # ← all CV content lives here
+    │   ├── portfolioData.ts    # English content
+    │   └── portfolioData.ar.ts # Arabic content (default)
     ├── i18n/
     │   ├── strings.ts          # UI strings (en, ar) and section ids
     │   └── LanguageProvider.tsx
@@ -77,8 +79,11 @@ npm run preview    # serve the production build locally
 
 ## Editing content
 
-Update **`src/data/portfolioData.ts`**. The file is typed by `src/data/types.ts`, so
-TypeScript flags missing or misspelled fields.
+Update **`src/data/portfolioData.ar.ts`** (Arabic) and **`src/data/portfolioData.ts`** (English).
+The Arabic file reuses ids, dates, links and technology names from the English one and only
+overrides the text. Both are typed by `src/data/types.ts`, so TypeScript flags missing or misspelled fields.
+The default language is `DEFAULT_LOCALE` in `src/i18n/LanguageProvider.tsx` (also mirrored in the
+pre-paint script in `index.html`).
 
 - **Projects:** each has `categories` (drives the filter tabs), `metrics`, `methodology`, and
   optional `problem`, `impact` and `links`. When `problem` or `impact` is omitted, the modal
@@ -86,9 +91,7 @@ TypeScript flags missing or misspelled fields.
   `{ label: 'Source code', href: 'https://github.com/…', kind: 'github' }` to that project's `links`.
 - **Certifications:** add `credentialUrl` to show a "View credential" link.
 - **Resume:** replace `public/assets/Sari-Owaid-Alsulami-Resume.pdf`, keeping the same file name.
-- **UI text / Arabic:** edit `src/i18n/strings.ts`. The Arabic toggle translates the interface;
-  CV content stays English. To translate the content too, create an Arabic `PortfolioData`
-  and return it from `getPortfolioData()` in `src/i18n/LanguageProvider.tsx`.
+- **UI text:** edit `src/i18n/strings.ts` (both languages).
 - **Brand icons:** to add one, append its `simple-icons` export name in
   `scripts/extract-brand-icons.mjs`, run `npm run icons`, then register it in `src/lib/icons.tsx`.
 

@@ -30,7 +30,7 @@ export function ProjectCard({ project, onOpen }: Props) {
       <div className="relative">
         <ProjectVisual visual={project.visual} className="aspect-[2/1] border-b border-line transition-transform duration-500 group-hover:scale-[1.02]" />
         <span className="absolute top-3 start-3 rounded-full border border-line bg-bg-elevated/85 px-2.5 py-1 font-mono text-[0.66rem] text-fg-muted backdrop-blur">
-          {project.kind}
+          {t.kinds[project.kind]}
         </span>
       </div>
 

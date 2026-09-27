@@ -67,6 +67,17 @@ html {
   text-rendering: optimizeLegibility;
 }
 
+/* Monospace fonts have no Arabic glyphs and space them out; use the Arabic
+   face for labels, but keep real code (the profile card) monospaced. */
+html[lang='ar'] :is(.font-mono, .kicker):not(pre, pre *) {
+  font-family: 'IBM Plex Sans Arabic', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Letter-spacing breaks the joins between Arabic letters. */
+html[lang='ar'] * {
+  letter-spacing: 0 !important;
+}
+
 html[dir='rtl'] body {
   font-family: 'IBM Plex Sans Arabic', 'Inter', ui-sans-serif, system-ui, sans-serif;
 }

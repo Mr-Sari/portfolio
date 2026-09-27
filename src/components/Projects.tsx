@@ -44,7 +44,7 @@ export function Projects() {
 
       <LayoutGroup id="project-filters">
         <div className="-mx-5 mb-8 overflow-x-auto px-5 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
-          <div role="group" aria-label="Filter projects" className="inline-flex gap-1 rounded-full border border-line bg-surface p-1 backdrop-blur">
+          <div role="group" aria-label={t.a11y.filterProjects} className="inline-flex gap-1 rounded-full border border-line bg-surface p-1 backdrop-blur">
             {tabs.map((tab) => {
               const isActive = filter === tab.id;
               return (

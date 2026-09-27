@@ -51,6 +51,8 @@ export interface Experience {
   metrics: { value: string; label: string }[];
 }
 
+export type ProjectKind = 'personal' | 'graduation' | 'professional';
+
 export type ProjectCategory = 'ai' | 'data-science' | 'data-engineering' | 'analytics';
 
 export interface ProjectLink {
@@ -64,7 +66,7 @@ export interface Project {
   title: string;
   shortDescription: string;
   context: string;
-  kind: 'Personal Project' | 'Graduation Project' | 'Professional Work';
+  kind: ProjectKind;
   start: string;
   end: string;
   categories: ProjectCategory[];

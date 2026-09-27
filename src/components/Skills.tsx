@@ -27,7 +27,7 @@ export function Skills() {
       <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-10">
         <LayoutGroup id="skill-filters">
           <Reveal>
-            <div role="group" aria-label="Filter skills by category" className="-mx-5 flex gap-1 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0 lg:sticky lg:top-28 lg:flex-col lg:overflow-visible [&::-webkit-scrollbar]:hidden">
+            <div role="group" aria-label={t.a11y.filterSkills} className="-mx-5 flex gap-1 overflow-x-auto px-5 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0 lg:sticky lg:top-28 lg:flex-col lg:overflow-visible [&::-webkit-scrollbar]:hidden">
               {[{ id: 'all' as const, label: t.skills.all }, ...data.skillCategories].map((c) => {
                 const isActive = filter === c.id;
                 const count = c.id === 'all' ? data.skills.length : data.skills.filter((s) => s.category === c.id).length;

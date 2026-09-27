@@ -9,14 +9,12 @@ import { SectionHeading } from './ui/SectionHeading';
 import { Tag } from './ui/Tag';
 import { ease } from './ui/motion';
 
-function duration(start: string, end: string | null) {
+function monthsBetween(start: string, end: string | null) {
   const [sy, sm] = start.split('-').map(Number);
   const now = new Date();
   const [ey, em] = end ? end.split('-').map(Number) : [now.getFullYear(), now.getMonth() + 1];
   const months = Math.max(1, (ey - sy) * 12 + (em - sm) + 1);
-  const y = Math.floor(months / 12);
-  const m = months % 12;
-  return [y && `${y} yr${y > 1 ? 's' : ''}`, m && `${m} mo${m > 1 ? 's' : ''}`].filter(Boolean).join(' ');
+  return [Math.floor(months / 12), months % 12] as const;
 }
 
 export function Experience() {
@@ -122,7 +120,7 @@ function TimelineItem({ item, index, isOpen, onToggle }: { item: ExperienceItem;
               <div className="text-fg-muted">
                 {formatDate(item.start)} – {formatDate(item.end)}
               </div>
-              <div className="mt-1">{duration(item.start, item.end)}</div>
+              <div className="mt-1">{t.experience.duration(...monthsBetween(item.start, item.end))}</div>
               <div className="mt-1 inline-flex items-center gap-1">
                 <MapPin size={11} aria-hidden />
                 {item.location}

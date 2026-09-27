@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowDown, ArrowRight, Download, MapPin, Send } from 'lucide-react';
+import { portfolioData as codeData } from '../data/portfolioData';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { asset } from '../lib/assets';
 import { TechIcon } from '../lib/icons';
@@ -7,14 +8,15 @@ import { scrollToSection } from '../lib/scroll';
 import { Button, LinkButton } from './ui/Button';
 import { ease } from './ui/motion';
 
-const heroSkills = ['Python', 'SQL', 'Power BI', 'LLMs', 'RAG Systems', 'Computer Vision', 'DuckDB', 'Docker'];
+// Icon keys of the skills highlighted in the hero (stable across languages).
+const heroSkills = ['python', 'sql', 'powerbi', 'sparkles', 'search', 'eye', 'duckdb', 'docker'];
 
 export function Hero() {
   const { t, data } = useLanguage();
   const reduce = useReducedMotion();
   const { personal } = data;
   const highlights = heroSkills
-    .map((name) => data.skills.find((s) => s.name === name))
+    .map((icon) => data.skills.find((s) => s.icon === icon))
     .filter((s): s is NonNullable<typeof s> => Boolean(s));
 
   const item = {
@@ -32,7 +34,7 @@ export function Hero() {
         <motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } } }}>
           <motion.div variants={item} className="mb-7 inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1 ps-1 pe-3 text-xs text-fg-muted backdrop-blur">
             <span className="rounded-full bg-accent-soft px-2 py-0.5 font-mono text-[0.68rem] font-medium text-accent">{personal.title}</span>
-            <span className="inline-flex items-center gap-1">
+            <span className="hidden items-center gap-1 min-[420px]:inline-flex">
               <MapPin size={12} aria-hidden />
               {personal.location}
             </span>
@@ -68,7 +70,7 @@ export function Hero() {
             </Button>
           </motion.div>
 
-          <motion.ul variants={item} className="mt-10 flex flex-wrap gap-2" aria-label="Core technologies">
+          <motion.ul variants={item} className="mt-10 flex flex-wrap gap-2" aria-label={t.a11y.coreTech}>
             {highlights.map((s) => (
               <li key={s.name} className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface px-2.5 py-1.5 text-xs text-fg-muted backdrop-blur transition-colors hover:border-accent/40 hover:text-fg">
                 <TechIcon name={s.icon} size={13} />
@@ -108,9 +110,11 @@ function HeroBackdrop() {
   );
 }
 
-/** A code-editor style card that renders the profile straight from the data object. */
+/** A code-editor style card that renders the profile straight from the data object.
+ * It is code, so it always uses the English data; its stats follow the page language. */
 function ProfileCard() {
-  const { data } = useLanguage();
+  const { data: pageData } = useLanguage();
+  const data = codeData;
   const reduce = useReducedMotion();
   const { personal, experience, education } = data;
   const current = experience.find((e) => e.end === null) ?? experience[0];
@@ -186,7 +190,7 @@ function ProfileCard() {
           </code>
         </pre>
         <div className="grid grid-cols-3 border-t border-line">
-          {data.about.stats.slice(1, 4).map((s, i) => (
+          {pageData.about.stats.slice(1, 4).map((s, i) => (
             <div key={s.label} className={`px-4 py-4 ${i > 0 ? 'border-s border-line' : ''}`}>
               <div className="text-lg font-semibold tracking-tight text-fg sm:text-xl">{s.value}</div>
               <div className="mt-0.5 text-[0.68rem] leading-snug text-fg-subtle">{s.label}</div>

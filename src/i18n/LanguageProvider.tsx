@@ -1,13 +1,15 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { portfolioData } from '../data/portfolioData';
+import { portfolioDataAr } from '../data/portfolioData.ar';
 import type { PortfolioData } from '../data/types';
 import { strings, type Locale, type Strings } from './strings';
 
 const STORAGE_KEY = 'portfolio-locale';
 
-/** Content per locale. Arabic falls back to the English CV content until a translation is added. */
-function getPortfolioData(_locale: Locale): PortfolioData {
-  return portfolioData;
+export const DEFAULT_LOCALE: Locale = 'ar';
+
+function getPortfolioData(locale: Locale): PortfolioData {
+  return locale === 'ar' ? portfolioDataAr : portfolioData;
 }
 
 interface LanguageContextValue {
@@ -28,7 +30,7 @@ function readStoredLocale(): Locale {
   } catch {
     /* storage unavailable */
   }
-  return 'en';
+  return DEFAULT_LOCALE;
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {

@@ -1,7 +1,8 @@
 import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
-import { portfolioData } from './src/data/portfolioData.ts';
+import { portfolioData as portfolioDataEn } from './src/data/portfolioData.ts';
+import { portfolioDataAr as portfolioData } from './src/data/portfolioData.ar.ts';
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
@@ -14,6 +15,7 @@ function seo(siteUrl: string, base: string): Plugin {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: personal.name,
+    alternateName: portfolioDataEn.personal.name,
     jobTitle: personal.title,
     email: `mailto:${personal.email}`,
     address: { '@type': 'PostalAddress', addressCountry: 'SA' },
@@ -25,7 +27,7 @@ function seo(siteUrl: string, base: string): Plugin {
   const tags = [
     `<title>${esc(seo.title)}</title>`,
     `<meta name="description" content="${esc(seo.description)}" />`,
-    `<meta name="author" content="${esc(personal.name)}" />`,
+    `<meta name="author" content="${esc(`${personal.name} (${portfolioDataEn.personal.name})`)}" />`,
     `<meta name="keywords" content="${esc(seo.keywords.join(', '))}" />`,
     root && `<link rel="canonical" href="${root}" />`,
     `<meta property="og:type" content="profile" />`,
@@ -35,11 +37,9 @@ function seo(siteUrl: string, base: string): Plugin {
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
     `<meta property="og:image:alt" content="${esc(`${personal.name} — ${personal.title}`)}" />`,
-    `<meta property="og:locale" content="en_US" />`,
-    `<meta property="og:locale:alternate" content="ar_SA" />`,
+    `<meta property="og:locale" content="ar_SA" />`,
+    `<meta property="og:locale:alternate" content="en_US" />`,
     root && `<meta property="og:url" content="${root}" />`,
-    `<meta property="profile:first_name" content="Sari" />`,
-    `<meta property="profile:last_name" content="Alsulami" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${esc(seo.title)}" />`,
     `<meta name="twitter:description" content="${esc(seo.description)}" />`,
@@ -63,6 +63,6 @@ export default defineConfig(({ mode }) => {
   return {
     base,
     plugins: [react(), tailwindcss(), seo(env.VITE_SITE_URL ?? '', base)],
-    build: { target: 'es2022' },
+    build: { target: 'es2022', chunkSizeWarningLimit: 600 },
   };
 });

@@ -149,7 +149,7 @@ export const portfolioData: PortfolioData = {
       shortDescription:
         'A full RAG system that answers questions over documents with source-grounded LLM responses, served through a Gradio chatbot.',
       context: 'Personal project',
-      kind: 'Personal Project',
+      kind: 'personal',
       start: '2026-05',
       end: '2026-06',
       categories: ['ai'],
@@ -176,7 +176,7 @@ export const portfolioData: PortfolioData = {
       shortDescription:
         'An LLM system using OpenAI and Claude APIs to match resumes to jobs, analyze skill gaps, and generate ATS-optimized resumes and tailored cover letters.',
       context: 'Personal project',
-      kind: 'Personal Project',
+      kind: 'personal',
       start: '2026-03',
       end: '2026-04',
       categories: ['ai'],
@@ -203,7 +203,7 @@ export const portfolioData: PortfolioData = {
       shortDescription:
         'A computer-vision platform combining damage detection, severity classification and part identification, with a rule-based cost estimator and automated PDF reports.',
       context: 'Graduation project · University of Jeddah',
-      kind: 'Graduation Project',
+      kind: 'graduation',
       start: '2024-10',
       end: '2025-01',
       categories: ['ai', 'data-science'],
@@ -240,7 +240,7 @@ export const portfolioData: PortfolioData = {
       shortDescription:
         'An internal platform for centralized knowledge access at Holy Makkah Municipality, built with Python, SQLite and full-stack web technologies.',
       context: 'Professional work · Holy Makkah Municipality',
-      kind: 'Professional Work',
+      kind: 'professional',
       start: '2025-12',
       end: 'Present',
       categories: ['data-engineering'],
@@ -261,7 +261,7 @@ export const portfolioData: PortfolioData = {
       shortDescription:
         '10+ Power BI dashboards tracking 25+ KPIs, backed by SQL database views built and optimized in Toad.',
       context: 'Professional work · Holy Makkah Municipality',
-      kind: 'Professional Work',
+      kind: 'professional',
       start: '2025-12',
       end: 'Present',
       categories: ['analytics'],
@@ -290,7 +290,7 @@ export const portfolioData: PortfolioData = {
       shortDescription:
         '15+ automated dashboards and reporting solutions on SAP and BI tools, plus 20+ executive reports from business and operational analysis.',
       context: 'Professional work · Saudi Ground Services',
-      kind: 'Professional Work',
+      kind: 'professional',
       start: '2025-10',
       end: '2025-12',
       categories: ['analytics'],
@@ -316,7 +316,7 @@ export const portfolioData: PortfolioData = {
       shortDescription:
         'Python automation (Pandas, Regex) for hourly weather report processing, with SQL optimized in DuckDB and environments containerized with Docker.',
       context: 'Professional work · National Center of Meteorology',
-      kind: 'Professional Work',
+      kind: 'professional',
       start: '2024-06',
       end: '2024-08',
       categories: ['data-engineering'],
@@ -342,7 +342,7 @@ export const portfolioData: PortfolioData = {
       title: 'ICAO Message Classification',
       shortDescription: 'A classification system for flight-arrival ICAO messages built with time-series analysis.',
       context: 'Professional work · National Center of Meteorology',
-      kind: 'Professional Work',
+      kind: 'professional',
       start: '2024-06',
       end: '2024-08',
       categories: ['data-science'],

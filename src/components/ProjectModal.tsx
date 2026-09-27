@@ -97,7 +97,7 @@ export default function ProjectModal({ project, onClose }: Props) {
 
         <div className="overflow-y-auto overscroll-contain px-5 pt-6 pb-8 sm:px-8">
           <div className="flex flex-wrap items-center gap-2 font-mono text-[0.7rem] text-fg-subtle">
-            <Tag tone="accent">{project.kind}</Tag>
+            <Tag tone="accent">{t.kinds[project.kind]}</Tag>
             {categories.map((c) => (
               <Tag key={c}>{c}</Tag>
             ))}
