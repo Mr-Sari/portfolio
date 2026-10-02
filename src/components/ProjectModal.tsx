@@ -1,10 +1,10 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight, Info, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useEffect, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import type { Project } from '../data/types';
 import { useLanguage } from '../i18n/LanguageProvider';
-import { GitHubIcon } from '../lib/icons';
+import { ProjectLinks } from './ProjectCard';
 import { ProjectVisual } from './ProjectVisual';
 import { Tag } from './ui/Tag';
 import { ease } from './ui/motion';
@@ -82,7 +82,7 @@ export default function ProjectModal({ project, onClose }: Props) {
         className="relative flex max-h-[92svh] w-full max-w-3xl flex-col overflow-hidden rounded-t-[1.75rem] border border-line bg-bg-elevated shadow-lift sm:rounded-[1.75rem]"
       >
         <div className="relative shrink-0">
-          <ProjectVisual visual={project.visual} className="h-36 border-b border-line sm:h-48" />
+          <ProjectVisual visual={project.visual} className="h-28 border-b border-line sm:h-40" />
           <div className="absolute top-2.5 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full bg-fg-subtle/40 sm:hidden" aria-hidden />
           <button
             ref={closeBtn}
@@ -95,7 +95,7 @@ export default function ProjectModal({ project, onClose }: Props) {
           </button>
         </div>
 
-        <div className="overflow-y-auto overscroll-contain px-5 pt-6 pb-8 sm:px-8">
+        <div className="overflow-y-auto overscroll-contain px-5 pt-5 pb-7 sm:px-8">
           <div className="flex flex-wrap items-center gap-2 font-mono text-[0.7rem] text-fg-subtle">
             <Tag tone="accent">{t.kinds[project.kind]}</Tag>
             {categories.map((c) => (
@@ -105,18 +105,21 @@ export default function ProjectModal({ project, onClose }: Props) {
               {formatDate(project.start)} – {end}
             </span>
           </div>
-          <h2 id={titleId} className="mt-4 text-balance text-2xl font-semibold tracking-[-0.025em] text-fg sm:text-3xl">
+          <h2 id={titleId} className="mt-3 text-balance text-xl font-semibold tracking-[-0.025em] text-fg sm:text-2xl">
             {project.title}
           </h2>
-          <p className="mt-1.5 text-sm text-fg-subtle">{project.context}</p>
+          <p className="mt-1 text-sm text-fg-subtle">{project.context}</p>
+          <div className="mt-4">
+            <ProjectLinks project={project} />
+          </div>
 
           {project.metrics.length > 0 && (
             <Block title={t.projects.metrics}>
-              <dl className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+              <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {project.metrics.map((m) => (
-                  <div key={m.label} className="flex flex-col rounded-2xl border border-line bg-accent-soft/60 p-4">
+                  <div key={m.label} className="flex flex-col rounded-xl border border-line bg-accent-soft/60 p-3">
                     <dt className="order-2 mt-0.5 text-xs text-fg-subtle">{m.label}</dt>
-                    <dd className="text-2xl font-semibold tracking-tight text-fg">{m.value}</dd>
+                    <dd className="text-xl font-semibold tracking-tight text-fg">{m.value}</dd>
                   </div>
                 ))}
               </dl>
@@ -127,17 +130,19 @@ export default function ProjectModal({ project, onClose }: Props) {
             <p>{project.overview}</p>
           </Block>
 
-          <div className="grid gap-x-8 sm:grid-cols-2">
-            <Block title={t.projects.problem}>
-              {project.problem ? <p>{project.problem}</p> : <Note>{t.projects.problemMissing}</Note>}
-            </Block>
+          <div className={`grid gap-x-8 ${project.problem ? 'sm:grid-cols-2' : ''}`}>
+            {project.problem && (
+              <Block title={t.projects.problem}>
+                <p>{project.problem}</p>
+              </Block>
+            )}
             <Block title={t.projects.solution}>
               <p>{project.solution}</p>
             </Block>
           </div>
 
           <Block title={t.projects.methodology}>
-            <ol className="space-y-2.5">
+            <ol className="space-y-1.5">
               {project.methodology.map((step, i) => (
                 <li key={step} className="flex gap-3">
                   <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border border-line font-mono text-[0.62rem] text-accent">{i + 1}</span>
@@ -147,9 +152,9 @@ export default function ProjectModal({ project, onClose }: Props) {
             </ol>
           </Block>
 
-          <Block title={t.projects.impact}>
-            {project.impact?.length ? (
-              <ul className="space-y-2">
+          {project.impact?.length ? (
+            <Block title={t.projects.impact}>
+              <ul className="space-y-1.5">
                 {project.impact.map((line) => (
                   <li key={line} className="flex gap-3">
                     <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
@@ -157,10 +162,8 @@ export default function ProjectModal({ project, onClose }: Props) {
                   </li>
                 ))}
               </ul>
-            ) : (
-              <Note>{t.projects.impactMissing}</Note>
-            )}
-          </Block>
+            </Block>
+          ) : null}
 
           <Block title={t.projects.technologies}>
             <ul className="flex flex-wrap gap-1.5">
@@ -172,24 +175,6 @@ export default function ProjectModal({ project, onClose }: Props) {
             </ul>
           </Block>
 
-          <Block title={t.projects.links}>
-            {project.links.length ? (
-              <div className="flex flex-wrap gap-2">
-                {project.links.map((l) => (
-                  <ExternalLink key={l.href} href={l.href}>
-                    {l.label}
-                  </ExternalLink>
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-col items-start gap-3">
-                <Note>{t.projects.noLinks}</Note>
-                <ExternalLink href={data.personal.github} icon={<GitHubIcon size={15} />}>
-                  {t.projects.githubProfile}
-                </ExternalLink>
-              </div>
-            )}
-          </Block>
         </div>
       </motion.div>
     </div>,
@@ -199,35 +184,9 @@ export default function ProjectModal({ project, onClose }: Props) {
 
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="mt-7">
-      <h3 className="mb-2.5 font-mono text-[0.7rem] tracking-[0.08em] text-fg-subtle uppercase">{title}</h3>
-      <div className="text-[0.95rem] leading-relaxed text-fg-muted">{children}</div>
+    <section className="mt-5">
+      <h3 className="mb-2 font-mono text-[0.7rem] tracking-[0.08em] text-fg-subtle uppercase">{title}</h3>
+      <div className="text-[0.92rem] leading-relaxed text-fg-muted">{children}</div>
     </section>
-  );
-}
-
-function Note({ children }: { children: ReactNode }) {
-  return (
-    <p className="flex gap-2 text-sm text-fg-subtle italic">
-      <Info size={15} className="mt-0.5 shrink-0" aria-hidden />
-      {children}
-    </p>
-  );
-}
-
-function ExternalLink({ href, children, icon }: { href: string; children: ReactNode; icon?: ReactNode }) {
-  const { t } = useLanguage();
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group inline-flex min-h-10 items-center gap-2 rounded-full border border-line-strong px-4 text-sm font-medium text-fg transition-colors hover:border-accent/50 hover:text-accent"
-    >
-      {icon}
-      {children}
-      <span className="sr-only">{t.a11y.opensNewTab}</span>
-      <ArrowUpRight size={15} aria-hidden className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-    </a>
   );
 }

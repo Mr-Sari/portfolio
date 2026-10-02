@@ -16,21 +16,21 @@ export function Footer() {
   ];
 
   return (
-    <footer className="relative mt-10 border-t border-line">
-      <div className="container-page grid gap-12 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="relative mt-4 border-t border-line">
+      <div className="container-page grid gap-6 py-8 sm:grid-cols-2 sm:py-10 md:grid-cols-[1.4fr_1fr_1fr] md:gap-10">
         <div>
           <div className="flex items-center gap-2.5">
             <span className="grid size-9 place-items-center rounded-lg bg-fg font-mono text-xs font-bold text-bg">{personal.initials}</span>
             <span className="font-semibold tracking-tight text-fg">{personal.name}</span>
           </div>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-fg-muted">{t.footer.tagline}</p>
-          <p className="mt-4 inline-flex items-center gap-1.5 text-sm text-fg-subtle">
+          <p className="mt-3 max-w-sm text-sm leading-relaxed text-fg-muted">{t.footer.tagline}</p>
+          <p className="mt-2 inline-flex items-center gap-1.5 text-sm text-fg-subtle">
             <MapPin size={14} aria-hidden />
             {personal.location}
           </p>
         </div>
 
-        <nav aria-label={t.footer.navigate}>
+        <nav aria-label={t.footer.navigate} className="hidden md:block">
           <h2 className="font-mono text-[0.7rem] tracking-[0.08em] text-fg-subtle uppercase">{t.footer.navigate}</h2>
           <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
             {sectionIds.map((id) => (
@@ -52,7 +52,7 @@ export function Footer() {
 
         <div>
           <h2 className="font-mono text-[0.7rem] tracking-[0.08em] text-fg-subtle uppercase">{t.footer.connect}</h2>
-          <ul className="mt-4 flex flex-col gap-2.5 text-sm">
+          <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm sm:flex-col">
             {socials.map((s) => (
               <li key={s.label}>
                 <a
@@ -71,7 +71,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-line">
-        <div className="container-page flex flex-col gap-2 py-6 text-xs text-fg-subtle sm:flex-row sm:items-center sm:justify-between">
+        <div className="container-page flex flex-col gap-1 py-4 text-xs text-fg-subtle sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {year} {personal.name}. {t.footer.rights}
           </p>

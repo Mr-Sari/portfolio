@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, Check, CircleAlert, CircleCheck, Copy, Info, LoaderCircle, Mail, MapPin, Phone, Send } from 'lucide-react';
 import { cloneElement, useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
 import { useLanguage } from '../i18n/LanguageProvider';
-import { hasContactBackend, submitContactForm, validateContact, type ContactErrors, type ContactMessage } from '../lib/contact';
+import { contactProvider, submitContactForm, validateContact, type ContactErrors, type ContactMessage } from '../lib/contact';
 import { GitHubIcon, LinkedInIcon } from '../lib/icons';
 import { Button } from './ui/Button';
 import { Reveal, RevealGroup } from './ui/Reveal';
@@ -35,8 +35,8 @@ export function Contact() {
     <Section id="contact">
       <SectionHeading id="contact" kicker={t.contact.kicker} title={t.contact.title} intro={t.contact.intro} />
 
-      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-8">
-        <RevealGroup as="ul" className="flex flex-col gap-3">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-6">
+        <RevealGroup as="ul" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 lg:content-start">
           <ContactRow icon={<Mail size={18} />} label={t.contact.email}>
             <a href={`mailto:${personal.email}`} className="break-all text-fg hover:text-accent">
               {personal.email}
@@ -82,18 +82,18 @@ function ContactRow({ icon, label, href, children }: { icon: ReactNode; label: s
   return (
     <motion.li
       variants={fadeUp}
-      className="card group relative flex items-center gap-4 rounded-2xl p-4 transition-[border-color,translate] duration-300 hover:border-line-strong"
+      className="card group relative flex items-center gap-3 rounded-2xl p-3 transition-[border-color,translate] duration-300 hover:border-line-strong"
     >
-      <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-line bg-accent-soft text-accent">{icon}</span>
+      <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-line bg-accent-soft text-accent">{icon}</span>
       <div className="min-w-0 flex-1">
         <div className="font-mono text-[0.66rem] tracking-[0.08em] text-fg-subtle uppercase">{label}</div>
         {href ? (
-          <a href={href} target="_blank" rel="noopener noreferrer" className="text-[0.95rem] text-fg after:absolute after:inset-0 after:rounded-2xl hover:text-accent">
+          <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm text-fg after:absolute after:inset-0 after:rounded-2xl hover:text-accent">
             {children}
             <span className="sr-only">{t.a11y.opensNewTab}</span>
           </a>
         ) : (
-          <div className="flex items-center gap-2 text-[0.95rem]">{children}</div>
+          <div className="flex items-center gap-2 text-sm">{children}</div>
         )}
       </div>
       {href && (
@@ -155,7 +155,7 @@ function ContactForm({ to }: { to: string }) {
   };
 
   return (
-    <div className="card relative overflow-hidden p-5 sm:p-8">
+    <div className="card relative overflow-hidden p-4 sm:p-6">
       <AnimatePresence mode="wait" initial={false}>
         {status === 'sent' || status === 'mailto' ? (
           <StatusPanel
@@ -174,9 +174,9 @@ function ContactForm({ to }: { to: string }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
-            className="grid gap-5"
+            className="grid gap-4"
           >
-            <div className="grid gap-5 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               <Field id={`${uid}-name`} label={f.name} error={errorText('name')}>
                 <input type="text" autoComplete="name" value={values.name} onChange={update('name')} onBlur={blur('name')} />
               </Field>
@@ -188,7 +188,7 @@ function ContactForm({ to }: { to: string }) {
               <input type="text" value={values.subject} onChange={update('subject')} onBlur={blur('subject')} />
             </Field>
             <Field id={`${uid}-message`} label={f.message} error={errorText('message')}>
-              <textarea rows={6} value={values.message} onChange={update('message')} onBlur={blur('message')} />
+              <textarea rows={4} value={values.message} onChange={update('message')} onBlur={blur('message')} />
             </Field>
 
             <AnimatePresence>
@@ -217,7 +217,7 @@ function ContactForm({ to }: { to: string }) {
             </AnimatePresence>
 
             <div className="flex flex-col-reverse items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-              {!hasContactBackend ? (
+              {contactProvider === 'mailto' ? (
                 <p className="flex max-w-xs gap-2 text-xs leading-relaxed text-fg-subtle">
                   <Info size={14} className="mt-0.5 shrink-0" aria-hidden />
                   {f.noBackendNote}
@@ -255,13 +255,13 @@ function Field({ id, label, error, children }: { id: string; label: string; erro
       required: true,
       'aria-invalid': error ? true : undefined,
       'aria-describedby': error ? errorId : undefined,
-      className: `w-full rounded-xl border bg-bg-elevated px-4 py-3 text-[0.95rem] text-fg placeholder:text-fg-subtle transition-[border-color,box-shadow] duration-200 outline-none focus:border-accent focus:ring-4 focus:ring-accent/15 ${
+      className: `w-full rounded-xl border bg-bg-elevated px-3.5 py-2.5 text-[0.95rem] text-fg placeholder:text-fg-subtle transition-[border-color,box-shadow] duration-200 outline-none focus:border-accent focus:ring-4 focus:ring-accent/15 ${
         error ? 'border-red-500/60' : 'border-line-strong hover:border-fg-subtle/60'
-      } ${children.type === 'textarea' ? 'min-h-36 resize-y' : 'min-h-12'}`,
+      } ${children.type === 'textarea' ? 'min-h-28 resize-y' : 'min-h-11'}`,
   });
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block text-sm font-medium text-fg">
+      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-fg">
         {label}
         <span className="text-accent" aria-hidden>
           {' '}
@@ -294,7 +294,7 @@ function StatusPanel({ tone, title, body, action, onAction }: { tone: 'success';
       initial={{ opacity: 0, scale: 0.97 }}
       animate={{ opacity: 1, scale: 1, transition: { duration: 0.4, ease } }}
       exit={{ opacity: 0 }}
-      className="flex min-h-[26rem] flex-col items-center justify-center text-center"
+      className="flex min-h-[20rem] flex-col items-center justify-center text-center"
       data-tone={tone}
     >
       <motion.span

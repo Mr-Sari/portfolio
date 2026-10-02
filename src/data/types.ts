@@ -1,7 +1,12 @@
 /**
- * Content model for the portfolio. Every piece of personal/professional
- * content rendered by the UI comes from an object that satisfies these types.
+ * Content model for the portfolio.
+ *
+ * Content is authored bilingually (see content.ts): any text field may be a
+ * plain string (technology names, URLs) or a `{ en, ar }` pair. `localize()`
+ * resolves the whole tree to one language, producing the `PortfolioData`
+ * shape that components render.
  */
+import type { Locale } from '../i18n/strings.ts';
 
 export type IconKey = string;
 
@@ -21,17 +26,9 @@ export interface Personal {
   languages: { name: string; level?: string }[];
 }
 
-export interface Stat {
-  value: string;
-  label: string;
-  /** Where the number comes from in the CV. */
-  source: string;
-}
-
 export interface About {
   paragraphs: string[];
   focusAreas: { title: string; description: string; icon: IconKey }[];
-  stats: Stat[];
 }
 
 export interface Experience {
@@ -45,21 +42,15 @@ export interface Experience {
   employmentType?: string;
   sector: string;
   summary: string;
-  responsibilities: string[];
+  /** Bullets from the CV. Figures such as "10+" are highlighted automatically. */
   achievements: string[];
+  responsibilities: string[];
   technologies: string[];
-  metrics: { value: string; label: string }[];
 }
 
 export type ProjectKind = 'personal' | 'graduation' | 'professional';
 
 export type ProjectCategory = 'ai' | 'data-science' | 'data-engineering' | 'analytics';
-
-export interface ProjectLink {
-  label: string;
-  href: string;
-  kind: 'github' | 'demo' | 'other';
-}
 
 export interface Project {
   id: string;
@@ -72,6 +63,9 @@ export interface Project {
   categories: ProjectCategory[];
   visual: 'rag' | 'resume' | 'vision' | 'platform' | 'dashboard' | 'reporting' | 'pipeline' | 'timeseries';
   technologies: string[];
+  /** 1–3 short phrases shown on the card. */
+  highlights: string[];
+  /** Quantified results, shown only in the project modal. */
   metrics: { value: string; label: string }[];
   overview: string;
   /** Only set when the CV states or directly implies the problem. */
@@ -80,24 +74,23 @@ export interface Project {
   methodology: string[];
   /** Only set when the CV states an outcome. */
   impact?: string[];
-  links: ProjectLink[];
-  featured: boolean;
+  /** Real repository URL, or empty when none has been provided. */
+  githubUrl: string;
+  /** Real live-demo URL, or empty when none exists. */
+  demoUrl: string;
 }
 
-export type SkillCategoryId = 'languages' | 'ai' | 'llm' | 'data-engineering' | 'analytics' | 'tools';
+export type SkillCategoryId = 'analytics' | 'languages' | 'data-engineering' | 'ai' | 'llm' | 'tools';
 
 export interface Skill {
   name: string;
   icon: IconKey;
   category: SkillCategoryId;
-  description: string;
 }
 
 export interface SkillCategory {
   id: SkillCategoryId;
   label: string;
-  shortLabel: string;
-  description: string;
 }
 
 export interface Education {
@@ -123,27 +116,46 @@ export interface Certification {
   credentialUrl?: string;
 }
 
-export interface Achievement {
-  title: string;
-  detail: string;
-}
-
 export interface PortfolioData {
   personal: Personal;
   about: About;
   experience: Experience[];
   projects: Project[];
-  projectCategories: { id: ProjectCategory; label: string; shortLabel: string }[];
+  projectCategories: { id: ProjectCategory; label: string }[];
   skillCategories: SkillCategory[];
   skills: Skill[];
   softSkills: string[];
   education: Education[];
   certifications: Certification[];
-  achievements: Achievement[];
   seo: {
     title: string;
     description: string;
     keywords: string[];
-    siteUrl: string;
   };
+}
+
+/* ---------- Bilingual authoring ---------- */
+
+export type Text = { en: string; ar: string };
+
+/** Same shape as T, but every string may also be an `{ en, ar }` pair. */
+export type Bilingual<T> = T extends string
+  ? string | Text
+  : T extends readonly (infer U)[]
+    ? Bilingual<U>[]
+    : T extends object
+      ? { [K in keyof T]: Bilingual<T[K]> }
+      : T;
+
+const isText = (v: unknown): v is Text =>
+  typeof v === 'object' && v !== null && !Array.isArray(v) && Object.keys(v).length === 2 && 'en' in v && 'ar' in v;
+
+/** Resolves bilingual content to a single language. */
+export function localize<T>(value: Bilingual<T>, locale: Locale): T {
+  if (isText(value)) return value[locale] as T;
+  if (Array.isArray(value)) return value.map((v) => localize(v, locale)) as T;
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, localize(v as Bilingual<unknown>, locale)])) as T;
+  }
+  return value as T;
 }

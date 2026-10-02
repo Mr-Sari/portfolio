@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -27,10 +27,10 @@
         }
         if (theme === 'dark') d.classList.add('dark');
         d.style.colorScheme = theme;
-        // Arabic is the default; only switch when the visitor chose English.
-        if (locale === 'en') {
-          d.lang = 'en';
-          d.dir = 'ltr';
+        // English is the default; switch only when the visitor chose Arabic.
+        if (locale === 'ar') {
+          d.lang = 'ar';
+          d.dir = 'rtl';
         }
       })();
     </script>
@@ -38,7 +38,7 @@
   <body>
     <noscript>
       <p style="padding: 2rem; font-family: system-ui, sans-serif">
-        ساري عويض السلمي — محلل بيانات ومهندس ذكاء اصطناعي · sarialsulami@gmail.com ·
+        Sari Owaid Alsulami — Data Analyst · sarialsulami@gmail.com ·
         <a href="https://www.linkedin.com/in/sari-alsulami">LinkedIn</a> ·
         <a href="https://github.com/Mr-Sari">GitHub</a>
       </p>

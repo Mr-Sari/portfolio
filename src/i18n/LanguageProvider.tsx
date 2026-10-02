@@ -1,16 +1,17 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { portfolioData } from '../data/portfolioData';
-import { portfolioDataAr } from '../data/portfolioData.ar';
+import { content } from '../data/content';
+import { localize } from '../data/types';
 import type { PortfolioData } from '../data/types';
 import { strings, type Locale, type Strings } from './strings';
 
 const STORAGE_KEY = 'portfolio-locale';
 
-export const DEFAULT_LOCALE: Locale = 'ar';
+export const DEFAULT_LOCALE: Locale = 'en';
 
-function getPortfolioData(locale: Locale): PortfolioData {
-  return locale === 'ar' ? portfolioDataAr : portfolioData;
-}
+const dataByLocale: Record<Locale, PortfolioData> = {
+  en: localize<PortfolioData>(content, 'en'),
+  ar: localize<PortfolioData>(content, 'ar'),
+};
 
 interface LanguageContextValue {
   locale: Locale;
@@ -55,7 +56,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       locale,
       dir,
       t,
-      data: getPortfolioData(locale),
+      data: dataByLocale[locale],
       toggleLocale,
       formatDate: (ym) => {
         if (!ym) return t.experience.present;

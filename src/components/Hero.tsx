@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowDown, ArrowRight, Download, MapPin, Send } from 'lucide-react';
-import { portfolioData as codeData } from '../data/portfolioData';
+import { content } from '../data/content';
+import { localize, type PortfolioData } from '../data/types';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { asset } from '../lib/assets';
 import { TechIcon } from '../lib/icons';
@@ -9,7 +10,10 @@ import { Button, LinkButton } from './ui/Button';
 import { ease } from './ui/motion';
 
 // Icon keys of the skills highlighted in the hero (stable across languages).
-const heroSkills = ['powerbi', 'sql', 'python', 'excel', 'gauge', 'workflow', 'sparkles', 'search'];
+const heroSkills = ['powerbi', 'sql', 'python', 'excel', 'sparkles'];
+
+// The profile card is code, so it always reads the English content.
+const codeData = localize<PortfolioData>(content, 'en');
 
 export function Hero() {
   const { t, data } = useLanguage();
@@ -28,11 +32,11 @@ export function Hero() {
   const last = nameParts.pop();
 
   return (
-    <section id="home" tabIndex={-1} aria-labelledby="home-title" className="relative isolate overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24 lg:min-h-[100svh] lg:pt-40">
+    <section id="home" tabIndex={-1} aria-labelledby="home-title" className="relative isolate overflow-hidden pt-24 pb-10 sm:pt-32 sm:pb-16 lg:min-h-[88svh] lg:pt-36">
       <HeroBackdrop />
-      <div className="container-page grid grid-cols-[minmax(0,1fr)] items-center gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-10">
+      <div className="container-page grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-10">
         <motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } } }}>
-          <motion.div variants={item} className="mb-7 inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1 ps-1 pe-3 text-xs text-fg-muted backdrop-blur">
+          <motion.div variants={item} className="mb-5 inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1 ps-1 pe-3 text-xs text-fg-muted backdrop-blur">
             <span className="rounded-full bg-accent-soft px-2 py-0.5 font-mono text-[0.68rem] font-medium text-accent">{personal.title}</span>
             <span className="hidden items-center gap-1 min-[420px]:inline-flex">
               <MapPin size={12} aria-hidden />
@@ -40,20 +44,20 @@ export function Hero() {
             </span>
           </motion.div>
 
-          <motion.h1 id="home-title" variants={item} className="text-[2.6rem] leading-[1.02] font-semibold tracking-[-0.045em] text-fg min-[400px]:text-5xl sm:text-6xl lg:text-[4.6rem]">
+          <motion.h1 id="home-title" variants={item} className="text-[2.1rem] leading-[1.05] font-semibold tracking-[-0.04em] text-fg min-[390px]:text-[2.4rem] sm:text-5xl lg:text-[4.2rem]">
             <span className="block">{nameParts.join(' ')}</span>
             <span className="block text-fg-subtle">{last}</span>
           </motion.h1>
 
-          <motion.p variants={item} className="mt-6 max-w-xl text-balance text-xl font-medium tracking-[-0.015em] text-fg sm:text-2xl">
+          <motion.p variants={item} className="mt-4 max-w-xl text-balance text-lg font-medium leading-snug tracking-[-0.015em] text-fg sm:mt-5 sm:text-2xl">
             {personal.headline}
           </motion.p>
 
-          <motion.p variants={item} className="mt-4 max-w-xl text-base leading-relaxed text-fg-muted sm:text-[1.05rem]">
+          <motion.p variants={item} className="mt-3 max-w-xl text-[0.95rem] leading-relaxed text-fg-muted sm:text-base">
             {personal.summary}
           </motion.p>
 
-          <motion.div variants={item} className="mt-9 flex flex-wrap items-center gap-3">
+          <motion.div variants={item} className="mt-6 flex flex-wrap items-center gap-2.5 sm:mt-8 sm:gap-3">
             <Button onClick={() => scrollToSection('projects')} icon={<ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" aria-hidden />}>
               {t.hero.viewProjects}
             </Button>
@@ -70,7 +74,7 @@ export function Hero() {
             </Button>
           </motion.div>
 
-          <motion.ul variants={item} className="mt-10 flex flex-wrap gap-2" aria-label={t.a11y.coreTech}>
+          <motion.ul variants={item} className="mt-6 flex flex-wrap gap-1.5 sm:mt-8 sm:gap-2" aria-label={t.a11y.coreTech}>
             {highlights.map((s) => (
               <li key={s.name} className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface px-2.5 py-1.5 text-xs text-fg-muted backdrop-blur transition-colors hover:border-accent/40 hover:text-fg">
                 <TechIcon name={s.icon} size={13} />
@@ -110,10 +114,9 @@ function HeroBackdrop() {
   );
 }
 
-/** A code-editor style card that renders the profile straight from the data object.
- * It is code, so it always uses the English data; its stats follow the page language. */
+/** Decorative code-editor card rendered from the (English) data. Desktop only:
+ * on phones it would only push the content down. */
 function ProfileCard() {
-  const { data: pageData } = useLanguage();
   const data = codeData;
   const reduce = useReducedMotion();
   const { personal, experience, education } = data;
@@ -134,7 +137,7 @@ function ProfileCard() {
       initial={{ opacity: 0, y: reduce ? 0 : 30, rotate: reduce ? 0 : 1.5 }}
       animate={{ opacity: 1, y: 0, rotate: 0 }}
       transition={{ duration: 1, ease, delay: 0.45 }}
-      className="relative mx-auto w-full max-w-md lg:max-w-none"
+      className="relative hidden w-full lg:block"
       dir="ltr"
       aria-hidden
     >
@@ -146,7 +149,7 @@ function ProfileCard() {
           <span className="size-2.5 rounded-full bg-fg-subtle/30" />
           <span className="ms-3 font-mono text-[0.7rem] text-fg-subtle">profile.py</span>
         </div>
-        <pre className="overflow-x-auto p-5 font-mono whitespace-pre-wrap break-words sm:whitespace-pre text-[0.74rem] leading-[1.85] sm:p-6 sm:text-[0.8rem]">
+        <pre className="overflow-x-auto p-6 font-mono text-[0.8rem] leading-[1.85]">
           <code>
             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="block">
               <span className="text-fg-subtle">sari</span> <span className="text-accent">=</span> <span className="text-fg">Profile</span>(
@@ -189,14 +192,6 @@ function ProfileCard() {
             </motion.span>
           </code>
         </pre>
-        <div className="grid grid-cols-3 border-t border-line">
-          {pageData.about.stats.slice(1, 4).map((s, i) => (
-            <div key={s.label} className={`px-4 py-4 ${i > 0 ? 'border-s border-line' : ''}`}>
-              <div className="text-lg font-semibold tracking-tight text-fg sm:text-xl">{s.value}</div>
-              <div className="mt-0.5 text-[0.68rem] leading-snug text-fg-subtle">{s.label}</div>
-            </div>
-          ))}
-        </div>
       </div>
     </motion.div>
   );

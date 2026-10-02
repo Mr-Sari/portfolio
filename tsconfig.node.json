@@ -12,5 +12,5 @@
     "isolatedModules": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["vite.config.ts", "src/data"]
+  "include": ["vite.config.ts", "src/data", "src/i18n/strings.ts"]
 }
