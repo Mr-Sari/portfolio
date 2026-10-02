@@ -5,7 +5,7 @@ import { useLanguage } from '../i18n/LanguageProvider';
 import { TechIcon } from '../lib/icons';
 import { RevealGroup } from './ui/Reveal';
 import { Section } from './ui/Section';
-import { SectionHeading } from './ui/SectionHeading';
+import { BigTitle } from './ui/BigTitle';
 import { fadeUp } from './ui/motion';
 
 export function Certifications() {
@@ -14,7 +14,7 @@ export function Certifications() {
 
   return (
     <Section id="certifications">
-      <SectionHeading id="certifications" kicker={t.certifications.kicker} title={t.certifications.title} />
+      <BigTitle id="certifications" lead={t.certifications.title.lead} accent={t.certifications.title.accent} sub={t.certifications.sub} className="mb-8 sm:mb-10" />
       <RevealGroup as="ul" className="grid gap-2.5 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
         {certs.map((cert) => (
           <motion.li

@@ -1,54 +1,60 @@
-import { motion } from 'framer-motion';
-import { ArrowUpRight, Check, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, ExternalLink } from 'lucide-react';
 import type { Project } from '../data/types';
 import { spotlightMove } from '../hooks/useSpotlight';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { GitHubIcon } from '../lib/icons';
 import { ProjectVisual } from './ProjectVisual';
 import { Tag } from './ui/Tag';
-import { ease } from './ui/motion';
 
 interface Props {
   project: Project;
+  index: number;
+  active: boolean;
+  onActivate: () => void;
   onOpen: (project: Project, trigger: HTMLElement) => void;
 }
 
-export function ProjectCard({ project, onOpen }: Props) {
-  const { t, data } = useLanguage();
-  const categoryLabels = project.categories.map((c) => data.projectCategories.find((pc) => pc.id === c)?.label ?? c);
+export function ProjectCard({ project, index, active, onActivate, onOpen }: Props) {
+  const { t } = useLanguage();
+  const rows = [
+    project.brief.problem && { label: t.projects.problem, text: project.brief.problem },
+    { label: t.projects.solution, text: project.brief.solution },
+    project.brief.result && { label: t.projects.result, text: project.brief.result },
+  ].filter((r): r is { label: string; text: string } => Boolean(r));
 
   return (
-    <motion.article
-      layout
-      initial={{ opacity: 0, y: 16, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.18 } }}
-      transition={{ duration: 0.4, ease }}
+    <article
       onPointerMove={spotlightMove}
-      className="card spotlight group flex flex-col overflow-hidden transition-[border-color,box-shadow,translate] duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-lift"
+      onClick={(e) => {
+        // Tapping a side card brings it to the centre first.
+        if (!active && !(e.target as HTMLElement).closest('a,button')) onActivate();
+      }}
+      className={`card spotlight group relative flex h-full flex-col overflow-hidden transition-[transform,opacity,border-color,box-shadow] duration-500 ease-out ${
+        active ? 'scale-100 border-line-strong opacity-100 shadow-lift' : 'scale-[0.94] cursor-pointer opacity-50 hover:opacity-75'
+      }`}
     >
       <div className="relative">
-        <ProjectVisual visual={project.visual} className="h-24 border-b border-line transition-transform duration-500 group-hover:scale-[1.02] sm:h-32" />
-        <span className="absolute top-2.5 start-2.5 rounded-full border border-line bg-bg-elevated/85 px-2 py-0.5 font-mono text-[0.64rem] text-fg-muted backdrop-blur">
-          {t.kinds[project.kind]}
+        <ProjectVisual visual={project.visual} className="h-28 border-b border-line transition-transform duration-700 group-hover:scale-[1.03] sm:h-36" />
+        <span aria-hidden className="pointer-events-none absolute -top-3 end-3 font-mono text-[4.5rem] leading-none font-bold text-fg/[0.06] sm:text-[5.5rem]">
+          {String(index).padStart(2, '0')}
         </span>
+        <div className="absolute top-2.5 start-2.5 flex gap-1.5">
+          <span className="rounded-full border border-line bg-bg-elevated/85 px-2 py-0.5 font-mono text-[0.62rem] text-fg-muted backdrop-blur">{project.start.slice(0, 4)}</span>
+          <span className="rounded-full border border-line bg-bg-elevated/85 px-2 py-0.5 font-mono text-[0.62rem] text-fg-muted backdrop-blur">{t.kinds[project.kind]}</span>
+        </div>
       </div>
 
       <div className="flex flex-1 flex-col p-4 sm:p-5">
-        <p className="mb-1.5 font-mono text-[0.66rem] text-accent">{categoryLabels.join(' · ')}</p>
-        <h3 className="text-base leading-snug font-semibold tracking-tight text-fg sm:text-[1.05rem]">{project.title}</h3>
-        <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{project.shortDescription}</p>
+        <h3 className="text-[1.05rem] leading-snug font-semibold tracking-tight text-fg sm:text-lg">{project.title}</h3>
 
-        {project.highlights.length > 0 && (
-          <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-fg">
-            {project.highlights.slice(0, 3).map((h) => (
-              <li key={h} className="inline-flex items-center gap-1">
-                <Check size={12} className="text-accent" aria-hidden />
-                {h}
-              </li>
-            ))}
-          </ul>
-        )}
+        <dl className="mt-3 space-y-1.5">
+          {rows.map((r) => (
+            <div key={r.label} className="grid grid-cols-[4.75rem_1fr] gap-2 text-[0.82rem] leading-snug">
+              <dt className="pt-px font-mono text-[0.62rem] tracking-[0.08em] text-accent uppercase">{r.label}</dt>
+              <dd className="text-fg-muted">{r.text}</dd>
+            </div>
+          ))}
+        </dl>
 
         <ul className="mt-3 flex flex-wrap gap-1" aria-label={t.projects.technologies}>
           {project.technologies.slice(0, 4).map((tech) => (
@@ -67,7 +73,7 @@ export function ProjectCard({ project, onOpen }: Props) {
           <button
             type="button"
             onClick={(e) => onOpen(project, e.currentTarget)}
-            className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full text-sm font-medium text-fg transition-colors after:absolute after:inset-0 after:content-[''] hover:text-accent"
+            className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full text-sm font-medium text-fg transition-colors hover:text-accent"
             aria-haspopup="dialog"
           >
             {t.projects.details}
@@ -77,7 +83,7 @@ export function ProjectCard({ project, onOpen }: Props) {
           <ProjectLinks project={project} compact />
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }
 

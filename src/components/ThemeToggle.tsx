@@ -13,7 +13,7 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={isDark ? t.a11y.toLight : t.a11y.toDark}
       title={isDark ? t.a11y.toLight : t.a11y.toDark}
-      className="relative grid size-10 cursor-pointer place-items-center overflow-hidden rounded-full text-fg-muted transition-colors hover:bg-accent-soft hover:text-fg"
+      className="relative grid size-9 cursor-pointer place-items-center overflow-hidden rounded-full text-fg-muted transition-colors hover:bg-accent-soft hover:text-fg"
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

@@ -28,7 +28,18 @@ export interface Personal {
 
 export interface About {
   paragraphs: string[];
+  /** Words inside `paragraphs` to emphasise in the accent colour. */
+  keywords: string[];
   focusAreas: { title: string; description: string; icon: IconKey }[];
+}
+
+/** Short personal statements placed at a few points in the page. */
+export interface Statements {
+  hero: string;
+  heroSub: string;
+  philosophy: string;
+  interlude: { lead: string; accent: string };
+  closing: { lead: string; accent: string; sub: string };
 }
 
 export interface Experience {
@@ -63,8 +74,8 @@ export interface Project {
   categories: ProjectCategory[];
   visual: 'rag' | 'resume' | 'vision' | 'platform' | 'dashboard' | 'reporting' | 'pipeline' | 'timeseries';
   technologies: string[];
-  /** 1–3 short phrases shown on the card. */
-  highlights: string[];
+  /** One-line Problem → Solution → Result summary for the card (only what the CV supports). */
+  brief: { problem?: string; solution: string; result?: string };
   /** Quantified results, shown only in the project modal. */
   metrics: { value: string; label: string }[];
   overview: string;
@@ -80,7 +91,7 @@ export interface Project {
   demoUrl: string;
 }
 
-export type SkillCategoryId = 'analytics' | 'languages' | 'data-engineering' | 'ai' | 'llm' | 'tools';
+export type SkillCategoryId = 'analytics' | 'bi' | 'data' | 'ai' | 'engineering';
 
 export interface Skill {
   name: string;
@@ -91,6 +102,8 @@ export interface Skill {
 export interface SkillCategory {
   id: SkillCategoryId;
   label: string;
+  /** Primary categories get larger, emphasised chips. */
+  primary?: boolean;
 }
 
 export interface Education {
@@ -118,6 +131,8 @@ export interface Certification {
 
 export interface PortfolioData {
   personal: Personal;
+  statements: Statements;
+  heroStack: string[];
   about: About;
   experience: Experience[];
   projects: Project[];

@@ -1,11 +1,11 @@
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
-import { Briefcase, ChevronDown } from 'lucide-react';
+import { ChevronDown, MapPin } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type { Experience as ExperienceItem } from '../data/types';
 import { spotlightMove } from '../hooks/useSpotlight';
 import { useLanguage } from '../i18n/LanguageProvider';
+import { BigTitle } from './ui/BigTitle';
 import { Section } from './ui/Section';
-import { SectionHeading } from './ui/SectionHeading';
 import { Tag } from './ui/Tag';
 import { ease } from './ui/motion';
 
@@ -21,8 +21,8 @@ export function Experience() {
   const { t, data } = useLanguage();
   const list = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: list, offset: ['start 70%', 'end 60%'] });
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+  const { scrollYProgress } = useScroll({ target: list, offset: ['start 75%', 'end 55%'] });
+  const progress = useSpring(scrollYProgress, { stiffness: 110, damping: 28 });
   const [open, setOpen] = useState<Set<string>>(() => new Set());
 
   const toggle = (id: string) =>
@@ -33,23 +33,23 @@ export function Experience() {
       return next;
     });
 
-  // Most recent first.
   const items = [...data.experience].sort((a, b) => (b.end ?? '9999').localeCompare(a.end ?? '9999') || b.start.localeCompare(a.start));
 
   return (
-    <Section id="experience" className="bg-[linear-gradient(to_bottom,transparent,var(--accent-soft)_50%,transparent)]">
-      <SectionHeading id="experience" kicker={t.experience.kicker} title={t.experience.title} />
+    <Section id="experience" className="overflow-x-clip">
+      <BigTitle id="experience" lead={t.experience.title.lead} accent={t.experience.title.accent} sub={t.experience.sub} className="mb-8 sm:mb-14" />
 
-      <div ref={list} className="relative">
-        <div aria-hidden className="absolute top-4 bottom-4 start-[15px] w-px bg-line sm:start-[19px]" />
+      <div ref={list} className="relative mx-auto max-w-5xl">
+        {/* Track + growing progress line (start edge on mobile, centre on desktop) */}
+        <div aria-hidden className="absolute top-2 bottom-2 start-[11px] w-px bg-line md:start-1/2" />
         <motion.div
           aria-hidden
           style={{ scaleY: reduce ? 1 : progress }}
-          className="absolute top-4 bottom-4 start-[15px] w-px origin-top bg-gradient-to-b from-accent via-accent to-accent/0 sm:start-[19px]"
+          className="absolute top-2 bottom-2 start-[11px] w-px origin-top bg-gradient-to-b from-accent via-accent to-accent/10 md:start-1/2"
         />
-        <ol className="relative">
+        <ol className="relative space-y-5 sm:space-y-8">
           {items.map((item, i) => (
-            <TimelineItem key={item.id} item={item} index={i} isOpen={open.has(item.id)} onToggle={() => toggle(item.id)} />
+            <TimelineItem key={item.id} item={item} side={i % 2 === 0 ? 'start' : 'end'} isOpen={open.has(item.id)} onToggle={() => toggle(item.id)} />
           ))}
         </ol>
       </div>
@@ -57,59 +57,64 @@ export function Experience() {
   );
 }
 
-function TimelineItem({ item, index, isOpen, onToggle }: { item: ExperienceItem; index: number; isOpen: boolean; onToggle: () => void }) {
-  const { t, formatDate } = useLanguage();
+function TimelineItem({ item, side, isOpen, onToggle }: { item: ExperienceItem; side: 'start' | 'end'; isOpen: boolean; onToggle: () => void }) {
+  const { t, formatDate, dir } = useLanguage();
   const reduce = useReducedMotion();
   const isCurrent = item.end === null;
   const panelId = `exp-${item.id}-panel`;
-  const meta = [`${formatDate(item.start)} – ${formatDate(item.end)}`, t.experience.duration(...monthsBetween(item.start, item.end)), item.location];
+  const year = item.start.slice(0, 4);
+  // Cards slide in from their own side of the line.
+  const fromX = reduce ? 0 : (side === 'start' ? -1 : 1) * (dir === 'rtl' ? -1 : 1) * 28;
 
   return (
-    <motion.li
-      initial={{ opacity: 0, x: reduce ? 0 : -12 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-      transition={{ duration: 0.5, ease, delay: index * 0.05 }}
-      className="relative ps-10 pb-4 last:pb-0 sm:ps-14 sm:pb-5"
-    >
-      <span aria-hidden className="absolute start-0 top-4 grid size-8 place-items-center sm:size-10">
-        {isCurrent && !reduce && <span className="absolute inset-0 animate-ping rounded-full bg-accent/25 [animation-duration:2.4s]" />}
-        <span
-          className={`relative grid size-8 place-items-center rounded-full border sm:size-10 ${
-            isCurrent ? 'border-accent bg-accent text-accent-fg' : 'border-line-strong bg-bg-elevated text-fg-muted'
-          }`}
-        >
-          <Briefcase size={14} />
-        </span>
-      </span>
-
-      <article
-        onPointerMove={spotlightMove}
-        className={`card spotlight p-4 transition-[border-color,box-shadow] duration-300 hover:shadow-lift sm:p-5 ${
-          isCurrent ? 'border-accent/35' : 'hover:border-line-strong'
+    <li className="relative ps-9 md:grid md:grid-cols-2 md:gap-12 md:ps-0">
+      {/* Year pill on the line */}
+      <motion.span
+        initial={{ scale: reduce ? 1 : 0.6, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        viewport={{ once: true, margin: '0px 0px -15% 0px' }}
+        transition={{ duration: 0.5, ease }}
+        className={`absolute top-4 start-0 z-10 grid h-6 min-w-6 place-items-center rounded-full border px-1.5 font-mono text-[0.62rem] font-semibold md:start-1/2 md:-translate-x-1/2 md:px-2.5 md:text-[0.68rem] rtl:md:translate-x-1/2 ${
+          isCurrent ? 'border-accent bg-accent text-accent-fg' : 'border-line-strong bg-bg-elevated text-fg-muted'
         }`}
       >
-        <header className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
-          <div className="min-w-0">
-            <h3 className="flex flex-wrap items-center gap-2 text-base font-semibold tracking-tight text-fg sm:text-lg">
-              {item.role}
-              {isCurrent && <Tag tone="accent">● {t.experience.current}</Tag>}
-              {item.employmentType && <Tag>{item.employmentType}</Tag>}
-            </h3>
-            <p className="mt-0.5 text-sm text-fg-muted">
-              <span className="font-medium text-fg">{item.company}</span>
-              {item.via && (
-                <span className="text-fg-subtle">
-                  {' '}
-                  ({t.experience.via} {item.via})
-                </span>
-              )}
-            </p>
-          </div>
-          <p className="font-mono text-[0.7rem] leading-relaxed text-fg-subtle">{meta.join(' · ')}</p>
-        </header>
+        <span className="hidden md:inline">{year}</span>
+        <span className="size-1.5 rounded-full bg-current md:hidden" aria-hidden />
+      </motion.span>
 
-        <ul className="mt-3 space-y-1.5 text-sm leading-relaxed text-fg-muted">
+      <motion.article
+        initial={{ opacity: 0, x: fromX, filter: reduce ? 'none' : 'blur(6px)' }}
+        whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+        viewport={{ once: true, margin: '0px 0px -12% 0px' }}
+        transition={{ duration: 0.7, ease }}
+        onPointerMove={spotlightMove}
+        className={`card spotlight p-4 transition-[border-color,box-shadow] duration-300 hover:shadow-lift sm:p-5 ${
+          side === 'end' ? 'md:col-start-2' : ''
+        } ${isCurrent ? 'border-accent/40' : 'hover:border-line-strong'}`}
+      >
+        <div className="flex flex-wrap items-center gap-1.5">
+          {isCurrent && <Tag tone="accent">● {t.experience.current}</Tag>}
+          {item.employmentType && <Tag>{item.employmentType}</Tag>}
+          <span className="font-mono text-[0.68rem] text-fg-subtle">
+            {formatDate(item.start)} – {formatDate(item.end)} · {t.experience.duration(...monthsBetween(item.start, item.end))}
+          </span>
+        </div>
+        <h3 className="mt-2 text-lg font-semibold tracking-tight text-fg sm:text-xl">{item.role}</h3>
+        <p className="mt-0.5 text-sm text-fg-muted">
+          <span className="font-medium text-accent">{item.company}</span>
+          {item.via && (
+            <span className="text-fg-subtle">
+              {' '}
+              ({t.experience.via} {item.via})
+            </span>
+          )}
+        </p>
+        <p className="mt-1 flex items-center gap-1 text-xs text-fg-subtle">
+          <MapPin size={12} aria-hidden />
+          {item.location}
+        </p>
+
+        <ul className="mt-3 space-y-1.5 text-start text-sm leading-relaxed text-fg-muted">
           {item.achievements.map((line) => (
             <li key={line} className="flex gap-2.5">
               <span className="mt-[0.55rem] size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
@@ -129,7 +134,7 @@ function TimelineItem({ item, index, isOpen, onToggle }: { item: ExperienceItem;
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: reduce ? 0 : 0.35, ease }}
-              className="overflow-hidden"
+              className="overflow-hidden text-start"
             >
               <ul className="mt-1.5 space-y-1.5 text-sm leading-relaxed text-fg-muted">
                 {item.responsibilities.map((line) => (
@@ -155,7 +160,7 @@ function TimelineItem({ item, index, isOpen, onToggle }: { item: ExperienceItem;
           onClick={onToggle}
           aria-expanded={isOpen}
           aria-controls={panelId}
-          className="mt-2.5 inline-flex min-h-9 cursor-pointer items-center gap-1 rounded-full text-xs font-medium text-fg-muted transition-colors hover:text-accent"
+          className="mt-2 inline-flex min-h-9 cursor-pointer items-center gap-1 rounded-full text-xs font-medium text-fg-muted transition-colors hover:text-accent"
         >
           {isOpen ? t.experience.collapse : t.experience.expand}
           <span className="sr-only">: {item.role}, {item.company}</span>
@@ -163,8 +168,8 @@ function TimelineItem({ item, index, isOpen, onToggle }: { item: ExperienceItem;
             <ChevronDown size={14} aria-hidden />
           </motion.span>
         </button>
-      </article>
-    </motion.li>
+      </motion.article>
+    </li>
   );
 }
 

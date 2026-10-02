@@ -11,23 +11,27 @@ Components render that data; none of them hard-code CV content.
 
 ## Features
 
-- **Sections:** Hero, About, Projects (filterable, with detail modal), Experience timeline,
-  Skills, Education, Certifications, Contact, Footer
+- **Sections:** Hero → About (bento: who I am, education, philosophy, location, focus) → Experience
+  (centre timeline) → Projects (snap carousel + detail modal) → statement interlude → Skills → Certifications →
+  Contact (closing statement, contact chips, form) → one-line footer
+- **Positioning:** Data Analyst first; BI, data engineering and AI/ML as supporting skills. Skills are grouped
+  by priority, and the Data Analytics group gets larger, emphasised chips.
+- **Personal voice:** a few short statements (hero, About philosophy, interlude, closing), edited in
+  `statements` inside `src/data/content.ts`
+- **Projects:** cards read Problem → Solution → Result (`brief` field, only where the CV supports it);
+  methodology, metrics and links live in the modal. GitHub/Live Demo buttons render only for real URLs.
+- **Motion (Framer Motion):** blur-to-sharp section titles, staggered reveals, typing stack line in the hero,
+  hero parallax, timeline line that grows with scroll, side-entering timeline cards, carousel focus scaling,
+  self-drawing skill dividers, soft-skills marquee. Everything is reduced or static under `prefers-reduced-motion`.
 - **Theme:** dark / light, following the system preference on first visit, saved per visitor, no flash on load
-- **Language:** English (default, LTR) / Arabic (RTL) toggle covering both the interface and the content
-- **Concise layout:** each metric appears once; project cards show a short summary, highlights and
-  links, with the full breakdown in the modal; experience details expand on demand
-- **Navigation:** sticky glass navbar, active-section indicator, smooth scrolling, animated mobile menu,
-  reading-progress bar, back-to-top button
-- **Motion:** entrance, scroll-reveal, filter, timeline, modal and hover animations, all
-  disabled for visitors with `prefers-reduced-motion`
-- **Accessibility:** semantic landmarks, skip link, one `h1` and ordered headings, keyboard-operable
-  filters, accordions and dialog (focus trap, Escape, focus return), visible focus rings, labelled form fields with
-  inline errors, AA contrast in both themes
+- **Language:** English (default, LTR) / Arabic (RTL), with both interface and content translated
+- **Navigation:** floating pill navbar with active-section indicator, Contact CTA, language and theme toggles,
+  animated mobile menu, reading-progress bar, back-to-top
+- **Accessibility:** semantic landmarks, skip link, ordered headings, keyboard-operable filters, carousel
+  (arrows, scrubber, arrow keys), accordions and dialog (focus trap, Escape, focus return), visible focus rings,
+  labelled form fields with inline errors
 - **SEO:** title, description, keywords, author, Open Graph / Twitter tags, a 1200×630 OG image and
   `Person` JSON-LD, all generated at build time from the same data file
-- **Performance:** the project modal is code-split; only the 18 brand icons in use are bundled;
-  static output is deployable anywhere
 
 ## Project structure
 
@@ -61,11 +65,11 @@ Components render that data; none of them hard-code CV content.
     │   └── assets.ts           # Base-path-aware public asset URLs
     └── components/
         ├── Navbar.tsx  ThemeToggle.tsx  LanguageToggle.tsx  ScrollChrome.tsx
-        ├── Hero.tsx  About.tsx
+        ├── Hero.tsx  About.tsx  Interlude.tsx
         ├── Projects.tsx  ProjectCard.tsx  ProjectModal.tsx  ProjectVisual.tsx
-        ├── Experience.tsx  Skills.tsx  Education.tsx  Certifications.tsx
+        ├── Experience.tsx  Skills.tsx  Certifications.tsx
         ├── Contact.tsx  Footer.tsx
-        └── ui/                 # Button, Tag, Section, SectionHeading, Reveal, motion presets
+        └── ui/                 # BigTitle, Button, Tag, Section, Reveal, motion presets
 ```
 
 ## Getting started
@@ -92,10 +96,12 @@ technologies: ['YOLOv8', 'OpenCV'], // technology names stay as plain strings
 against the content model. The default language is `DEFAULT_LOCALE` in
 `src/i18n/LanguageProvider.tsx` (mirrored in the pre-paint script in `index.html`).
 
-- **Projects:** each has `categories` (drives the filter tabs), `highlights` (card), `metrics`,
-  `methodology` and optional `problem` / `impact` (modal; omitted sections are hidden).
-  `githubUrl` and `demoUrl` show their buttons only when non-empty, so leave them `''` until a real
-  URL exists. The first six projects are shown, and the rest are behind "Show all".
+- **Projects:** each has `categories` (drives the filter tabs), `brief` (card: optional problem,
+  solution, optional result), plus `metrics`, `methodology` and optional `problem` / `impact` for the
+  modal (omitted sections are hidden). `githubUrl` and `demoUrl` show their buttons only when non-empty,
+  so leave them `''` until a real URL exists.
+- **Statements & hero:** `statements` (hero line, philosophy, interlude, closing) and `heroStack`
+  (the typed stack line) are in `content.ts`.
 - **Certifications:** add `credentialUrl` to show a "View credential" link.
 - **Resume:** replace `public/assets/Sari-Owaid-Alsulami-Resume.pdf`, keeping the same file name.
 - **UI text:** edit `src/i18n/strings.ts` (both languages).

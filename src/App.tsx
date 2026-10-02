@@ -2,10 +2,10 @@ import { MotionConfig } from 'framer-motion';
 import { About } from './components/About';
 import { Certifications } from './components/Certifications';
 import { Contact } from './components/Contact';
-import { Education } from './components/Education';
 import { Experience } from './components/Experience';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
+import { Interlude } from './components/Interlude';
 import { Navbar } from './components/Navbar';
 import { Projects } from './components/Projects';
 import { ScrollChrome } from './components/ScrollChrome';
@@ -28,10 +28,10 @@ export default function App() {
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <About />
-        <Projects />
         <Experience />
+        <Projects />
+        <Interlude />
         <Skills />
-        <Education />
         <Certifications />
         <Contact />
       </main>

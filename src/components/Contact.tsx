@@ -1,13 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Check, CircleAlert, CircleCheck, Copy, Info, LoaderCircle, Mail, MapPin, Phone, Send } from 'lucide-react';
-import { cloneElement, useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
+import { Check, CircleAlert, CircleCheck, Copy, Info, LoaderCircle, Mail, Phone, Send } from 'lucide-react';
+import { cloneElement, useId, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { contactProvider, submitContactForm, validateContact, type ContactErrors, type ContactMessage } from '../lib/contact';
 import { GitHubIcon, LinkedInIcon } from '../lib/icons';
 import { Button } from './ui/Button';
 import { Reveal, RevealGroup } from './ui/Reveal';
-import { Section } from './ui/Section';
-import { SectionHeading } from './ui/SectionHeading';
+import { BigTitle } from './ui/BigTitle';
 import { ease, fadeUp } from './ui/motion';
 
 const empty: ContactMessage = { name: '', email: '', subject: '', message: '' };
@@ -15,7 +14,7 @@ type Status = 'idle' | 'submitting' | 'sent' | 'mailto' | 'error';
 
 export function Contact() {
   const { t, data } = useLanguage();
-  const { personal } = data;
+  const { personal, statements } = data;
   const [copied, setCopied] = useState(false);
 
   const copyEmail = async () => {
@@ -28,78 +27,64 @@ export function Contact() {
     }
   };
 
-  const linkedinHandle = personal.linkedin.replace(/^https?:\/\/(www\.)?/, '');
-  const githubHandle = personal.github.replace(/^https?:\/\/(www\.)?/, '');
+  const chip =
+    'inline-flex min-h-10 items-center gap-2 rounded-full border border-line-strong bg-surface px-4 text-sm text-fg backdrop-blur transition-[color,border-color,translate] hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent';
 
   return (
-    <Section id="contact">
-      <SectionHeading id="contact" kicker={t.contact.kicker} title={t.contact.title} intro={t.contact.intro} />
+    <section id="contact" tabIndex={-1} aria-labelledby="contact-title" className="relative isolate scroll-mt-20 overflow-hidden pt-14 pb-12 sm:pt-20 sm:pb-16">
+      <div aria-hidden className="absolute inset-x-0 top-10 -z-10 mx-auto h-72 max-w-3xl rounded-full bg-[radial-gradient(closest-side,var(--accent-glow),transparent)]" />
+      <div className="container-page">
+        <h2 id="contact-title" className="sr-only">
+          {t.nav.contact}
+        </h2>
+        <BigTitle id="closing" as="p" size="display" lead={statements.closing.lead} accent={statements.closing.accent} sub={statements.closing.sub} />
 
-      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-6">
-        <RevealGroup as="ul" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 lg:content-start">
-          <ContactRow icon={<Mail size={18} />} label={t.contact.email}>
-            <a href={`mailto:${personal.email}`} className="break-all text-fg hover:text-accent">
+        {/* Contact chips */}
+        <RevealGroup as="ul" step={0.06} className="mt-7 flex flex-wrap items-center justify-center gap-2">
+          <motion.li variants={fadeUp}>
+            <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className={chip}>
+              <LinkedInIcon size={15} /> LinkedIn<span className="sr-only">{t.a11y.opensNewTab}</span>
+            </a>
+          </motion.li>
+          <motion.li variants={fadeUp}>
+            <a href={personal.github} target="_blank" rel="noopener noreferrer" className={chip}>
+              <GitHubIcon size={15} /> GitHub<span className="sr-only">{t.a11y.opensNewTab}</span>
+            </a>
+          </motion.li>
+          <motion.li variants={fadeUp}>
+            <a href={`tel:${personal.phone.replace(/\s/g, '')}`} className={chip} aria-label={`${t.contact.phone}: ${personal.phone}`}>
+              <Phone size={15} aria-hidden />
+              <span dir="ltr">{personal.phone}</span>
+            </a>
+          </motion.li>
+          <motion.li variants={fadeUp} className="flex items-center gap-1">
+            <a
+              href={`mailto:${personal.email}`}
+              className="inline-flex min-h-10 items-center gap-2 rounded-full bg-accent px-4 text-sm font-medium text-accent-fg shadow-[0_8px_24px_-10px_var(--accent)] transition-transform hover:-translate-y-0.5"
+            >
+              <Mail size={15} aria-hidden />
               {personal.email}
             </a>
             <button
               type="button"
               onClick={copyEmail}
               aria-label={t.a11y.copyEmail}
-              className="relative z-10 ms-auto grid size-10 shrink-0 cursor-pointer place-items-center rounded-full text-fg-muted transition-colors hover:bg-accent-soft hover:text-fg"
+              className="grid size-10 cursor-pointer place-items-center rounded-full border border-line-strong bg-surface text-fg-muted transition-colors hover:text-accent"
             >
-              {copied ? <Check size={16} className="text-accent" aria-hidden /> : <Copy size={16} aria-hidden />}
+              {copied ? <Check size={15} className="text-accent" aria-hidden /> : <Copy size={15} aria-hidden />}
             </button>
             <span className="sr-only" aria-live="polite">
               {copied ? t.contact.copied : ''}
             </span>
-          </ContactRow>
-          <ContactRow icon={<LinkedInIcon size={17} />} label="LinkedIn" href={personal.linkedin}>
-            {linkedinHandle}
-          </ContactRow>
-          <ContactRow icon={<GitHubIcon size={17} />} label="GitHub" href={personal.github}>
-            {githubHandle}
-          </ContactRow>
-          <ContactRow icon={<Phone size={18} />} label={t.contact.phone}>
-            <a href={`tel:${personal.phone.replace(/\s/g, '')}`} dir="ltr" className="text-fg hover:text-accent">
-              {personal.phone}
-            </a>
-          </ContactRow>
-          <ContactRow icon={<MapPin size={18} />} label={t.contact.location}>
-            <span className="text-fg">{personal.location}</span>
-          </ContactRow>
+          </motion.li>
         </RevealGroup>
 
-        <Reveal delay={0.1}>
+        <Reveal delay={0.1} className="mx-auto mt-8 max-w-2xl sm:mt-10">
+          <h3 className="mb-3 text-center font-mono text-[0.68rem] tracking-[0.14em] text-fg-subtle uppercase">{t.contact.formTitle}</h3>
           <ContactForm to={personal.email} />
         </Reveal>
       </div>
-    </Section>
-  );
-}
-
-function ContactRow({ icon, label, href, children }: { icon: ReactNode; label: string; href?: string; children: ReactNode }) {
-  const { t } = useLanguage();
-  return (
-    <motion.li
-      variants={fadeUp}
-      className="card group relative flex items-center gap-3 rounded-2xl p-3 transition-[border-color,translate] duration-300 hover:border-line-strong"
-    >
-      <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-line bg-accent-soft text-accent">{icon}</span>
-      <div className="min-w-0 flex-1">
-        <div className="font-mono text-[0.66rem] tracking-[0.08em] text-fg-subtle uppercase">{label}</div>
-        {href ? (
-          <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm text-fg after:absolute after:inset-0 after:rounded-2xl hover:text-accent">
-            {children}
-            <span className="sr-only">{t.a11y.opensNewTab}</span>
-          </a>
-        ) : (
-          <div className="flex items-center gap-2 text-sm">{children}</div>
-        )}
-      </div>
-      {href && (
-        <ArrowUpRight size={16} aria-hidden className="shrink-0 text-fg-subtle transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent rtl:-scale-x-100" />
-      )}
-    </motion.li>
+    </section>
   );
 }
 

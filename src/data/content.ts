@@ -23,8 +23,8 @@ export const content: Bilingual<PortfolioData> = {
     email: 'sarialsulami@gmail.com',
     phone: '+966 54 934 4220',
     summary: {
-      en: 'Data Analyst focused on business intelligence — interactive dashboards, KPIs and analytical reporting with Power BI, SQL, Python and Excel — backed by data engineering and applied AI.',
-      ar: 'محلل بيانات متخصص في ذكاء الأعمال: لوحات معلومات تفاعلية ومؤشرات أداء وتقارير تحليلية باستخدام Power BI وSQL وPython وExcel، مع خبرة داعمة في هندسة البيانات والذكاء الاصطناعي.',
+      en: 'I turn data into actionable insights and better decisions — through dashboards, KPIs and clear analytical reporting.',
+      ar: 'أحوّل البيانات إلى رؤى قابلة للتنفيذ وقرارات أفضل، عبر لوحات المعلومات ومؤشرات الأداء والتقارير التحليلية الواضحة.',
     },
     linkedin: 'https://www.linkedin.com/in/sari-alsulami',
     github: 'https://github.com/Mr-Sari',
@@ -35,12 +35,41 @@ export const content: Bilingual<PortfolioData> = {
     ],
   },
 
+  statements: {
+    hero: { en: 'Turning data into decisions.', ar: 'أحوّل البيانات إلى قرارات.' },
+    heroSub: {
+      en: 'I turn data into actionable insights and better decisions.',
+      ar: 'أحوّل البيانات إلى رؤى قابلة للتنفيذ وقرارات أفضل.',
+    },
+    philosophy: { en: 'Data tells a story. I turn it into action.', ar: 'البيانات تحكي قصة، وأنا أحوّلها إلى أثر.' },
+    interlude: {
+      lead: { en: 'From raw data', ar: 'من البيانات الخام' },
+      accent: { en: 'to meaningful insights.', ar: 'إلى رؤى ذات قيمة.' },
+    },
+    closing: {
+      lead: { en: 'Analyze. Understand.', ar: 'حلّل. افهم.' },
+      accent: { en: 'Improve.', ar: 'طوّر.' },
+      sub: {
+        en: 'Have data that should be driving better decisions? Let’s talk.',
+        ar: 'لديك بيانات يمكن أن تقود قرارات أفضل؟ لنتحدث.',
+      },
+    },
+  },
+
+  heroStack: ['Power BI + DAX', 'SQL + Python', 'Excel + Power Query', 'ETL + Data Quality', 'RAG + LLMs'],
+
   about: {
     paragraphs: [
       {
-        en: 'Data Science graduate from the University of Jeddah, working as a Data Analyst in government and enterprise. I turn raw data into dashboards, KPIs and reports that support decisions — and use AI and LLMs where they make analysis faster.',
-        ar: 'خريج علم البيانات من جامعة جدة، أعمل محلل بيانات في القطاعين الحكومي والخاص. أحوّل البيانات الخام إلى لوحات معلومات ومؤشرات أداء وتقارير تدعم اتخاذ القرار، وأوظّف الذكاء الاصطناعي والنماذج اللغوية حيث تختصر وقت التحليل.',
+        en: 'A Data Analyst working across government and enterprise. I turn raw data into dashboards, KPIs and reports that leaders can act on — backed by data engineering, and by AI and LLMs where they make analysis faster.',
+        ar: 'محلل بيانات أعمل في القطاعين الحكومي والخاص. أحوّل البيانات الخام إلى لوحات معلومات ومؤشرات أداء وتقارير يمكن للقيادات أن تتخذ قراراتها بناءً عليها، مدعومًا بهندسة البيانات، وبالذكاء الاصطناعي والنماذج اللغوية حين تختصر وقت التحليل.',
       },
+    ],
+    keywords: [
+      { en: 'Data Analyst', ar: 'محلل بيانات' },
+      { en: 'dashboards, KPIs and reports', ar: 'لوحات معلومات ومؤشرات أداء وتقارير' },
+      { en: 'data engineering', ar: 'بهندسة البيانات' },
+      { en: 'AI and LLMs', ar: 'بالذكاء الاصطناعي والنماذج اللغوية' },
     ],
     focusAreas: [
       {
@@ -77,8 +106,8 @@ export const content: Bilingual<PortfolioData> = {
       end: null,
       sector: { en: 'Government', ar: 'قطاع حكومي' },
       summary: {
-        en: 'Power BI reporting, SQL data views and internal platforms.',
-        ar: 'تقارير Power BI وعروض بيانات SQL ومنصات داخلية.',
+        en: 'Data analysis, dashboard development and KPI reporting.',
+        ar: 'تحليل البيانات وتطوير لوحات المعلومات وتقارير مؤشرات الأداء.',
       },
       achievements: [
         {
@@ -86,21 +115,29 @@ export const content: Bilingual<PortfolioData> = {
           ar: 'تصميم أكثر من 10 لوحات Power BI تتابع أكثر من 25 مؤشر أداء، مع أتمتة التقارير وتقليل الجهد اليدوي.',
         },
         {
-          en: 'Built the “Maarefah Plus” knowledge platform (Python, SQLite, full-stack web), centralizing knowledge access across teams.',
-          ar: 'بناء منصة «معرفة بلس» (Python وSQLite وتطوير ويب متكامل) لمركزة الوصول إلى المعرفة بين الفرق.',
+          en: 'Analyze operational data with Power BI (DAX, Power Query), Excel (Pivot Tables) and SAP for data-driven reporting.',
+          ar: 'تحليل البيانات التشغيلية باستخدام Power BI (DAX وPower Query) وExcel (Pivot Tables) وSAP لإعداد تقارير مبنية على البيانات.',
+        },
+        {
+          en: 'Run ETL and data-quality checks so every report rests on clean, reliable data.',
+          ar: 'تنفيذ عمليات ETL وفحوصات جودة البيانات لتستند كل التقارير إلى بيانات نظيفة وموثوقة.',
         },
       ],
       responsibilities: [
         {
-          en: 'Built database views and optimized queries in Toad and SQL for extraction, analysis and Power BI.',
-          ar: 'بناء عروض قواعد البيانات وتحسين الاستعلامات عبر Toad وSQL للاستخراج والتحليل وربطها بـ Power BI.',
+          en: 'Built database views and optimized SQL queries (Toad) for extraction, analysis and Power BI.',
+          ar: 'بناء عروض قواعد البيانات وتحسين استعلامات SQL (Toad) للاستخراج والتحليل وربطها بـ Power BI.',
         },
         {
-          en: 'Contributed to Digital Transformation Measurement to raise digital maturity, efficiency and productivity.',
-          ar: 'المساهمة في قياس التحول الرقمي لرفع النضج الرقمي والكفاءة والإنتاجية.',
+          en: 'Built the “Maarefah Plus” knowledge platform (Python, SQLite) to centralize knowledge across teams.',
+          ar: 'بناء منصة «معرفة بلس» (Python وSQLite) لمركزة المعرفة بين الفرق.',
+        },
+        {
+          en: 'Contributed to Digital Transformation Measurement to raise digital maturity and productivity.',
+          ar: 'المساهمة في قياس التحول الرقمي لرفع النضج الرقمي والإنتاجية.',
         },
       ],
-      technologies: ['Power BI', 'SQL', 'Toad', 'Python', 'SQLite'],
+      technologies: ['Power BI', 'DAX', 'Power Query', 'Excel', 'SAP', 'SQL', 'ETL'],
     },
     {
       id: 'sgs',
@@ -192,10 +229,11 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['analytics'],
       visual: 'dashboard',
       technologies: ['Power BI', 'SQL', 'Toad'],
-      highlights: [
-        { en: 'Automated KPI reporting', ar: 'تقارير مؤشرات آلية' },
-        { en: 'Optimized SQL data views', ar: 'عروض SQL محسّنة' },
-      ],
+      brief: {
+        problem: { en: 'KPI reporting relied on manual work.', ar: 'تقارير المؤشرات كانت تعتمد على عمل يدوي.' },
+        solution: { en: 'Power BI dashboards on optimized SQL views.', ar: 'لوحات Power BI على عروض SQL محسّنة.' },
+        result: { en: 'Automated, always-current KPI reporting.', ar: 'تقارير مؤشرات آلية ومحدّثة دائمًا.' },
+      },
       metrics: [],
       overview: { en: 'A suite of Power BI dashboards that automates KPI reporting.', ar: 'مجموعة لوحات Power BI تؤتمت تقارير مؤشرات الأداء.' },
       problem: { en: 'Reporting relied on manual effort.', ar: 'اعتماد التقارير على جهد يدوي.' },
@@ -226,10 +264,10 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['ai'],
       visual: 'rag',
       technologies: ['LangChain', 'ChromaDB', 'OpenAI', 'Gradio', 'Python'],
-      highlights: [
-        { en: 'Semantic retrieval', ar: 'استرجاع دلالي' },
-        { en: 'Source-grounded answers', ar: 'إجابات موثّقة المصدر' },
-      ],
+      brief: {
+        solution: { en: 'Semantic retrieval with LangChain and ChromaDB.', ar: 'استرجاع دلالي عبر LangChain وChromaDB.' },
+        result: { en: 'Answers that cite their source documents.', ar: 'إجابات تستشهد بمصادرها.' },
+      },
       metrics: [],
       overview: {
         en: 'An end-to-end retrieval-augmented generation system, from document ingestion to an interactive chatbot.',
@@ -263,10 +301,10 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['ai'],
       visual: 'resume',
       technologies: ['OpenAI API', 'Claude API', 'Pydantic', 'Python'],
-      highlights: [
-        { en: 'Skill-gap analysis', ar: 'تحليل فجوات المهارات' },
-        { en: 'End-to-end pipeline', ar: 'خط معالجة متكامل' },
-      ],
+      brief: {
+        solution: { en: 'Structured LLM pipeline with Pydantic outputs.', ar: 'خط معالجة بنماذج لغوية ومخرجات Pydantic منظّمة.' },
+        result: { en: 'Gap analysis, tailored resume and cover letter in one run.', ar: 'تحليل الفجوات وسيرة وخطاب مخصصان في تشغيل واحد.' },
+      },
       metrics: [],
       overview: {
         en: 'An LLM assistant for resume–job matching and optimization, unified in one pipeline (run_resume_rocket).',
@@ -299,10 +337,10 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['ai', 'data-science'],
       visual: 'vision',
       technologies: ['YOLOv8', 'EfficientNetB0', 'OpenCV', 'Pandas', 'Streamlit'],
-      highlights: [
-        { en: '23K+ image dataset', ar: 'بيانات +23K صورة' },
-        { en: 'Rule-based cost estimator', ar: 'مقدِّر تكلفة بالقواعد' },
-      ],
+      brief: {
+        solution: { en: 'YOLOv8 + EfficientNetB0 models and a rule-based cost estimator.', ar: 'نماذج YOLOv8 وEfficientNetB0 ومقدِّر تكلفة بالقواعد.' },
+        result: { en: 'From one photo to a full PDF damage report.', ar: 'من صورة واحدة إلى تقرير PDF كامل.' },
+      },
       metrics: [
         { value: '81%', label: { en: 'Damage detection', ar: 'اكتشاف الضرر' } },
         { value: '93%', label: { en: 'Severity classification', ar: 'تصنيف الشدة' } },
@@ -341,7 +379,10 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['analytics'],
       visual: 'reporting',
       technologies: ['SAP', { en: 'BI tools', ar: 'أدوات BI' }],
-      highlights: [{ en: 'Executive-level reporting', ar: 'تقارير للإدارة التنفيذية' }],
+      brief: {
+        solution: { en: 'Automated dashboards on SAP and BI tools.', ar: 'لوحات آلية على SAP وأدوات BI.' },
+        result: { en: 'Executive-ready reporting for leadership.', ar: 'تقارير جاهزة للإدارة التنفيذية.' },
+      },
       metrics: [],
       overview: {
         en: 'Automated dashboards and executive reporting for business and operations.',
@@ -373,7 +414,11 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['data-engineering'],
       visual: 'pipeline',
       technologies: ['Python', 'Pandas', 'Regex', 'DuckDB', 'Docker'],
-      highlights: [{ en: 'Zero manual entry', ar: 'بلا إدخال يدوي' }],
+      brief: {
+        problem: { en: 'Hourly weather reports were entered by hand.', ar: 'تقارير الطقس الساعية كانت تُدخل يدويًا.' },
+        solution: { en: 'Python parsing (Pandas, Regex) and tuned DuckDB queries.', ar: 'تحليل بـ Python (Pandas وRegex) واستعلامات DuckDB محسّنة.' },
+        result: { en: 'Manual entry eliminated.', ar: 'إلغاء الإدخال اليدوي.' },
+      },
       metrics: [],
       overview: { en: 'Automated processing of hourly weather reports.', ar: 'أتمتة معالجة تقارير الطقس الساعية.' },
       problem: { en: 'Hourly weather reports were entered manually.', ar: 'كانت تقارير الطقس الساعية تُدخل يدويًا.' },
@@ -407,7 +452,11 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['data-engineering'],
       visual: 'platform',
       technologies: ['Python', 'SQLite', { en: 'Full-stack web', ar: 'تطوير ويب متكامل' }],
-      highlights: [{ en: 'Cross-team knowledge hub', ar: 'مرجع معرفي موحّد' }],
+      brief: {
+        problem: { en: 'Knowledge was scattered across teams.', ar: 'المعرفة كانت مشتتة بين الفرق.' },
+        solution: { en: 'A Python + SQLite web platform.', ar: 'منصة ويب بـ Python وSQLite.' },
+        result: { en: 'One central place for knowledge.', ar: 'مرجع مركزي واحد للمعرفة.' },
+      },
       metrics: [],
       overview: { en: 'A centralized knowledge platform for municipality teams.', ar: 'منصة معرفية مركزية لفرق الأمانة.' },
       problem: {
@@ -441,7 +490,9 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['data-science'],
       visual: 'timeseries',
       technologies: ['Python', 'Pandas', { en: 'Time-series analysis', ar: 'السلاسل الزمنية' }],
-      highlights: [{ en: 'Time-series classification', ar: 'تصنيف بالسلاسل الزمنية' }],
+      brief: {
+        solution: { en: 'Time-series analysis of flight-arrival ICAO messages.', ar: 'تحليل السلاسل الزمنية لرسائل ICAO لوصول الرحلات.' },
+      },
       metrics: [],
       overview: { en: 'A system that classifies ICAO messages for flight arrivals.', ar: 'نظام يصنّف رسائل ICAO الخاصة بوصول الرحلات.' },
       solution: {
@@ -458,55 +509,54 @@ export const content: Bilingual<PortfolioData> = {
   ],
 
   skillCategories: [
-    { id: 'analytics', label: { en: 'Analytics & BI', ar: 'التحليل وذكاء الأعمال' } },
-    { id: 'languages', label: { en: 'Languages', ar: 'لغات البرمجة' } },
-    { id: 'data-engineering', label: { en: 'Data Engineering', ar: 'هندسة البيانات' } },
-    { id: 'ai', label: { en: 'Machine Learning', ar: 'تعلم الآلة' } },
-    { id: 'llm', label: { en: 'LLMs & GenAI', ar: 'النماذج اللغوية' } },
-    { id: 'tools', label: { en: 'Tools', ar: 'الأدوات' } },
+    { id: 'analytics', label: { en: 'Data Analytics', ar: 'تحليل البيانات' }, primary: true },
+    { id: 'bi', label: { en: 'Business Intelligence', ar: 'ذكاء الأعمال' } },
+    { id: 'data', label: { en: 'Data Processing', ar: 'معالجة البيانات' } },
+    { id: 'ai', label: { en: 'Data Science & AI', ar: 'علم البيانات والذكاء الاصطناعي' } },
+    { id: 'engineering', label: { en: 'Engineering & Tools', ar: 'الهندسة والأدوات' } },
   ],
 
   skills: [
     { name: 'Power BI', icon: 'powerbi', category: 'analytics' },
     { name: 'Excel', icon: 'excel', category: 'analytics' },
-    { name: 'SAP', icon: 'sap', category: 'analytics' },
-    { name: { en: 'Dashboards & KPIs', ar: 'لوحات ومؤشرات أداء' }, icon: 'gauge', category: 'analytics' },
-    { name: { en: 'Data Visualization', ar: 'تصوير البيانات' }, icon: 'dashboard', category: 'analytics' },
+    { name: 'SQL', icon: 'sql', category: 'analytics' },
+    { name: 'Python', icon: 'python', category: 'analytics' },
 
-    { name: 'Python', icon: 'python', category: 'languages' },
-    { name: 'SQL', icon: 'sql', category: 'languages' },
-    { name: 'JavaScript', icon: 'javascript', category: 'languages' },
-    { name: 'TypeScript', icon: 'typescript', category: 'languages' },
-    { name: 'Regex', icon: 'regex', category: 'languages' },
+    { name: 'DAX', icon: 'sigma', category: 'bi' },
+    { name: 'Power Query', icon: 'filter', category: 'bi' },
+    { name: 'Pivot Tables', icon: 'table', category: 'bi' },
+    { name: { en: 'Data Visualization', ar: 'تصوير البيانات' }, icon: 'dashboard', category: 'bi' },
+    { name: { en: 'Dashboards & KPIs', ar: 'لوحات ومؤشرات أداء' }, icon: 'gauge', category: 'bi' },
+    { name: 'SAP', icon: 'sap', category: 'bi' },
 
-    { name: { en: 'ETL Pipelines', ar: 'خطوط ETL' }, icon: 'workflow', category: 'data-engineering' },
-    { name: 'Pandas', icon: 'pandas', category: 'data-engineering' },
-    { name: 'DuckDB', icon: 'duckdb', category: 'data-engineering' },
-    { name: 'SQLite', icon: 'sqlite', category: 'data-engineering' },
-    { name: 'Toad', icon: 'table', category: 'data-engineering' },
+    { name: 'Pandas', icon: 'pandas', category: 'data' },
+    { name: 'ETL', icon: 'workflow', category: 'data' },
+    { name: { en: 'Data Cleaning', ar: 'تنظيف البيانات' }, icon: 'sparkles', category: 'data' },
+    { name: { en: 'Data Processing', ar: 'معالجة البيانات' }, icon: 'layers', category: 'data' },
+    { name: 'DuckDB', icon: 'duckdb', category: 'data' },
+    { name: 'SQLite', icon: 'sqlite', category: 'data' },
+    { name: 'Toad', icon: 'database', category: 'data' },
 
     { name: { en: 'Machine Learning', ar: 'تعلم الآلة' }, icon: 'brain', category: 'ai' },
-    { name: { en: 'Deep Learning', ar: 'التعلم العميق' }, icon: 'network', category: 'ai' },
     { name: 'NLP', icon: 'message', category: 'ai' },
     { name: { en: 'Computer Vision', ar: 'الرؤية الحاسوبية' }, icon: 'eye', category: 'ai' },
+    { name: { en: 'Generative AI', ar: 'الذكاء الاصطناعي التوليدي' }, icon: 'sparkles', category: 'ai' },
+    { name: 'RAG', icon: 'search', category: 'ai' },
+    { name: 'LLMs', icon: 'bot', category: 'ai' },
+    { name: { en: 'Deep Learning', ar: 'التعلم العميق' }, icon: 'network', category: 'ai' },
     { name: 'YOLOv8', icon: 'yolo', category: 'ai' },
-    { name: 'EfficientNetB0', icon: 'layers', category: 'ai' },
     { name: 'OpenCV', icon: 'opencv', category: 'ai' },
+    { name: 'LangChain', icon: 'langchain', category: 'ai' },
+    { name: { en: 'Prompt Engineering', ar: 'هندسة الأوامر' }, icon: 'terminal', category: 'ai' },
 
-    { name: 'LLMs', icon: 'sparkles', category: 'llm' },
-    { name: 'RAG', icon: 'search', category: 'llm' },
-    { name: { en: 'Prompt Engineering', ar: 'هندسة الأوامر' }, icon: 'terminal', category: 'llm' },
-    { name: 'LangChain', icon: 'langchain', category: 'llm' },
-    { name: 'ChromaDB', icon: 'database', category: 'llm' },
-    { name: 'OpenAI API', icon: 'bot', category: 'llm' },
-    { name: 'Claude API', icon: 'claude', category: 'llm' },
-    { name: 'Pydantic', icon: 'pydantic', category: 'llm' },
-
-    { name: 'Docker', icon: 'docker', category: 'tools' },
-    { name: 'Git', icon: 'git', category: 'tools' },
-    { name: 'GitHub', icon: 'github', category: 'tools' },
-    { name: 'Streamlit', icon: 'streamlit', category: 'tools' },
-    { name: 'Gradio', icon: 'gradio', category: 'tools' },
+    { name: 'Docker', icon: 'docker', category: 'engineering' },
+    { name: 'Git', icon: 'git', category: 'engineering' },
+    { name: 'GitHub', icon: 'github', category: 'engineering' },
+    { name: 'APIs', icon: 'terminal', category: 'engineering' },
+    { name: { en: 'Data Pipelines', ar: 'خطوط البيانات' }, icon: 'workflow', category: 'engineering' },
+    { name: 'Streamlit', icon: 'streamlit', category: 'engineering' },
+    { name: 'JavaScript', icon: 'javascript', category: 'engineering' },
+    { name: 'TypeScript', icon: 'typescript', category: 'engineering' },
   ],
 
   softSkills: [
