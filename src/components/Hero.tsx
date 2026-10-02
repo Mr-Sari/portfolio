@@ -16,7 +16,7 @@ const heroSkills = ['powerbi', 'sql', 'python', 'excel', 'sparkles'];
 const codeData = localize<PortfolioData>(content, 'en');
 
 export function Hero() {
-  const { t, data } = useLanguage();
+  const { t, data, locale } = useLanguage();
   const reduce = useReducedMotion();
   const { personal } = data;
   const highlights = heroSkills
@@ -44,9 +44,20 @@ export function Hero() {
             </span>
           </motion.div>
 
-          <motion.h1 id="home-title" variants={item} className="text-[2.1rem] leading-[1.05] font-semibold tracking-[-0.04em] text-fg min-[390px]:text-[2.4rem] sm:text-5xl lg:text-[4.2rem]">
-            <span className="block">{nameParts.join(' ')}</span>
-            <span className="block text-fg-subtle">{last}</span>
+          {/* Arabic script needs more line-height (tall letters and dots), so the
+              Arabic name sits on one line instead of two tightly stacked ones. */}
+          <motion.h1
+            id="home-title"
+            variants={item}
+            className={`font-semibold text-fg ${
+              locale === 'ar'
+                ? 'text-[2.1rem] leading-[1.35] min-[390px]:text-[2.4rem] sm:text-5xl lg:text-[3.6rem]'
+                : 'text-[2.1rem] leading-[1.05] tracking-[-0.04em] min-[390px]:text-[2.4rem] sm:text-5xl lg:text-[4.2rem]'
+            }`}
+          >
+            <span className={locale === 'ar' ? '' : 'block'}>{nameParts.join(' ')}</span>
+            {locale === 'ar' ? ' ' : null}
+            <span className={`text-fg-subtle ${locale === 'ar' ? '' : 'block'}`}>{last}</span>
           </motion.h1>
 
           <motion.p variants={item} className="mt-4 max-w-xl text-balance text-lg font-medium leading-snug tracking-[-0.015em] text-fg sm:mt-5 sm:text-2xl">
