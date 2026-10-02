@@ -200,12 +200,6 @@ section:focus {
   }
 }
 
-/* In Arabic mode the page chrome is RTL while CV content stays English:
-   resolve each text block's direction from its own content so punctuation
-   and Latin runs render correctly. */
-html[dir='rtl'] :is(p, h1, h2, h3, h4, li, dd, dt, label) {
-  unicode-bidi: plaintext;
-}
 
 /* Two-tone headline accent — derived only from the existing tokens. */
 @utility text-gradient {

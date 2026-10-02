@@ -34,8 +34,8 @@ export function Contact() {
     <section id="contact" tabIndex={-1} aria-labelledby="contact-title" className="relative isolate scroll-mt-20 overflow-hidden pt-14 pb-12 sm:pt-20 sm:pb-16">
       <div aria-hidden className="absolute inset-x-0 top-10 -z-10 mx-auto h-72 max-w-3xl rounded-full bg-[radial-gradient(closest-side,var(--accent-glow),transparent)]" />
       <div className="container-page">
-        <h2 id="contact-title" className="sr-only">
-          {t.nav.contact}
+        <h2 id="contact-title" className="mb-3 text-center font-mono text-[0.7rem] tracking-[0.18em] text-accent uppercase">
+          {t.contact.title}
         </h2>
         <BigTitle id="closing" as="p" size="display" lead={statements.closing.lead} accent={statements.closing.accent} sub={statements.closing.sub} />
 

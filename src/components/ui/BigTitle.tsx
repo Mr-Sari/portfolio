@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import { useLanguage } from '../../i18n/LanguageProvider';
 import { ease } from './motion';
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
  */
 export function BigTitle({ id, lead, accent, sub, size = 'section', as = 'h2', className = '' }: Props) {
   const reduce = useReducedMotion();
+  const { dir } = useLanguage();
   const Tag = as === 'h2' ? motion.h2 : motion.p;
   const word = {
     hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 18, filter: 'blur(10px)' },
@@ -38,11 +40,16 @@ export function BigTitle({ id, lead, accent, sub, size = 'section', as = 'h2', c
     >
       <Tag
         id={as === 'h2' ? `${id}-title` : undefined}
+        dir={dir}
         className={`text-balance font-semibold leading-[1.15] tracking-[-0.035em] text-fg ${sizes[size]}`}
       >
-        <motion.span variants={word} className="inline-block">
-          {lead}
-        </motion.span>{' '}
+        {lead && (
+          <>
+            <motion.span variants={word} className="inline-block">
+              {lead}
+            </motion.span>{' '}
+          </>
+        )}
         <motion.span variants={word} className="text-gradient inline-block">
           {accent}
         </motion.span>

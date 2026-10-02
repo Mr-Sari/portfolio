@@ -101,6 +101,7 @@ const en = {
     credential: 'View credential',
   },
   contact: {
+    title: 'Contact Me',
     email: 'Email',
     phone: 'Phone',
     copied: 'Copied',
@@ -222,16 +223,17 @@ const ar: Strings = {
         .join(' و'),
   },
   skills: {
-    title: { lead: 'مهاراتي', accent: 'التقنية' },
+    title: { lead: '', accent: 'مهاراتي' },
     sub: 'التحليل أولًا، والهندسة والذكاء الاصطناعي داعمان.',
     soft: 'المهارات الشخصية',
   },
   certifications: {
-    title: { lead: 'التعلّم', accent: 'المستمر' },
+    title: { lead: '', accent: 'الشهادات' },
     sub: 'شهادات في تحليل البيانات وعلم البيانات ومعالجة اللغة والذكاء الاصطناعي التوليدي.',
     credential: 'عرض الشهادة',
   },
   contact: {
+    title: 'تواصل معي',
     email: 'البريد الإلكتروني',
     phone: 'الجوال',
     copied: 'تم النسخ',
