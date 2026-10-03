@@ -334,7 +334,7 @@ export const content: Bilingual<PortfolioData> = {
       kind: 'graduation',
       start: '2024-10',
       end: '2025-01',
-      categories: ['ai', 'data-science'],
+      categories: ['ai'],
       visual: 'vision',
       technologies: ['YOLOv8', 'EfficientNetB0', 'OpenCV', 'Pandas', 'Streamlit'],
       brief: {
