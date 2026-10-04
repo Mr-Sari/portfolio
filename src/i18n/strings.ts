@@ -4,7 +4,7 @@
  */
 export type Locale = 'en' | 'ar';
 
-export const sectionIds = ['home', 'about', 'experience', 'projects', 'skills', 'education', 'contact'] as const;
+export const sectionIds = ['home', 'about', 'experience', 'projects', 'skills', 'education', 'certifications', 'contact'] as const;
 export type SectionId = (typeof sectionIds)[number];
 
 const en = {
@@ -12,9 +12,10 @@ const en = {
     home: 'Home',
     about: 'About',
     experience: 'Experience',
-    projects: 'Work',
+    projects: 'Projects',
     skills: 'Skills',
     education: 'Education',
+    certifications: 'Certifications',
     contact: 'Contact',
   } satisfies Record<SectionId, string>,
   a11y: {
@@ -38,13 +39,14 @@ const en = {
   /** Label of the *other* language, shown on the toggle. */
   langToggle: 'العربية',
   langToggleShort: 'ع',
-  resume: 'Résumé',
+  resume: 'CV',
   kinds: { personal: 'Personal', graduation: 'Graduation', professional: 'Professional' },
   hero: {
-    role: 'Data Analyst · Business Intelligence',
+    disciplines: 'Business Intelligence · Data Science · AI/ML',
     location: 'Saudi Arabia',
-    explore: 'View selected work',
-    downloadResume: 'Download résumé',
+    explore: 'View my work',
+    downloadResume: 'Download CV',
+    contact: 'Contact me',
     panelTitle: 'By the numbers',
     panelNote: 'Figures from my roles',
     gpa: 'GPA · Bachelor of Data Science',
@@ -58,6 +60,8 @@ const en = {
   experience: {
     title: 'Experience',
     lede: 'From data engineering to analytics and business intelligence — in government and enterprise.',
+    stages: ['Data Engineering', 'Data Analytics', 'Data Analytics & BI'],
+    next: { stage: 'Advanced Analytics & AI', detail: 'RAG and LLM projects' },
     present: 'Present',
     current: 'Current',
     via: 'via',
@@ -89,6 +93,7 @@ const en = {
     title: 'Skills',
     lede: 'Analytics at the core — business intelligence, data science and engineering built around it.',
     core: 'Core',
+    also: 'Also worked with',
     soft: 'Ways of working',
   },
   education: {
@@ -99,10 +104,13 @@ const en = {
   },
   certifications: {
     title: 'Certifications',
+    lede: 'Professional certificates in data analytics, data science and AI.',
     credential: 'View credential',
   },
   contact: {
     title: 'Get in Touch',
+    lead: 'Let’s talk data.',
+    cv: 'CV',
     email: 'Email',
     phone: 'Phone',
     copied: 'Copied',
@@ -141,11 +149,12 @@ export type Strings = typeof en;
 const ar: Strings = {
   nav: {
     home: 'الرئيسية',
-    about: 'عنّي',
-    experience: 'مسيرتي',
-    projects: 'أعمالي',
-    skills: 'مهاراتي',
+    about: 'نبذة',
+    experience: 'الخبرات',
+    projects: 'المشاريع',
+    skills: 'المهارات',
     education: 'التعليم',
+    certifications: 'الشهادات',
     contact: 'تواصل',
   },
   a11y: {
@@ -171,10 +180,11 @@ const ar: Strings = {
   resume: 'السيرة الذاتية',
   kinds: { personal: 'مشروع شخصي', graduation: 'مشروع التخرج', professional: 'عمل مهني' },
   hero: {
-    role: 'محلل بيانات · ذكاء الأعمال',
+    disciplines: 'ذكاء الأعمال · علم البيانات · الذكاء الاصطناعي',
     location: 'المملكة العربية السعودية',
     explore: 'استعرض أعمالي',
     downloadResume: 'تحميل السيرة الذاتية',
+    contact: 'تواصل معي',
     panelTitle: 'بالأرقام',
     panelNote: 'أرقام من أدواري المهنية',
     gpa: 'المعدل · بكالوريوس علم البيانات',
@@ -188,6 +198,8 @@ const ar: Strings = {
   experience: {
     title: 'مسيرتي المهنية',
     lede: 'من هندسة البيانات إلى التحليل وذكاء الأعمال، في القطاعين الحكومي والخاص.',
+    stages: ['هندسة البيانات', 'تحليل البيانات', 'التحليل وذكاء الأعمال'],
+    next: { stage: 'التحليل المتقدم والذكاء الاصطناعي', detail: 'مشاريع RAG والنماذج اللغوية' },
     present: 'حتى الآن',
     current: 'حاليًا',
     via: 'عبر',
@@ -224,6 +236,7 @@ const ar: Strings = {
     title: 'مهاراتي',
     lede: 'التحليل في القلب، وحوله ذكاء الأعمال وعلم البيانات والهندسة.',
     core: 'الأساس',
+    also: 'أدوات أخرى',
     soft: 'أسلوب عملي',
   },
   education: {
@@ -234,10 +247,13 @@ const ar: Strings = {
   },
   certifications: {
     title: 'الشهادات',
+    lede: 'شهادات مهنية في تحليل البيانات وعلم البيانات والذكاء الاصطناعي.',
     credential: 'عرض الشهادة',
   },
   contact: {
     title: 'تواصل معي',
+    lead: 'لنتحدث عن البيانات.',
+    cv: 'السيرة الذاتية',
     email: 'البريد الإلكتروني',
     phone: 'الجوال',
     copied: 'تم النسخ',

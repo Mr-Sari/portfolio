@@ -11,13 +11,16 @@ Components render that data; none of them hard-code CV content.
 
 ## Features
 
-- **Design direction — "the analyst's report":** an editorial, data-journalism look. Instrument Serif
-  headlines, Geist body, Geist Mono for figures and labels, numbered sections (01–06), chart gridlines,
-  a teal signal colour for interaction and an amber colour reserved for real figures.
-- **Sections:** Hero (statement + "By the numbers" panel of sourced figures) → About (personal narrative +
+- **Design direction — "the analyst's report", with a modern Saudi professional identity:** an
+  editorial, data-journalism look. Instrument Serif headlines, Geist body, Geist Mono for figures,
+  IBM Plex Sans Arabic for Arabic, numbered sections (01–07) and chart gridlines. Palette: warm sand
+  neutrals, a deep emerald accent used sparingly, and a desert-sand gold reserved for real figures;
+  every text colour pair meets WCAG AA in both themes.
+- **Sections:** Hero (name → Data Analyst → value → actions, with the name also shown in the other
+  language, beside a "By the numbers" panel of sourced figures) → About (personal narrative +
   Analytics → BI → Data Science → AI chain) → Experience (rising career-path chart + detailed roles) →
   Selected Work (coverflow + Problem → Approach → Technology → Result case strip + case-study modal) →
-  "raw data → insight" interlude → Skills (tiered matrix, Data Analytics first) → Education & Certifications →
+  "raw data → insight" interlude → Skills (tiered matrix, Data Analytics first) → Education → Certifications →
   Contact (closing statement, direct channels, form) → footer
 - **Positioning:** Data Analyst first; business intelligence, data science, AI/ML and data engineering in
   support. Only figures stated in the CV are shown (10+, 25+, 15+, 20+, 4.43/5, 81% / 93% / 100% / 21).

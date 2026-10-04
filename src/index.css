@@ -2,47 +2,47 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ---------- Design tokens ----------
-   "Analyst's report": warm paper / deep ink neutrals, a teal signal colour
-   for interaction and an amber highlight reserved for real figures. */
+/* ---------- Design tokens ---------- */
 :root {
-  --bg: #f5f4ef;
+  /* Warm sand neutrals, an emerald signal colour used sparingly, and a
+     desert-sand gold reserved for real figures. All text pairs meet WCAG AA. */
+  --bg: #f6f4ee;
   --bg-elevated: #ffffff;
-  --bg-sunken: #ecebe4;
+  --bg-sunken: #ece9e0;
   --surface: rgb(255 255 255 / 0.7);
-  --fg: #12161c;
-  --fg-muted: #4b535e;
-  --fg-subtle: #737b86;
-  --border: rgb(18 22 28 / 0.1);
-  --border-strong: rgb(18 22 28 / 0.18);
-  --accent: #0b7366;
+  --fg: #111714;
+  --fg-muted: #47504b;
+  --fg-subtle: #5e6762;
+  --border: rgb(17 23 20 / 0.1);
+  --border-strong: rgb(17 23 20 / 0.18);
+  --accent: #0b6650;
   --accent-fg: #ffffff;
-  --accent-soft: rgb(11 115 102 / 0.08);
-  --accent-glow: rgb(11 115 102 / 0.18);
-  --figure: #a85a07;
-  --figure-soft: rgb(168 90 7 / 0.09);
-  --grid-line: rgb(18 22 28 / 0.06);
-  --shadow-card: 0 1px 2px rgb(18 22 28 / 0.04), 0 10px 30px -18px rgb(18 22 28 / 0.18);
-  --shadow-lift: 0 2px 6px rgb(18 22 28 / 0.05), 0 30px 60px -28px rgb(18 22 28 / 0.3);
+  --accent-soft: rgb(11 102 80 / 0.08);
+  --accent-glow: rgb(11 102 80 / 0.16);
+  --figure: #7c5c17;
+  --figure-soft: rgb(124 92 23 / 0.09);
+  --grid-line: rgb(17 23 20 / 0.055);
+  --shadow-card: 0 1px 2px rgb(17 23 20 / 0.04), 0 10px 30px -18px rgb(17 23 20 / 0.18);
+  --shadow-lift: 0 2px 6px rgb(17 23 20 / 0.05), 0 30px 60px -28px rgb(17 23 20 / 0.3);
 }
 
 .dark {
-  --bg: #0b0e12;
-  --bg-elevated: #12161c;
-  --bg-sunken: #080a0d;
+  --bg: #0b0f0d;
+  --bg-elevated: #121815;
+  --bg-sunken: #070a09;
   --surface: rgb(255 255 255 / 0.03);
-  --fg: #ecebe5;
-  --fg-muted: #a8aeb6;
-  --fg-subtle: #7e858e;
+  --fg: #ecebe4;
+  --fg-muted: #a9b0ab;
+  --fg-subtle: #8a918c;
   --border: rgb(255 255 255 / 0.08);
   --border-strong: rgb(255 255 255 / 0.15);
-  --accent: #3fd0b6;
-  --accent-fg: #04201b;
-  --accent-soft: rgb(63 208 182 / 0.09);
-  --accent-glow: rgb(63 208 182 / 0.16);
-  --figure: #f2b04c;
-  --figure-soft: rgb(242 176 76 / 0.1);
-  --grid-line: rgb(255 255 255 / 0.045);
+  --accent: #4cbf9b;
+  --accent-fg: #04170f;
+  --accent-soft: rgb(76 191 155 / 0.1);
+  --accent-glow: rgb(76 191 155 / 0.14);
+  --figure: #d8b46a;
+  --figure-soft: rgb(216 180 106 / 0.1);
+  --grid-line: rgb(255 255 255 / 0.04);
   --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 14px 36px -20px rgb(0 0 0 / 0.7);
   --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 30px 70px -30px rgb(0 0 0 / 0.85);
 }
@@ -99,9 +99,14 @@ html[lang='ar'] .font-serif {
   font-weight: 600;
   font-style: normal;
 }
-html[lang='ar'] :is(.font-serif, .font-mono, .kicker)[lang='en'],
+html[lang='ar'] :is(.font-mono, .kicker)[lang='en'],
 html[lang='ar'] [lang='en'] :is(.font-mono, .kicker) {
   font-family: 'Geist Mono', ui-monospace, monospace;
+}
+html[lang='ar'] .font-serif[lang='en'] {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.1;
 }
 
 /* Letter-spacing breaks the joins between Arabic letters. */

@@ -63,8 +63,19 @@ export function Skills() {
         })}
       </div>
 
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:gap-6">
-        <h3 className="shrink-0 font-mono text-[0.72rem] text-fg-subtle">{t.skills.soft}</h3>
+      <div className="mt-8 flex flex-col gap-3 md:grid md:grid-cols-[17rem_minmax(0,1fr)] md:gap-10">
+        <h3 className="font-mono text-[0.72rem] text-fg-subtle">{t.skills.also}</h3>
+        <ul className="flex flex-wrap gap-1.5">
+          {data.tools.map((tool) => (
+            <li key={tool} className="rounded-md border border-line px-2 py-1 text-[0.8rem] text-fg-muted">
+              {tool}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-6 flex flex-col gap-3 md:grid md:grid-cols-[17rem_minmax(0,1fr)] md:gap-10">
+        <h3 className="font-mono text-[0.72rem] text-fg-subtle">{t.skills.soft}</h3>
         <ul className="flex flex-wrap gap-x-2 gap-y-1 text-[0.95rem] text-fg-muted">
           {data.softSkills.map((s, i) => (
             <li key={s} className="flex items-center gap-2">

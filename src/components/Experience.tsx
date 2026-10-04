@@ -33,11 +33,15 @@ export function Experience() {
   );
 }
 
-/** Rising step chart of the roles, oldest → newest. Purely illustrative. */
+/**
+ * Rising step chart of the roles, oldest → newest, each labelled with the
+ * discipline it represents; a dashed step points on to the 2026 AI projects.
+ */
 function CareerPath({ items }: { items: ExperienceItem[] }) {
-  const { formatDate } = useLanguage();
+  const { t, formatDate } = useLanguage();
   const reduce = useReducedMotion();
-  const heights = ['h-10 sm:h-12', 'h-16 sm:h-20', 'h-24 sm:h-28'];
+  const heights = ['h-8 sm:h-12', 'h-14 sm:h-20', 'h-20 sm:h-28'];
+  const bar = { hidden: { scaleY: 0 }, show: { scaleY: 1, transition: { duration: reduce ? 0 : 0.8, ease } } };
 
   return (
     <motion.ol
@@ -45,29 +49,44 @@ function CareerPath({ items }: { items: ExperienceItem[] }) {
       whileInView="show"
       viewport={{ once: true, margin: '0px 0px -15% 0px' }}
       variants={{ hidden: {}, show: { transition: { staggerChildren: 0.18 } } }}
-      className="grid grid-cols-3 items-end gap-2 sm:gap-4"
+      className="grid grid-cols-2 items-end gap-x-3 gap-y-8 sm:grid-cols-4 sm:gap-4"
     >
       {items.map((item, i) => {
         const current = item.end === null;
         return (
           <li key={item.id}>
             <a href={`#exp-${item.id}`} className="group block">
+              <span className={`mb-2 block text-[0.72rem] font-medium ${current ? 'text-accent' : 'text-fg-muted'}`}>{t.experience.stages[i]}</span>
               <motion.span
                 aria-hidden
-                variants={{ hidden: { scaleY: 0 }, show: { scaleY: 1, transition: { duration: reduce ? 0 : 0.8, ease } } }}
+                variants={bar}
                 className={`block origin-bottom rounded-t-md transition-colors ${heights[Math.min(i, 2)]} ${
                   current ? 'bg-accent' : i === 0 ? 'bg-accent/25 group-hover:bg-accent/40' : 'bg-accent/50 group-hover:bg-accent/65'
                 }`}
               />
               <span className="mt-3 block border-t border-line-strong pt-2.5">
                 <span className="block font-mono text-[0.66rem] text-fg-subtle">{formatDate(item.start)}</span>
-                <span className="mt-0.5 block text-[0.82rem] leading-snug font-semibold text-fg group-hover:text-accent sm:text-[0.95rem]">{item.role}</span>
-                <span className="block truncate text-[0.72rem] text-fg-muted sm:text-[0.8rem]">{item.company}</span>
+                <span className="mt-0.5 block text-[0.85rem] leading-snug font-semibold text-fg group-hover:text-accent sm:text-[0.95rem]">{item.role}</span>
+                <span className="block truncate text-[0.75rem] text-fg-muted sm:text-[0.8rem]">{item.company}</span>
               </span>
             </a>
           </li>
         );
       })}
+      <li>
+        <a href="#projects" className="group block">
+          <span className="mb-2 block text-[0.72rem] font-medium text-figure">{t.experience.next.stage}</span>
+          <motion.span
+            aria-hidden
+            variants={bar}
+            className="block h-24 origin-bottom rounded-t-md border-2 border-b-0 border-dashed border-figure/60 bg-figure-soft sm:h-36"
+          />
+          <span className="mt-3 block border-t border-dashed border-line-strong pt-2.5">
+            <span className="block font-mono text-[0.66rem] text-fg-subtle">2026</span>
+            <span className="mt-0.5 block text-[0.85rem] leading-snug font-semibold text-fg group-hover:text-accent sm:text-[0.95rem]">{t.experience.next.detail}</span>
+          </span>
+        </a>
+      </li>
     </motion.ol>
   );
 }

@@ -66,8 +66,7 @@ export function Navbar() {
         <div className="container-page flex h-16 items-center justify-between gap-3">
           <a href="#top" onClick={go('home')} className="group flex min-w-0 items-center gap-2.5" aria-label={`${data.personal.name} — ${t.nav.home}`}>
             <BrandMark className="size-8 shrink-0" />
-            <span className="truncate text-[0.95rem] font-semibold tracking-tight text-fg">{data.personal.shortName}</span>
-            <span aria-hidden className="hidden truncate text-[0.85rem] text-fg-subtle xl:inline">/ {data.personal.title}</span>
+            <span className="truncate text-[0.95rem] font-semibold tracking-tight text-fg lg:hidden xl:inline">{data.personal.shortName}</span>
           </a>
 
           <nav aria-label={t.a11y.mainNav} className="hidden lg:block">
@@ -78,18 +77,18 @@ export function Navbar() {
                     href={`#${id}`}
                     onClick={go(id)}
                     aria-current={active === id ? 'true' : undefined}
-                    className={`relative flex h-16 items-center gap-1.5 px-3 text-[0.85rem] font-medium transition-colors duration-200 ${
+                    className={`relative flex h-16 items-center gap-1.5 px-2.5 text-[0.84rem] font-medium xl:px-3 transition-colors duration-200 ${
                       active === id ? 'text-fg' : 'text-fg-muted hover:text-fg'
                     }`}
                   >
-                    <span aria-hidden lang="en" className={`font-mono text-[0.65rem] ${active === id ? 'text-accent' : 'text-fg-subtle'}`}>
+                    <span aria-hidden lang="en" className={`hidden font-mono text-[0.65rem] xl:inline ${active === id ? 'text-accent' : 'text-fg-subtle'}`}>
                       {indexOf(id)}
                     </span>
                     {t.nav[id]}
                     {active === id && (
                       <motion.span
                         layoutId="nav-active"
-                        className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-accent"
+                        className="absolute inset-x-2.5 -bottom-px h-0.5 rounded-full bg-accent xl:inset-x-3"
                         transition={{ type: 'spring', stiffness: 420, damping: 36 }}
                       />
                     )}

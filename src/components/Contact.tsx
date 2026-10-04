@@ -36,12 +36,10 @@ export function Contact() {
     <Section id="contact" className="border-t border-line">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-16">
         <div>
-          <SectionHeader id="contact" index="06" title={t.contact.title} />
+          <SectionHeader id="contact" index="07" title={t.contact.title} />
           <Reveal>
-            <p className="font-serif text-[1.9rem] leading-tight text-fg sm:text-[2.3rem]">
-              {statements.closing.lead} <em className="text-accent">{statements.closing.accent}</em>
-            </p>
-            <p className="mt-3 max-w-md text-[0.98rem] leading-relaxed text-fg-muted">{statements.closing.sub}</p>
+            <p className="font-serif text-[1.9rem] leading-tight text-accent italic sm:text-[2.3rem]">{t.contact.lead}</p>
+            <p className="mt-3 max-w-md text-[0.98rem] leading-relaxed text-fg-muted">{statements.closing}</p>
           </Reveal>
 
           <RevealGroup as="ul" step={0.06} className="mt-8 divide-y divide-line border-y border-line">
@@ -106,7 +104,7 @@ export function Contact() {
               <a href={asset(personal.resume)} download className={row}>
                 <Download size={18} aria-hidden className="shrink-0 text-accent" />
                 <span>
-                  <span className={label}>PDF</span>
+                  <span className={label}>{t.contact.cv} · PDF</span>
                   <span className="block font-medium">{t.hero.downloadResume}</span>
                 </span>
               </a>

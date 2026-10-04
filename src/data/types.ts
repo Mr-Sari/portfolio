@@ -13,6 +13,7 @@ export type IconKey = string;
 export interface Personal {
   name: string;
   shortName: string;
+  altName: string;
   initials: string;
   title: string;
   headline: string;
@@ -45,13 +46,11 @@ export interface HeroStat {
 
 /** Short personal statements, each used once at a deliberate point in the page. */
 export interface Statements {
-  /** Hero statement split so the middle phrase can be emphasised. */
-  hero: { lead: string; accent: string; tail: string };
+  tagline: string;
   intro: string;
   philosophy: string;
   interlude: { lead: string; accent: string };
-  closing: { lead: string; accent: string; sub: string };
-  signature: string;
+  closing: string;
 }
 
 export interface Experience {
@@ -154,6 +153,7 @@ export interface PortfolioData {
   projectCategories: { id: ProjectCategory; label: string }[];
   skillCategories: SkillCategory[];
   skills: Skill[];
+  tools: string[];
   softSkills: string[];
   education: Education[];
   certifications: Certification[];

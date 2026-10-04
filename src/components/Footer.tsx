@@ -15,7 +15,9 @@ export function Footer() {
             <BrandMark className="size-9 shrink-0" />
             <div>
               <p className="font-semibold text-fg">{data.personal.name}</p>
-              <p className="font-serif text-lg text-fg-muted italic">{data.statements.signature}</p>
+              <p className="text-sm text-fg-muted">
+                {data.personal.title} · {data.personal.location}
+              </p>
             </div>
           </div>
           <button

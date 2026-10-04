@@ -1,7 +1,7 @@
 import { MotionConfig } from 'framer-motion';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
-import { Education } from './components/Education';
+import { Certifications, Education } from './components/Education';
 import { Experience } from './components/Experience';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
@@ -33,6 +33,7 @@ export default function App() {
         <Interlude />
         <Skills />
         <Education />
+        <Certifications />
         <Contact />
       </main>
       <Footer />
