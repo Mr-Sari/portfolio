@@ -1,37 +1,82 @@
-import { ArrowUp } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageProvider';
+import { sectionIds } from '../i18n/strings';
+import { GitHubIcon, LinkedInIcon } from '../lib/icons';
 import { scrollToSection } from '../lib/scroll';
-import { BrandMark } from './ui/BrandMark';
 
 export function Footer() {
   const { t, data } = useLanguage();
+  const { personal } = data;
   const year = new Date().getFullYear();
 
+  const socials = [
+    { label: 'LinkedIn', href: personal.linkedin, icon: <LinkedInIcon size={16} /> },
+    { label: 'GitHub', href: personal.github, icon: <GitHubIcon size={16} /> },
+    { label: t.contact.email, href: `mailto:${personal.email}`, icon: <Mail size={16} aria-hidden /> },
+  ];
+
   return (
-    <footer className="border-t border-line bg-bg-sunken/40">
-      <div className="container-page py-10">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="flex items-center gap-3">
-            <BrandMark className="size-9 shrink-0" />
-            <div>
-              <p className="font-semibold text-fg">{data.personal.name}</p>
-              <p className="text-sm text-fg-muted">
-                {data.personal.title} · {data.personal.location}
-              </p>
-            </div>
+    <footer className="relative mt-4 border-t border-line">
+      <div className="container-page grid gap-6 py-8 sm:grid-cols-2 sm:py-10 md:grid-cols-[1.4fr_1fr_1fr] md:gap-10">
+        <div>
+          <div className="flex items-center gap-2.5">
+            <span className="grid size-9 place-items-center rounded-lg bg-fg font-mono text-xs font-bold text-bg">{personal.initials}</span>
+            <span className="font-semibold tracking-tight text-fg">{personal.name}</span>
           </div>
-          <button
-            type="button"
-            onClick={() => scrollToSection('home')}
-            className="inline-flex min-h-10 w-fit cursor-pointer items-center gap-1.5 rounded-lg border border-line-strong px-3.5 text-[0.8rem] text-fg-muted transition-colors hover:border-accent/60 hover:text-accent"
-          >
-            <ArrowUp size={14} aria-hidden />
-            {t.footer.top}
-          </button>
+          <p className="mt-3 max-w-sm text-sm leading-relaxed text-fg-muted">{t.footer.tagline}</p>
+          <p className="mt-2 inline-flex items-center gap-1.5 text-sm text-fg-subtle">
+            <MapPin size={14} aria-hidden />
+            {personal.location}
+          </p>
         </div>
-        <p className="mt-8 border-t border-line pt-5 text-xs text-fg-subtle">
-          © {year} {data.personal.name} · {data.personal.title}. {t.footer.rights}
-        </p>
+
+        <nav aria-label={t.footer.navigate} className="hidden md:block">
+          <h2 className="font-mono text-[0.7rem] tracking-[0.08em] text-fg-subtle uppercase">{t.footer.navigate}</h2>
+          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5 text-sm">
+            {sectionIds.map((id) => (
+              <li key={id}>
+                <a
+                  href={`#${id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(id);
+                  }}
+                  className="text-fg-muted transition-colors hover:text-fg"
+                >
+                  {t.nav[id]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          <h2 className="font-mono text-[0.7rem] tracking-[0.08em] text-fg-subtle uppercase">{t.footer.connect}</h2>
+          <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm sm:flex-col">
+            {socials.map((s) => (
+              <li key={s.label}>
+                <a
+                  href={s.href}
+                  {...(s.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="group inline-flex items-center gap-2.5 text-fg-muted transition-colors hover:text-fg"
+                >
+                  <span className="grid size-8 place-items-center rounded-lg border border-line transition-[color,border-color,transform] group-hover:-translate-y-0.5 group-hover:border-accent/40 group-hover:text-accent">
+                    {s.icon}
+                  </span>
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="border-t border-line">
+        <div className="container-page flex flex-col gap-1 py-4 text-xs text-fg-subtle sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {year} {personal.name}. {t.footer.rights}
+          </p>
+          <p>{t.footer.built}</p>
+        </div>
       </div>
     </footer>
   );

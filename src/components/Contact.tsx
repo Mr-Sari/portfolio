@@ -1,13 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Check, CircleAlert, CircleCheck, Copy, Download, Info, LoaderCircle, Mail, Phone, Send } from 'lucide-react';
-import { cloneElement, useId, useState, type ChangeEvent, type FormEvent } from 'react';
+import { ArrowUpRight, Check, CircleAlert, CircleCheck, Copy, Info, LoaderCircle, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { cloneElement, useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { contactProvider, submitContactForm, validateContact, type ContactErrors, type ContactMessage } from '../lib/contact';
 import { GitHubIcon, LinkedInIcon } from '../lib/icons';
 import { Button } from './ui/Button';
 import { Reveal, RevealGroup } from './ui/Reveal';
-import { Section, SectionHeader } from './ui/Section';
-import { asset } from '../lib/assets';
+import { Section } from './ui/Section';
+import { SectionHeading } from './ui/SectionHeading';
 import { ease, fadeUp } from './ui/motion';
 
 const empty: ContactMessage = { name: '', email: '', subject: '', message: '' };
@@ -15,7 +15,7 @@ type Status = 'idle' | 'submitting' | 'sent' | 'mailto' | 'error';
 
 export function Contact() {
   const { t, data } = useLanguage();
-  const { personal, statements } = data;
+  const { personal } = data;
   const [copied, setCopied] = useState(false);
 
   const copyEmail = async () => {
@@ -28,96 +28,78 @@ export function Contact() {
     }
   };
 
-  const row =
-    'group flex min-h-14 flex-1 items-center gap-4 py-3 text-fg transition-colors hover:text-accent';
-  const label = 'block font-mono text-[0.68rem] text-fg-subtle';
+  const linkedinHandle = personal.linkedin.replace(/^https?:\/\/(www\.)?/, '');
+  const githubHandle = personal.github.replace(/^https?:\/\/(www\.)?/, '');
 
   return (
-    <Section id="contact" className="border-t border-line">
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-16">
-        <div>
-          <SectionHeader id="contact" index="07" title={t.contact.title} />
-          <Reveal>
-            <p className="font-serif text-[1.9rem] leading-tight text-accent italic sm:text-[2.3rem]">{t.contact.lead}</p>
-            <p className="mt-3 max-w-md text-[0.98rem] leading-relaxed text-fg-muted">{statements.closing}</p>
-          </Reveal>
+    <Section id="contact">
+      <SectionHeading id="contact" kicker={t.contact.kicker} title={t.contact.title} intro={t.contact.intro} />
 
-          <RevealGroup as="ul" step={0.06} className="mt-8 divide-y divide-line border-y border-line">
-            <motion.li variants={fadeUp} className="flex items-center gap-2">
-              <a href={`mailto:${personal.email}`} className={row}>
-                <Mail size={18} aria-hidden className="shrink-0 text-accent" />
-                <span className="min-w-0">
-                  <span className={label}>{t.contact.email}</span>
-                  <span className="block truncate font-medium">{personal.email}</span>
-                </span>
-              </a>
-              <button
-                type="button"
-                onClick={copyEmail}
-                aria-label={t.a11y.copyEmail}
-                className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-lg border border-line-strong text-fg-muted transition-colors hover:border-accent/60 hover:text-accent"
-              >
-                {copied ? <Check size={15} className="text-accent" aria-hidden /> : <Copy size={15} aria-hidden />}
-              </button>
-              <span className="sr-only" aria-live="polite">
-                {copied ? t.contact.copied : ''}
-              </span>
-            </motion.li>
-            <motion.li variants={fadeUp} className="flex">
-              <a href={`tel:${personal.phone.replace(/\s/g, '')}`} className={row}>
-                <Phone size={18} aria-hidden className="shrink-0 text-accent" />
-                <span>
-                  <span className={label}>{t.contact.phone}</span>
-                  <span dir="ltr" className="block font-medium">
-                    {personal.phone}
-                  </span>
-                </span>
-              </a>
-            </motion.li>
-            <motion.li variants={fadeUp} className="flex">
-              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className={row}>
-                <LinkedInIcon size={18} className="shrink-0 text-accent" />
-                <span className="min-w-0">
-                  <span className={label}>LinkedIn</span>
-                  <span className="block truncate font-medium" dir="ltr">
-                    {personal.linkedin.replace(/^https:\/\/(www\.)?/, '')}
-                  </span>
-                </span>
-                <span className="sr-only">{t.a11y.opensNewTab}</span>
-                <ArrowUpRight size={16} aria-hidden className="ms-auto shrink-0 text-fg-subtle transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 rtl:-scale-x-100" />
-              </a>
-            </motion.li>
-            <motion.li variants={fadeUp} className="flex">
-              <a href={personal.github} target="_blank" rel="noopener noreferrer" className={row}>
-                <GitHubIcon size={18} className="shrink-0 text-accent" />
-                <span className="min-w-0">
-                  <span className={label}>GitHub</span>
-                  <span className="block truncate font-medium" dir="ltr">
-                    {personal.github.replace(/^https:\/\//, '')}
-                  </span>
-                </span>
-                <span className="sr-only">{t.a11y.opensNewTab}</span>
-                <ArrowUpRight size={16} aria-hidden className="ms-auto shrink-0 text-fg-subtle transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 rtl:-scale-x-100" />
-              </a>
-            </motion.li>
-            <motion.li variants={fadeUp} className="flex">
-              <a href={asset(personal.resume)} download className={row}>
-                <Download size={18} aria-hidden className="shrink-0 text-accent" />
-                <span>
-                  <span className={label}>{t.contact.cv} · PDF</span>
-                  <span className="block font-medium">{t.hero.downloadResume}</span>
-                </span>
-              </a>
-            </motion.li>
-          </RevealGroup>
-        </div>
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-6">
+        <RevealGroup as="ul" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 lg:content-start">
+          <ContactRow icon={<Mail size={18} />} label={t.contact.email}>
+            <a href={`mailto:${personal.email}`} className="break-all text-fg hover:text-accent">
+              {personal.email}
+            </a>
+            <button
+              type="button"
+              onClick={copyEmail}
+              aria-label={t.a11y.copyEmail}
+              className="relative z-10 ms-auto grid size-10 shrink-0 cursor-pointer place-items-center rounded-full text-fg-muted transition-colors hover:bg-accent-soft hover:text-fg"
+            >
+              {copied ? <Check size={16} className="text-accent" aria-hidden /> : <Copy size={16} aria-hidden />}
+            </button>
+            <span className="sr-only" aria-live="polite">
+              {copied ? t.contact.copied : ''}
+            </span>
+          </ContactRow>
+          <ContactRow icon={<LinkedInIcon size={17} />} label="LinkedIn" href={personal.linkedin}>
+            {linkedinHandle}
+          </ContactRow>
+          <ContactRow icon={<GitHubIcon size={17} />} label="GitHub" href={personal.github}>
+            {githubHandle}
+          </ContactRow>
+          <ContactRow icon={<Phone size={18} />} label={t.contact.phone}>
+            <a href={`tel:${personal.phone.replace(/\s/g, '')}`} dir="ltr" className="text-fg hover:text-accent">
+              {personal.phone}
+            </a>
+          </ContactRow>
+          <ContactRow icon={<MapPin size={18} />} label={t.contact.location}>
+            <span className="text-fg">{personal.location}</span>
+          </ContactRow>
+        </RevealGroup>
 
-        <Reveal delay={0.1} className="lg:pt-24">
-          <h3 className="mb-3 font-mono text-[0.72rem] text-fg-subtle">{t.contact.formTitle}</h3>
+        <Reveal delay={0.1}>
           <ContactForm to={personal.email} />
         </Reveal>
       </div>
     </Section>
+  );
+}
+
+function ContactRow({ icon, label, href, children }: { icon: ReactNode; label: string; href?: string; children: ReactNode }) {
+  const { t } = useLanguage();
+  return (
+    <motion.li
+      variants={fadeUp}
+      className="card group relative flex items-center gap-3 rounded-2xl p-3 transition-[border-color,translate] duration-300 hover:border-line-strong"
+    >
+      <span className="grid size-9 shrink-0 place-items-center rounded-lg border border-line bg-accent-soft text-accent">{icon}</span>
+      <div className="min-w-0 flex-1">
+        <div className="font-mono text-[0.66rem] tracking-[0.08em] text-fg-subtle uppercase">{label}</div>
+        {href ? (
+          <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm text-fg after:absolute after:inset-0 after:rounded-2xl hover:text-accent">
+            {children}
+            <span className="sr-only">{t.a11y.opensNewTab}</span>
+          </a>
+        ) : (
+          <div className="flex items-center gap-2 text-sm">{children}</div>
+        )}
+      </div>
+      {href && (
+        <ArrowUpRight size={16} aria-hidden className="shrink-0 text-fg-subtle transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent rtl:-scale-x-100" />
+      )}
+    </motion.li>
   );
 }
 
@@ -173,7 +155,7 @@ function ContactForm({ to }: { to: string }) {
   };
 
   return (
-    <div className="card relative overflow-hidden p-5 sm:p-7">
+    <div className="card relative overflow-hidden p-4 sm:p-6">
       <AnimatePresence mode="wait" initial={false}>
         {status === 'sent' || status === 'mailto' ? (
           <StatusPanel
@@ -273,7 +255,7 @@ function Field({ id, label, error, children }: { id: string; label: string; erro
       required: true,
       'aria-invalid': error ? true : undefined,
       'aria-describedby': error ? errorId : undefined,
-      className: `w-full rounded-lg border bg-bg px-3.5 py-2.5 text-[0.95rem] text-fg placeholder:text-fg-subtle transition-[border-color,box-shadow] duration-200 outline-none focus:border-accent focus:ring-4 focus:ring-accent/15 ${
+      className: `w-full rounded-xl border bg-bg-elevated px-3.5 py-2.5 text-[0.95rem] text-fg placeholder:text-fg-subtle transition-[border-color,box-shadow] duration-200 outline-none focus:border-accent focus:ring-4 focus:ring-accent/15 ${
         error ? 'border-red-500/60' : 'border-line-strong hover:border-fg-subtle/60'
       } ${children.type === 'textarea' ? 'min-h-28 resize-y' : 'min-h-11'}`,
   });

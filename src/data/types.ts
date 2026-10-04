@@ -13,7 +13,6 @@ export type IconKey = string;
 export interface Personal {
   name: string;
   shortName: string;
-  altName: string;
   initials: string;
   title: string;
   headline: string;
@@ -29,28 +28,7 @@ export interface Personal {
 
 export interface About {
   paragraphs: string[];
-  /** How the disciplines build on each other: analytics first, AI last. */
-  chain: { title: string; description: string }[];
-}
-
-/** A real, sourced figure shown in the hero panel. */
-export interface HeroStat {
-  value: number;
-  /** Shown after the counted number, e.g. "+" or " / 5". */
-  suffix?: string;
-  decimals?: number;
-  label: string;
-  /** Where the figure comes from (role or institution). */
-  source: string;
-}
-
-/** Short personal statements, each used once at a deliberate point in the page. */
-export interface Statements {
-  tagline: string;
-  intro: string;
-  philosophy: string;
-  interlude: { lead: string; accent: string };
-  closing: string;
+  focusAreas: { title: string; description: string; icon: IconKey }[];
 }
 
 export interface Experience {
@@ -85,8 +63,8 @@ export interface Project {
   categories: ProjectCategory[];
   visual: 'rag' | 'resume' | 'vision' | 'platform' | 'dashboard' | 'reporting' | 'pipeline' | 'timeseries';
   technologies: string[];
-  /** One-line Problem → Approach → Result summary (only what the CV supports). */
-  brief: { problem: string; approach: string; result?: string };
+  /** 1–3 short phrases shown on the card. */
+  highlights: string[];
   /** Quantified results, shown only in the project modal. */
   metrics: { value: string; label: string }[];
   overview: string;
@@ -102,7 +80,7 @@ export interface Project {
   demoUrl: string;
 }
 
-export type SkillCategoryId = 'analytics' | 'bi' | 'ai' | 'engineering';
+export type SkillCategoryId = 'analytics' | 'languages' | 'data-engineering' | 'ai' | 'llm' | 'tools';
 
 export interface Skill {
   name: string;
@@ -113,10 +91,6 @@ export interface Skill {
 export interface SkillCategory {
   id: SkillCategoryId;
   label: string;
-  /** What the group is used for, one short line. */
-  description: string;
-  /** Primary categories get larger, emphasised chips. */
-  primary?: boolean;
 }
 
 export interface Education {
@@ -144,16 +118,12 @@ export interface Certification {
 
 export interface PortfolioData {
   personal: Personal;
-  statements: Statements;
-  heroStats: HeroStat[];
-  heroStack: string[];
   about: About;
   experience: Experience[];
   projects: Project[];
   projectCategories: { id: ProjectCategory; label: string }[];
   skillCategories: SkillCategory[];
   skills: Skill[];
-  tools: string[];
   softSkills: string[];
   education: Education[];
   certifications: Certification[];

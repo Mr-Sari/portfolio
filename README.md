@@ -11,35 +11,23 @@ Components render that data; none of them hard-code CV content.
 
 ## Features
 
-- **Design direction — "the analyst's report", with a modern Saudi professional identity:** an
-  editorial, data-journalism look. Instrument Serif headlines, Geist body, Geist Mono for figures,
-  IBM Plex Sans Arabic for Arabic, numbered sections (01–07) and chart gridlines. Palette: warm sand
-  neutrals, a deep emerald accent used sparingly, and a desert-sand gold reserved for real figures;
-  every text colour pair meets WCAG AA in both themes.
-- **Sections:** Hero (name → Data Analyst → value → actions, with the name also shown in the other
-  language, beside a "By the numbers" panel of sourced figures) → About (personal narrative +
-  Analytics → BI → Data Science → AI chain) → Experience (rising career-path chart + detailed roles) →
-  Selected Work (coverflow + Problem → Approach → Technology → Result case strip + case-study modal) →
-  "raw data → insight" interlude → Skills (tiered matrix, Data Analytics first) → Education → Certifications →
-  Contact (closing statement, direct channels, form) → footer
-- **Positioning:** Data Analyst first; business intelligence, data science, AI/ML and data engineering in
-  support. Only figures stated in the CV are shown (10+, 25+, 15+, 20+, 4.43/5, 81% / 93% / 100% / 21).
-- **Personal voice:** short statements (hero, About, interlude, closing, footer signature), edited in
-  `statements` inside `src/data/content.ts`
-- **Projects:** eight projects, newest first. Each has a `brief` (problem, approach, result) and optional
-  `metrics`; GitHub/Live Demo buttons render only for real URLs.
-- **Motion (Framer Motion):** staggered hero entrance, counting figures, drawn section rules, rising
-  career-path bars, a self-drawing trend line, coverflow transitions and subtle hover lifts. Everything is
-  static under `prefers-reduced-motion`.
+- **Sections:** Hero, About, Projects (filterable, with detail modal), Experience timeline,
+  Skills, Education, Certifications, Contact, Footer
 - **Theme:** dark / light, following the system preference on first visit, saved per visitor, no flash on load
-- **Language:** English (default, LTR) / Arabic (RTL), with both interface and content translated
-- **Navigation:** report-style top bar with numbered links and active indicator, résumé button, language and
-  theme toggles, full-screen mobile menu, reading-progress bar, back-to-top
-- **Accessibility:** semantic landmarks, skip link, ordered headings, keyboard-operable filters, carousel
-  (arrows, dots, arrow keys, swipe), accordions and dialog (focus trap, Escape, focus return), visible focus
-  rings, labelled form fields with inline errors
+- **Language:** English (default, LTR) / Arabic (RTL) toggle covering both the interface and the content
+- **Concise layout:** each metric appears once; project cards show a short summary, highlights and
+  links, with the full breakdown in the modal; experience details expand on demand
+- **Navigation:** sticky glass navbar, active-section indicator, smooth scrolling, animated mobile menu,
+  reading-progress bar, back-to-top button
+- **Motion:** entrance, scroll-reveal, filter, timeline, modal and hover animations, all
+  disabled for visitors with `prefers-reduced-motion`
+- **Accessibility:** semantic landmarks, skip link, one `h1` and ordered headings, keyboard-operable
+  filters, accordions and dialog (focus trap, Escape, focus return), visible focus rings, labelled form fields with
+  inline errors, AA contrast in both themes
 - **SEO:** title, description, keywords, author, Open Graph / Twitter tags, a 1200×630 OG image and
   `Person` JSON-LD, all generated at build time from the same data file
+- **Performance:** the project modal is code-split; only the 18 brand icons in use are bundled;
+  static output is deployable anywhere
 
 ## Project structure
 
@@ -64,7 +52,7 @@ Components render that data; none of them hard-code CV content.
     ├── i18n/
     │   ├── strings.ts          # UI strings (en, ar) and section ids
     │   └── LanguageProvider.tsx
-    ├── hooks/                  # useTheme, useActiveSection, useScrolled
+    ├── hooks/                  # useTheme, useActiveSection, useScrolled, useSpotlight
     ├── lib/
     │   ├── contact.ts          # Contact form validation + submission (isolated)
     │   ├── icons.tsx           # Tech/brand icon registry
@@ -73,11 +61,11 @@ Components render that data; none of them hard-code CV content.
     │   └── assets.ts           # Base-path-aware public asset URLs
     └── components/
         ├── Navbar.tsx  ThemeToggle.tsx  LanguageToggle.tsx  ScrollChrome.tsx
-        ├── Hero.tsx  About.tsx  Experience.tsx
+        ├── Hero.tsx  About.tsx
         ├── Projects.tsx  ProjectCard.tsx  ProjectModal.tsx  ProjectVisual.tsx
-        ├── Interlude.tsx  Skills.tsx  Education.tsx
+        ├── Experience.tsx  Skills.tsx  Education.tsx  Certifications.tsx
         ├── Contact.tsx  Footer.tsx
-        └── ui/                 # Section + SectionHeader, BrandMark, Button, Tag, Reveal, motion presets
+        └── ui/                 # Button, Tag, Section, SectionHeading, Reveal, motion presets
 ```
 
 ## Getting started
@@ -104,12 +92,10 @@ technologies: ['YOLOv8', 'OpenCV'], // technology names stay as plain strings
 against the content model. The default language is `DEFAULT_LOCALE` in
 `src/i18n/LanguageProvider.tsx` (mirrored in the pre-paint script in `index.html`).
 
-- **Projects:** each has `categories` (drives the filter tabs), `brief` (card: optional problem,
-  solution, optional result), plus `metrics`, `methodology` and optional `problem` / `impact` for the
-  modal (omitted sections are hidden). `githubUrl` and `demoUrl` show their buttons only when non-empty,
-  so leave them `''` until a real URL exists.
-- **Statements & hero:** `statements` (hero line, philosophy, interlude, closing) and `heroStack`
-  (the typed stack line) are in `content.ts`.
+- **Projects:** each has `categories` (drives the filter tabs), `highlights` (card), `metrics`,
+  `methodology` and optional `problem` / `impact` (modal; omitted sections are hidden).
+  `githubUrl` and `demoUrl` show their buttons only when non-empty, so leave them `''` until a real
+  URL exists. The first six projects are shown, and the rest are behind "Show all".
 - **Certifications:** add `credentialUrl` to show a "View credential" link.
 - **Resume:** replace `public/assets/Sari-Owaid-Alsulami-Resume.pdf`, keeping the same file name.
 - **UI text:** edit `src/i18n/strings.ts` (both languages).

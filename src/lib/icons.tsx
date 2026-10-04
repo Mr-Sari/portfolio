@@ -40,8 +40,6 @@ import {
   Terminal,
   Workflow,
   Boxes,
-  Sigma,
-  ListFilter,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -143,8 +141,6 @@ const registry = {
   google: brand(siGoogle),
   ibm: monogram('IBM'),
   deeplearningai: monogram('DL'),
-  sigma: lucide(Sigma),
-  filter: lucide(ListFilter),
   fallback: lucide(Boxes),
 } as const;
 

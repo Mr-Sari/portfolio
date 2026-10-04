@@ -1,55 +1,83 @@
-import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, Check, ExternalLink } from 'lucide-react';
 import type { Project } from '../data/types';
+import { spotlightMove } from '../hooks/useSpotlight';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { GitHubIcon } from '../lib/icons';
 import { ProjectVisual } from './ProjectVisual';
+import { Tag } from './ui/Tag';
+import { ease } from './ui/motion';
 
 interface Props {
   project: Project;
-  index: number;
-  total: number;
-  active: boolean;
+  onOpen: (project: Project, trigger: HTMLElement) => void;
 }
 
-/**
- * Coverflow card face: project illustration on top, then index, category,
- * title and — when the CV has one — the headline figure. The case-study
- * strip under the carousel carries the detail for the active card.
- */
-export function ProjectCard({ project, index, total, active }: Props) {
+export function ProjectCard({ project, onOpen }: Props) {
   const { t, data } = useLanguage();
-  const category = data.projectCategories.find((c) => c.id === project.categories[0])?.label;
-  const lead = project.metrics[0];
+  const categoryLabels = project.categories.map((c) => data.projectCategories.find((pc) => pc.id === c)?.label ?? c);
 
   return (
-    <article
-      className={`relative isolate flex h-full flex-col overflow-hidden rounded-2xl border bg-bg-elevated transition-[border-color,box-shadow] duration-500 ${
-        active ? 'border-accent/70 shadow-[0_0_0_1px_var(--accent),0_30px_70px_-30px_var(--accent-glow)]' : 'border-line-strong'
-      }`}
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 16, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.18 } }}
+      transition={{ duration: 0.4, ease }}
+      onPointerMove={spotlightMove}
+      className="card spotlight group flex flex-col overflow-hidden transition-[border-color,box-shadow,translate] duration-300 hover:-translate-y-1 hover:border-line-strong hover:shadow-lift"
     >
-      <ProjectVisual visual={project.visual} className="h-[55%] shrink-0 border-b border-line" />
-      <div className="absolute top-3 start-3 flex gap-1.5">
-        <span className="rounded-md border border-line bg-bg-elevated/90 px-2 py-1 font-mono text-[0.66rem] text-fg">{project.start.slice(0, 4)}</span>
-        <span className="rounded-md border border-line bg-bg-elevated/90 px-2 py-1 text-[0.66rem] text-fg-muted">{t.kinds[project.kind]}</span>
+      <div className="relative">
+        <ProjectVisual visual={project.visual} className="h-24 border-b border-line transition-transform duration-500 group-hover:scale-[1.02] sm:h-32" />
+        <span className="absolute top-2.5 start-2.5 rounded-full border border-line bg-bg-elevated/85 px-2 py-0.5 font-mono text-[0.64rem] text-fg-muted backdrop-blur">
+          {t.kinds[project.kind]}
+        </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <div className="flex items-center justify-between gap-3 font-mono text-[0.68rem]">
-          {category && <span className="text-accent">{category}</span>}
-          <span className="text-fg-subtle" lang="en" dir="ltr">
-            {String(index).padStart(2, '0')} / {String(total).padStart(2, '0')}
-          </span>
-        </div>
-        <h3 className="mt-2 text-balance text-xl leading-tight font-semibold tracking-tight text-fg sm:text-[1.45rem]">{project.title}</h3>
-        <p className="mt-2 line-clamp-2 text-[0.85rem] leading-snug text-fg-muted">{project.shortDescription}</p>
-        {lead && (
-          <p className="mt-auto flex items-baseline gap-2 pt-3">
-            <span className="font-mono text-2xl font-medium text-figure">{lead.value}</span>
-            <span className="text-[0.78rem] text-fg-muted">{lead.label}</span>
-          </p>
+      <div className="flex flex-1 flex-col p-4 sm:p-5">
+        <p className="mb-1.5 font-mono text-[0.66rem] text-accent">{categoryLabels.join(' · ')}</p>
+        <h3 className="text-base leading-snug font-semibold tracking-tight text-fg sm:text-[1.05rem]">{project.title}</h3>
+        <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{project.shortDescription}</p>
+
+        {project.highlights.length > 0 && (
+          <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-fg">
+            {project.highlights.slice(0, 3).map((h) => (
+              <li key={h} className="inline-flex items-center gap-1">
+                <Check size={12} className="text-accent" aria-hidden />
+                {h}
+              </li>
+            ))}
+          </ul>
         )}
+
+        <ul className="mt-3 flex flex-wrap gap-1" aria-label={t.projects.technologies}>
+          {project.technologies.slice(0, 4).map((tech) => (
+            <li key={tech}>
+              <Tag>{tech}</Tag>
+            </li>
+          ))}
+          {project.technologies.length > 4 && (
+            <li>
+              <Tag>+{project.technologies.length - 4}</Tag>
+            </li>
+          )}
+        </ul>
+
+        <div className="mt-auto flex items-center justify-between gap-2 pt-4">
+          <button
+            type="button"
+            onClick={(e) => onOpen(project, e.currentTarget)}
+            className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full text-sm font-medium text-fg transition-colors after:absolute after:inset-0 after:content-[''] hover:text-accent"
+            aria-haspopup="dialog"
+          >
+            {t.projects.details}
+            <span className="sr-only">: {project.title}</span>
+            <ArrowUpRight size={15} aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100" />
+          </button>
+          <ProjectLinks project={project} compact />
+        </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
@@ -71,12 +99,12 @@ export function ProjectLinks({ project, compact = false }: { project: Project; c
           target="_blank"
           rel="noopener noreferrer"
           aria-label={compact ? `${l.label}: ${project.title} ${t.a11y.opensNewTab}` : undefined}
-          className="inline-flex min-h-10 items-center gap-1.5 rounded-lg border border-line-strong bg-bg-elevated px-3 text-[0.8rem] font-medium text-fg transition-[color,border-color,translate] hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+          className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line-strong bg-surface px-3 text-xs font-medium text-fg transition-[color,border-color,translate] hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
         >
           {l.icon}
           {l.label}
           {!compact && <span className="sr-only">{t.a11y.opensNewTab}</span>}
-          <ArrowUpRight size={13} aria-hidden className="opacity-60 rtl:-scale-x-100" />
+          <ArrowUpRight size={12} aria-hidden className="opacity-60 rtl:-scale-x-100" />
         </a>
       ))}
     </div>

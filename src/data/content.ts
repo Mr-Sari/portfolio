@@ -6,14 +6,13 @@ import type { Bilingual, PortfolioData } from './types.ts';
  * where the CV gives no detail (a problem statement, a repository, a demo)
  * the field is omitted or left empty and the UI adapts.
  *
- * Figures (10+, 25+, 93% …) appear only where the CV states them.
+ * Each figure has one home: work metrics live in Experience, project results
+ * in the project modal, GPA in Education.
  */
 export const content: Bilingual<PortfolioData> = {
   personal: {
     name: { en: 'Sari Owaid Alsulami', ar: 'ساري عويض السلمي' },
     shortName: { en: 'Sari Alsulami', ar: 'ساري السلمي' },
-    /** The name in the other language, shown beside it in the hero. */
-    altName: { en: 'ساري عويض السلمي', ar: 'Sari Owaid Alsulami' },
     initials: 'SA',
     title: { en: 'Data Analyst', ar: 'محلل بيانات' },
     headline: {
@@ -24,8 +23,8 @@ export const content: Bilingual<PortfolioData> = {
     email: 'sarialsulami@gmail.com',
     phone: '+966 54 934 4220',
     summary: {
-      en: 'I turn data into actionable insights and better decisions — through dashboards, KPIs and clear analytical reporting.',
-      ar: 'أحوّل البيانات إلى رؤى قابلة للتنفيذ وقرارات أفضل، عبر لوحات المعلومات ومؤشرات الأداء والتقارير التحليلية الواضحة.',
+      en: 'Data Analyst focused on business intelligence — interactive dashboards, KPIs and analytical reporting with Power BI, SQL, Python and Excel — backed by data engineering and applied AI.',
+      ar: 'محلل بيانات متخصص في ذكاء الأعمال: لوحات معلومات تفاعلية ومؤشرات أداء وتقارير تحليلية باستخدام Power BI وSQL وPython وExcel، مع خبرة داعمة في هندسة البيانات والذكاء الاصطناعي.',
     },
     linkedin: 'https://www.linkedin.com/in/sari-alsulami',
     github: 'https://github.com/Mr-Sari',
@@ -36,64 +35,33 @@ export const content: Bilingual<PortfolioData> = {
     ],
   },
 
-  statements: {
-    tagline: { en: 'Turning data into decisions.', ar: 'من البيانات إلى القرار.' },
-    intro: {
-      en: 'I turn data into actionable insights and better decisions — through Power BI dashboards, KPI reporting and reliable data, backed by a degree in Data Science.',
-      ar: 'أحوّل البيانات إلى رؤى قابلة للتنفيذ وقرارات أفضل، عبر لوحات Power BI وتقارير مؤشرات الأداء وبيانات موثوقة، مستندًا إلى شهادة في علم البيانات.',
-    },
-    philosophy: { en: 'Data tells a story. I turn it into action.', ar: 'البيانات تحكي قصة، وأنا أحوّلها إلى أثر.' },
-    interlude: {
-      lead: { en: 'From raw data', ar: 'من البيانات الخام' },
-      accent: { en: 'to meaningful insights.', ar: 'إلى رؤى ذات قيمة.' },
-    },
-    closing: {
-      en: 'Have data that should be driving better decisions? I’d be glad to hear about it.',
-      ar: 'لديك بيانات يمكن أن تقود قرارات أفضل؟ يسعدني أن أسمع عنها.',
-    },
-  },
-
-  /** Real figures from the CV, each with its source. */
-  heroStats: [
-    { value: 10, suffix: '+', label: { en: 'Power BI dashboards', ar: 'لوحة Power BI' }, source: { en: 'Holy Makkah Municipality', ar: 'أمانة العاصمة المقدسة' } },
-    { value: 25, suffix: '+', label: { en: 'KPIs tracked', ar: 'مؤشر أداء متابَع' }, source: { en: 'Holy Makkah Municipality', ar: 'أمانة العاصمة المقدسة' } },
-    { value: 15, suffix: '+', label: { en: 'Automated dashboards', ar: 'لوحة آلية' }, source: { en: 'Saudi Ground Services', ar: 'الخدمات الأرضية السعودية' } },
-    { value: 20, suffix: '+', label: { en: 'Executive reports', ar: 'تقرير تنفيذي' }, source: { en: 'Saudi Ground Services', ar: 'الخدمات الأرضية السعودية' } },
-  ],
-
-  heroStack: ['Power BI', 'DAX', 'Power Query', 'Excel', 'SQL', 'Python'],
-
   about: {
     paragraphs: [
       {
-        en: 'I’m a Data Analyst in Saudi Arabia, currently with Holy Makkah Municipality, where I build Power BI dashboards and KPI reporting. Before that I worked on SAP data and executive reporting at Saudi Ground Services, and I started as a data engineering intern at the National Center for Meteorology.',
-        ar: 'أنا محلل بيانات في المملكة العربية السعودية، أعمل حاليًا لدى أمانة العاصمة المقدسة على بناء لوحات Power BI وتقارير مؤشرات الأداء. وقبلها عملت على بيانات SAP والتقارير التنفيذية في الشركة السعودية للخدمات الأرضية، وبدأت متدربًا في هندسة البيانات في المركز الوطني للأرصاد.',
-      },
-      {
-        en: 'My degree is in Data Science from the University of Jeddah. Day to day, much of the work happens before the dashboard: bringing data from several sources into one clean model with SQL, Power Query and ETL checks, so the final report can be read in a minute and trusted.',
-        ar: 'تخرجت في علم البيانات من جامعة جدة. وفي عملي اليومي، يحدث جزء كبير من العمل قبل لوحة المعلومات: جمع البيانات من مصادر متعددة في نموذج واحد نظيف عبر SQL وPower Query وفحوصات ETL، ليُقرأ التقرير النهائي في دقيقة ويُوثق به.',
-      },
-      {
-        en: 'Alongside analytics I keep building with machine learning and LLMs — a computer-vision pipeline on 23,000+ images for my graduation project, and RAG and resume-matching tools in 2026. They extend my analytics work rather than replace it.',
-        ar: 'وإلى جانب التحليل أواصل البناء بتعلم الآلة والنماذج اللغوية: خط رؤية حاسوبية على أكثر من 23,000 صورة في مشروع تخرجي، وأدوات RAG ومطابقة السير الذاتية في 2026. وهي امتداد لعملي في التحليل لا بديل عنه.',
+        en: 'Data Science graduate from the University of Jeddah, working as a Data Analyst in government and enterprise. I turn raw data into dashboards, KPIs and reports that support decisions — and use AI and LLMs where they make analysis faster.',
+        ar: 'خريج علم البيانات من جامعة جدة، أعمل محلل بيانات في القطاعين الحكومي والخاص. أحوّل البيانات الخام إلى لوحات معلومات ومؤشرات أداء وتقارير تدعم اتخاذ القرار، وأوظّف الذكاء الاصطناعي والنماذج اللغوية حيث تختصر وقت التحليل.',
       },
     ],
-    chain: [
+    focusAreas: [
       {
-        title: { en: 'Data Analytics', ar: 'تحليل البيانات' },
-        description: { en: 'Cleaning, querying and analysing data with SQL, Python and Excel.', ar: 'تنظيف البيانات والاستعلام عنها وتحليلها بـ SQL وPython وExcel.' },
+        title: { en: 'Analytics & BI', ar: 'التحليل وذكاء الأعمال' },
+        description: { en: 'Power BI dashboards, KPIs, reporting', ar: 'لوحات Power BI ومؤشرات وتقارير' },
+        icon: 'dashboard',
       },
       {
-        title: { en: 'Business Intelligence', ar: 'ذكاء الأعمال' },
-        description: { en: 'Turning analysis into Power BI dashboards and KPIs people act on.', ar: 'تحويل التحليل إلى لوحات Power BI ومؤشرات أداء تُبنى عليها القرارات.' },
+        title: { en: 'Data Engineering', ar: 'هندسة البيانات' },
+        description: { en: 'SQL, ETL, automation', ar: 'SQL وETL والأتمتة' },
+        icon: 'workflow',
       },
       {
-        title: { en: 'Data Science', ar: 'علم البيانات' },
-        description: { en: 'Machine-learning models when a question needs prediction or classification.', ar: 'نماذج تعلم الآلة حين يحتاج السؤال إلى تنبؤ أو تصنيف.' },
+        title: { en: 'AI & LLMs', ar: 'الذكاء الاصطناعي والنماذج اللغوية' },
+        description: { en: 'RAG, structured LLM outputs', ar: 'أنظمة RAG ومخرجات منظّمة' },
+        icon: 'brain',
       },
       {
-        title: { en: 'AI & ML', ar: 'الذكاء الاصطناعي' },
-        description: { en: 'LLMs, RAG and computer vision where they make analysis faster.', ar: 'النماذج اللغوية وRAG والرؤية الحاسوبية حين تختصر وقت التحليل.' },
+        title: { en: 'Machine Learning', ar: 'تعلم الآلة' },
+        description: { en: 'Detection & classification models', ar: 'نماذج الاكتشاف والتصنيف' },
+        icon: 'scan',
       },
     ],
   },
@@ -109,38 +77,30 @@ export const content: Bilingual<PortfolioData> = {
       end: null,
       sector: { en: 'Government', ar: 'قطاع حكومي' },
       summary: {
-        en: 'Power BI dashboards, KPI development and reporting, built on data from multiple sources.',
-        ar: 'لوحات Power BI وتطوير مؤشرات الأداء والتقارير، مبنية على بيانات من مصادر متعددة.',
+        en: 'Power BI reporting, SQL data views and internal platforms.',
+        ar: 'تقارير Power BI وعروض بيانات SQL ومنصات داخلية.',
       },
       achievements: [
         {
-          en: 'Designed 10+ Power BI dashboards tracking 25+ KPIs, automating reporting and reducing manual effort.',
+          en: 'Designed 10+ Power BI dashboards tracking 25+ KPIs, automating reporting and cutting manual effort.',
           ar: 'تصميم أكثر من 10 لوحات Power BI تتابع أكثر من 25 مؤشر أداء، مع أتمتة التقارير وتقليل الجهد اليدوي.',
         },
         {
-          en: 'Model and analyse data with Power BI, DAX, Power Query and Excel, and turn it into clear visualizations and reports.',
-          ar: 'نمذجة البيانات وتحليلها باستخدام Power BI وDAX وPower Query وExcel، وتحويلها إلى عروض بصرية وتقارير واضحة.',
-        },
-        {
-          en: 'Run ETL across multiple data sources, with data processing and quality checks so every report rests on reliable data.',
-          ar: 'تنفيذ عمليات ETL من مصادر بيانات متعددة، مع معالجة البيانات وفحص جودتها لتستند كل التقارير إلى بيانات موثوقة.',
+          en: 'Built the “Maarefah Plus” knowledge platform (Python, SQLite, full-stack web), centralizing knowledge access across teams.',
+          ar: 'بناء منصة «معرفة بلس» (Python وSQLite وتطوير ويب متكامل) لمركزة الوصول إلى المعرفة بين الفرق.',
         },
       ],
       responsibilities: [
         {
-          en: 'Built database views and optimized SQL queries in Toad for extraction, analysis and Power BI.',
-          ar: 'بناء عروض قواعد البيانات وتحسين استعلامات SQL عبر Toad للاستخراج والتحليل وربطها بـ Power BI.',
+          en: 'Built database views and optimized queries in Toad and SQL for extraction, analysis and Power BI.',
+          ar: 'بناء عروض قواعد البيانات وتحسين الاستعلامات عبر Toad وSQL للاستخراج والتحليل وربطها بـ Power BI.',
         },
         {
-          en: 'Built the “Maarefah Plus” knowledge platform with Python and SQLite to centralize knowledge across teams.',
-          ar: 'بناء منصة «معرفة بلس» بـ Python وSQLite لمركزة المعرفة بين الفرق.',
-        },
-        {
-          en: 'Contributed to Digital Transformation Measurement to improve digital maturity, efficiency and productivity.',
+          en: 'Contributed to Digital Transformation Measurement to raise digital maturity, efficiency and productivity.',
           ar: 'المساهمة في قياس التحول الرقمي لرفع النضج الرقمي والكفاءة والإنتاجية.',
         },
       ],
-      technologies: ['Power BI', 'DAX', 'Power Query', 'Excel', 'SQL', 'Toad', 'ETL', 'Python', 'SQLite'],
+      technologies: ['Power BI', 'SQL', 'Toad', 'Python', 'SQLite'],
     },
     {
       id: 'sgs',
@@ -152,34 +112,30 @@ export const content: Bilingual<PortfolioData> = {
       employmentType: { en: 'Tamheer program', ar: 'برنامج تمهير' },
       sector: { en: 'Aviation services', ar: 'خدمات الطيران' },
       summary: {
-        en: 'SAP data, dashboards and executive reporting.',
-        ar: 'بيانات SAP ولوحات المعلومات والتقارير التنفيذية.',
+        en: 'Automated dashboards and executive reporting on SAP data.',
+        ar: 'لوحات آلية وتقارير تنفيذية على بيانات SAP.',
       },
       achievements: [
         {
-          en: 'Developed 15+ automated dashboards and reporting solutions using SAP and BI tools.',
-          ar: 'تطوير أكثر من 15 لوحة وحل تقارير آلي باستخدام SAP وأدوات BI.',
+          en: 'Developed 15+ automated dashboards and reporting solutions with SAP and BI tools.',
+          ar: 'تطوير أكثر من 15 لوحة وحل تقارير آلي عبر SAP وأدوات BI.',
         },
         {
-          en: 'Generated 20+ executive reports from business and operational analysis.',
+          en: 'Produced 20+ executive reports from business and operational analysis.',
           ar: 'إعداد أكثر من 20 تقريرًا تنفيذيًا من تحليل الأعمال والعمليات.',
-        },
-        {
-          en: 'Preprocessed, cleansed and validated SAP data, working with SAP queries and workflows for reporting.',
-          ar: 'معالجة بيانات SAP وتنظيفها والتحقق منها، والعمل على استعلامات SAP ومسارات عملها لأغراض التقارير.',
         },
       ],
       responsibilities: [
         {
-          en: 'Collaborated with cross-functional teams to implement data-driven solutions.',
+          en: 'Worked with cross-functional teams to implement data-driven solutions.',
           ar: 'التعاون مع فرق متعددة التخصصات لتطبيق حلول مبنية على البيانات.',
         },
       ],
-      technologies: ['SAP', { en: 'SAP queries', ar: 'استعلامات SAP' }, { en: 'BI tools', ar: 'أدوات BI' }, { en: 'Data validation', ar: 'التحقق من البيانات' }],
+      technologies: ['SAP', { en: 'BI tools', ar: 'أدوات BI' }],
     },
     {
       id: 'ncm',
-      company: { en: 'National Center for Meteorology (NCM)', ar: 'المركز الوطني للأرصاد (NCM)' },
+      company: { en: 'National Center of Meteorology (NCM)', ar: 'المركز الوطني للأرصاد (NCM)' },
       role: { en: 'Data Engineer Intern', ar: 'متدرب هندسة بيانات' },
       location: { en: 'Jeddah', ar: 'جدة' },
       start: '2024-06',
@@ -187,17 +143,13 @@ export const content: Bilingual<PortfolioData> = {
       employmentType: { en: 'Internship', ar: 'تدريب تعاوني' },
       sector: { en: 'Government', ar: 'قطاع حكومي' },
       summary: {
-        en: 'Meteorological ETL, ICAO aviation-message processing and query optimization.',
-        ar: 'عمليات ETL لبيانات الأرصاد، ومعالجة رسائل الطيران ICAO، وتحسين الاستعلامات.',
+        en: 'Weather-report automation and ICAO message classification.',
+        ar: 'أتمتة تقارير الطقس وتصنيف رسائل ICAO.',
       },
       achievements: [
         {
           en: 'Automated hourly weather-report processing with Python (Pandas, Regex), eliminating manual entry.',
-          ar: 'أتمتة معالجة تقارير الطقس الساعية بـ Python عبر Pandas وRegex، وإلغاء الإدخال اليدوي.',
-        },
-        {
-          en: 'Developed an ICAO message classification system for flight arrivals using time-series analysis.',
-          ar: 'تطوير نظام لتصنيف رسائل ICAO لوصول الرحلات باستخدام تحليل السلاسل الزمنية.',
+          ar: 'أتمتة معالجة تقارير الطقس الساعية بـ Python (Pandas وRegex) وإلغاء الإدخال اليدوي.',
         },
         {
           en: 'Optimized SQL queries in DuckDB, improving database performance.',
@@ -206,11 +158,15 @@ export const content: Bilingual<PortfolioData> = {
       ],
       responsibilities: [
         {
-          en: 'Implemented Docker containers and Git for environment consistency and version control.',
-          ar: 'استخدام حاويات Docker وGit لتوحيد البيئات وإدارة الإصدارات.',
+          en: 'Built an ICAO message classification system for flight arrivals using time-series analysis.',
+          ar: 'بناء نظام لتصنيف رسائل ICAO لوصول الرحلات باستخدام تحليل السلاسل الزمنية.',
+        },
+        {
+          en: 'Used Docker and Git for consistent environments and version control.',
+          ar: 'استخدام Docker وGit لتوحيد البيئات وإدارة الإصدارات.',
         },
       ],
-      technologies: ['Python', 'Pandas', 'Regex', 'Delta Lake', 'DuckDB', 'SQL', { en: 'OOP', ar: 'البرمجة الكائنية' }, 'Docker', 'Git'],
+      technologies: ['Python', 'Pandas', 'DuckDB', 'SQL', 'Docker', 'Git'],
     },
   ],
 
@@ -222,6 +178,40 @@ export const content: Bilingual<PortfolioData> = {
   ],
 
   projects: [
+    {
+      id: 'kpi-dashboards',
+      title: { en: 'KPI Dashboards & Reporting Automation', ar: 'لوحات مؤشرات الأداء وأتمتة التقارير' },
+      shortDescription: {
+        en: 'Power BI dashboards that automate KPI reporting, built on SQL views optimized in Toad.',
+        ar: 'لوحات Power BI تؤتمت تقارير مؤشرات الأداء، مبنية على عروض SQL محسّنة عبر Toad.',
+      },
+      context: { en: 'Holy Makkah Municipality', ar: 'أمانة العاصمة المقدسة' },
+      kind: 'professional',
+      start: '2025-12',
+      end: 'Present',
+      categories: ['analytics'],
+      visual: 'dashboard',
+      technologies: ['Power BI', 'SQL', 'Toad'],
+      highlights: [
+        { en: 'Automated KPI reporting', ar: 'تقارير مؤشرات آلية' },
+        { en: 'Optimized SQL data views', ar: 'عروض SQL محسّنة' },
+      ],
+      metrics: [],
+      overview: { en: 'A suite of Power BI dashboards that automates KPI reporting.', ar: 'مجموعة لوحات Power BI تؤتمت تقارير مؤشرات الأداء.' },
+      problem: { en: 'Reporting relied on manual effort.', ar: 'اعتماد التقارير على جهد يدوي.' },
+      solution: {
+        en: 'Database views and optimized queries in Toad and SQL feed Power BI dashboards designed around the organization’s KPIs.',
+        ar: 'عروض قواعد بيانات واستعلامات محسّنة عبر Toad وSQL تغذّي لوحات Power BI مصممة حول مؤشرات الأداء.',
+      },
+      methodology: [
+        { en: 'Database views and query optimization (Toad, SQL)', ar: 'عروض قواعد البيانات وتحسين الاستعلامات (Toad وSQL)' },
+        { en: 'Data extraction and analysis for Power BI', ar: 'استخراج البيانات وتحليلها لـ Power BI' },
+        { en: 'KPI-driven dashboard design', ar: 'تصميم لوحات حول مؤشرات الأداء' },
+      ],
+      impact: [{ en: 'Automated reporting and reduced manual effort.', ar: 'أتمتة التقارير وتقليل الجهد اليدوي.' }],
+      githubUrl: '',
+      demoUrl: '',
+    },
     {
       id: 'rag-qa',
       title: { en: 'RAG Q&A System', ar: 'نظام أسئلة وأجوبة RAG' },
@@ -236,11 +226,10 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['ai'],
       visual: 'rag',
       technologies: ['LangChain', 'ChromaDB', 'OpenAI', 'Gradio', 'Python'],
-      brief: {
-        problem: { en: 'Answers buried in long documents are slow to find — and hard to trust without a source.', ar: 'الإجابات داخل المستندات الطويلة يصعب العثور عليها، ويصعب الوثوق بها دون مصدر.' },
-        approach: { en: 'Documents chunked into ChromaDB; LangChain retrieves the relevant passages to ground the LLM.', ar: 'تقسيم المستندات وتخزينها في ChromaDB، واسترجاع المقاطع المناسبة عبر LangChain لتأسيس إجابة النموذج.' },
-        result: { en: 'A Gradio chatbot whose answers cite their source documents.', ar: 'واجهة محادثة Gradio تستشهد إجاباتها بمستنداتها المصدرية.' },
-      },
+      highlights: [
+        { en: 'Semantic retrieval', ar: 'استرجاع دلالي' },
+        { en: 'Source-grounded answers', ar: 'إجابات موثّقة المصدر' },
+      ],
       metrics: [],
       overview: {
         en: 'An end-to-end retrieval-augmented generation system, from document ingestion to an interactive chatbot.',
@@ -274,15 +263,14 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['ai'],
       visual: 'resume',
       technologies: ['OpenAI API', 'Claude API', 'Pydantic', 'Python'],
-      brief: {
-        problem: { en: 'Tailoring a resume and cover letter to every job posting is slow, manual work.', ar: 'مواءمة السيرة الذاتية وخطاب التقديم مع كل وظيفة عمل يدوي يستغرق وقتًا.' },
-        approach: { en: 'A structured LLM pipeline with Pydantic-validated outputs for skill extraction and gap analysis.', ar: 'خط معالجة بنماذج لغوية ومخرجات يتحقق منها Pydantic لاستخراج المهارات وتحليل الفجوات.' },
-        result: { en: 'Gap analysis, an ATS-optimized resume and a tailored cover letter in one run.', ar: 'تحليل للفجوات وسيرة متوافقة مع ATS وخطاب تقديم مخصص في تشغيل واحد.' },
-      },
+      highlights: [
+        { en: 'Skill-gap analysis', ar: 'تحليل فجوات المهارات' },
+        { en: 'End-to-end pipeline', ar: 'خط معالجة متكامل' },
+      ],
       metrics: [],
       overview: {
         en: 'An LLM assistant for resume–job matching and optimization, unified in one pipeline (run_resume_rocket).',
-        ar: 'مساعد مبني على النماذج اللغوية لمطابقة السيرة مع الوظيفة وتحسينها، موحَّد في خط معالجة واحد هو run_resume_rocket.',
+        ar: 'مساعد مبني على النماذج اللغوية لمطابقة السيرة مع الوظيفة وتحسينها، موحَّد في خط معالجة واحد (run_resume_rocket).',
       },
       solution: {
         en: 'Structured LLM outputs validated with Pydantic drive skill extraction, gap analysis and job alignment, then resume rewriting and cover-letter generation.',
@@ -298,121 +286,6 @@ export const content: Bilingual<PortfolioData> = {
       demoUrl: '',
     },
     {
-      id: 'kpi-dashboards',
-      title: { en: 'KPI Dashboards & Reporting Automation', ar: 'لوحات مؤشرات الأداء وأتمتة التقارير' },
-      shortDescription: {
-        en: 'Power BI dashboards that automate KPI reporting, built on SQL views optimized in Toad.',
-        ar: 'لوحات Power BI تؤتمت تقارير مؤشرات الأداء، مبنية على عروض SQL محسّنة عبر Toad.',
-      },
-      context: { en: 'Holy Makkah Municipality', ar: 'أمانة العاصمة المقدسة' },
-      kind: 'professional',
-      start: '2025-12',
-      end: 'Present',
-      categories: ['analytics'],
-      visual: 'dashboard',
-      technologies: ['Power BI', 'SQL', 'Toad'],
-      brief: {
-        problem: { en: 'KPI reporting relied on manual effort.', ar: 'تقارير مؤشرات الأداء كانت تعتمد على جهد يدوي.' },
-        approach: { en: 'Database views and optimized SQL in Toad, feeding Power BI dashboards built around the KPIs.', ar: 'عروض قواعد بيانات واستعلامات SQL محسّنة عبر Toad تغذّي لوحات Power BI مصممة حول المؤشرات.' },
-        result: { en: '10+ dashboards tracking 25+ KPIs, with reporting automated.', ar: 'أكثر من 10 لوحات تتابع أكثر من 25 مؤشرًا، مع أتمتة التقارير.' },
-      },
-      metrics: [
-        { value: '10+', label: { en: 'Power BI dashboards', ar: 'لوحة Power BI' } },
-        { value: '25+', label: { en: 'KPIs tracked', ar: 'مؤشر أداء' } },
-      ],
-      overview: { en: 'A suite of Power BI dashboards that automates KPI reporting.', ar: 'مجموعة لوحات Power BI تؤتمت تقارير مؤشرات الأداء.' },
-      problem: { en: 'Reporting relied on manual effort.', ar: 'اعتماد التقارير على جهد يدوي.' },
-      solution: {
-        en: 'Database views and optimized queries in Toad and SQL feed Power BI dashboards designed around the organization’s KPIs.',
-        ar: 'عروض قواعد بيانات واستعلامات محسّنة عبر Toad وSQL تغذّي لوحات Power BI مصممة حول مؤشرات الأداء.',
-      },
-      methodology: [
-        { en: 'Database views and query optimization (Toad, SQL)', ar: 'عروض قواعد البيانات وتحسين الاستعلامات عبر Toad وSQL' },
-        { en: 'Data extraction and analysis for Power BI', ar: 'استخراج البيانات وتحليلها لـ Power BI' },
-        { en: 'KPI-driven dashboard design', ar: 'تصميم لوحات حول مؤشرات الأداء' },
-      ],
-      impact: [{ en: 'Automated reporting and reduced manual effort.', ar: 'أتمتة التقارير وتقليل الجهد اليدوي.' }],
-      githubUrl: '',
-      demoUrl: '',
-    },
-    {
-      id: 'sgs-reporting',
-      title: { en: 'Automated Executive Reporting', ar: 'التقارير التنفيذية الآلية' },
-      shortDescription: {
-        en: 'Automated dashboards and executive reports from business and operational analysis on SAP data.',
-        ar: 'لوحات آلية وتقارير تنفيذية من تحليل الأعمال والعمليات على بيانات SAP.',
-      },
-      context: { en: 'Saudi Ground Services', ar: 'الشركة السعودية للخدمات الأرضية' },
-      kind: 'professional',
-      start: '2025-10',
-      end: '2025-12',
-      categories: ['analytics'],
-      visual: 'reporting',
-      technologies: ['SAP', { en: 'BI tools', ar: 'أدوات BI' }],
-      brief: {
-        problem: { en: 'Business and operational data in SAP needed to reach leadership as clear reporting.', ar: 'بيانات الأعمال والعمليات في SAP كانت بحاجة إلى أن تصل للإدارة في تقارير واضحة.' },
-        approach: { en: 'Automated dashboards and reporting on SAP and BI tools, built with cross-functional teams.', ar: 'لوحات وتقارير آلية عبر SAP وأدوات BI بالتعاون مع فرق متعددة التخصصات.' },
-        result: { en: '15+ automated dashboards and 20+ executive reports.', ar: 'أكثر من 15 لوحة آلية وأكثر من 20 تقريرًا تنفيذيًا.' },
-      },
-      metrics: [
-        { value: '15+', label: { en: 'Automated dashboards', ar: 'لوحة آلية' } },
-        { value: '20+', label: { en: 'Executive reports', ar: 'تقرير تنفيذي' } },
-      ],
-      overview: {
-        en: 'Automated dashboards and executive reporting for business and operations.',
-        ar: 'لوحات آلية وتقارير تنفيذية لتحليل الأعمال والعمليات.',
-      },
-      solution: {
-        en: 'Automated dashboards and reporting solutions on SAP and BI tools, built with cross-functional teams.',
-        ar: 'لوحات وحلول تقارير آلية عبر SAP وأدوات BI بالتعاون مع فرق متعددة التخصصات.',
-      },
-      methodology: [
-        { en: 'Business and operational analysis', ar: 'تحليل الأعمال والعمليات' },
-        { en: 'Automated dashboards on SAP data', ar: 'لوحات آلية على بيانات SAP' },
-        { en: 'Executive reports for leadership', ar: 'تقارير تنفيذية للإدارة' },
-      ],
-      githubUrl: '',
-      demoUrl: '',
-    },
-    {
-      id: 'maarefah-plus',
-      title: { en: 'Maarefah Plus Platform', ar: 'منصة معرفة بلس' },
-      shortDescription: {
-        en: 'Internal knowledge platform centralizing access across teams, built with Python and SQLite.',
-        ar: 'منصة معرفية داخلية تمركز الوصول إلى المعرفة بين الفرق، مبنية بـ Python وSQLite.',
-      },
-      context: { en: 'Holy Makkah Municipality', ar: 'أمانة العاصمة المقدسة' },
-      kind: 'professional',
-      start: '2025-12',
-      end: 'Present',
-      categories: ['data-engineering'],
-      visual: 'platform',
-      technologies: ['Python', 'SQLite', { en: 'Full-stack web', ar: 'تطوير ويب متكامل' }],
-      brief: {
-        problem: { en: 'Knowledge was scattered across teams.', ar: 'المعرفة كانت مشتتة بين الفرق.' },
-        approach: { en: 'A Python and SQLite platform with a full-stack web interface.', ar: 'منصة بـ Python وSQLite مع واجهة ويب متكاملة.' },
-        result: { en: 'One central place for knowledge, and better collaboration.', ar: 'مرجع مركزي واحد للمعرفة وتعاون أفضل.' },
-      },
-      metrics: [],
-      overview: { en: 'A centralized knowledge platform for municipality teams.', ar: 'منصة معرفية مركزية لفرق الأمانة.' },
-      problem: {
-        en: 'Knowledge access was not centralized, limiting collaboration across teams.',
-        ar: 'الوصول إلى المعرفة لم يكن مركزيًا، مما حدّ من التعاون بين الفرق.',
-      },
-      solution: {
-        en: 'A Python and SQLite platform with a full-stack web interface as one place to find knowledge.',
-        ar: 'منصة بـ Python وSQLite وواجهة ويب متكاملة كمرجع واحد للمعرفة.',
-      },
-      methodology: [
-        { en: 'Python application layer', ar: 'طبقة تطبيق بـ Python' },
-        { en: 'SQLite storage', ar: 'تخزين في SQLite' },
-        { en: 'Full-stack web interface', ar: 'واجهة ويب متكاملة' },
-      ],
-      impact: [{ en: 'Centralized knowledge access and better collaboration.', ar: 'مركزة الوصول إلى المعرفة وتحسين التعاون.' }],
-      githubUrl: '',
-      demoUrl: '',
-    },
-    {
       id: 'car-damage',
       title: { en: 'Car Damage Analysis Pipeline', ar: 'نظام تحليل أضرار المركبات' },
       shortDescription: {
@@ -423,20 +296,18 @@ export const content: Bilingual<PortfolioData> = {
       kind: 'graduation',
       start: '2024-10',
       end: '2025-01',
-      categories: ['ai'],
+      categories: ['ai', 'data-science'],
       visual: 'vision',
       technologies: ['YOLOv8', 'EfficientNetB0', 'OpenCV', 'Pandas', 'Streamlit'],
-      brief: {
-        problem: { en: 'Assessing vehicle damage — what, how severe, which part, what cost — takes several manual steps.', ar: 'تقييم ضرر المركبة، بنوعه وشدته والقطعة المتضررة وتكلفته، يمر بعدة خطوات يدوية.' },
-        approach: { en: 'YOLOv8 and EfficientNetB0 models on 23,000+ processed images, combined by a rule-based cost estimator.', ar: 'نماذج YOLOv8 وEfficientNetB0 على أكثر من 23,000 صورة معالجة، يجمعها مقدِّر تكلفة قائم على القواعد.' },
-        result: { en: 'One workflow from an uploaded photo to a PDF damage report.', ar: 'مسار واحد من الصورة المرفوعة حتى تقرير PDF للأضرار.' },
-      },
+      highlights: [
+        { en: '23K+ image dataset', ar: 'بيانات +23K صورة' },
+        { en: 'Rule-based cost estimator', ar: 'مقدِّر تكلفة بالقواعد' },
+      ],
       metrics: [
         { value: '81%', label: { en: 'Damage detection', ar: 'اكتشاف الضرر' } },
         { value: '93%', label: { en: 'Severity classification', ar: 'تصنيف الشدة' } },
         { value: '100%', label: { en: 'Part identification', ar: 'تحديد القطعة' } },
         { value: '21', label: { en: 'Car parts covered', ar: 'قطعة مركبة' } },
-        { value: '23K+', label: { en: 'Images processed', ar: 'صورة معالجة' } },
       ],
       overview: {
         en: 'A unified platform for damage detection, severity grading, part identification and repair-cost estimation, delivered as a Streamlit app.',
@@ -457,6 +328,38 @@ export const content: Bilingual<PortfolioData> = {
       demoUrl: '',
     },
     {
+      id: 'sgs-reporting',
+      title: { en: 'Automated Executive Reporting', ar: 'التقارير التنفيذية الآلية' },
+      shortDescription: {
+        en: 'Automated dashboards and executive reports from business and operational analysis on SAP data.',
+        ar: 'لوحات آلية وتقارير تنفيذية من تحليل الأعمال والعمليات على بيانات SAP.',
+      },
+      context: { en: 'Saudi Ground Services', ar: 'الشركة السعودية للخدمات الأرضية' },
+      kind: 'professional',
+      start: '2025-10',
+      end: '2025-12',
+      categories: ['analytics'],
+      visual: 'reporting',
+      technologies: ['SAP', { en: 'BI tools', ar: 'أدوات BI' }],
+      highlights: [{ en: 'Executive-level reporting', ar: 'تقارير للإدارة التنفيذية' }],
+      metrics: [],
+      overview: {
+        en: 'Automated dashboards and executive reporting for business and operations.',
+        ar: 'لوحات آلية وتقارير تنفيذية لتحليل الأعمال والعمليات.',
+      },
+      solution: {
+        en: 'Automated dashboards and reporting solutions on SAP and BI tools, built with cross-functional teams.',
+        ar: 'لوحات وحلول تقارير آلية عبر SAP وأدوات BI بالتعاون مع فرق متعددة التخصصات.',
+      },
+      methodology: [
+        { en: 'Business and operational analysis', ar: 'تحليل الأعمال والعمليات' },
+        { en: 'Automated dashboards on SAP data', ar: 'لوحات آلية على بيانات SAP' },
+        { en: 'Executive reports for leadership', ar: 'تقارير تنفيذية للإدارة' },
+      ],
+      githubUrl: '',
+      demoUrl: '',
+    },
+    {
       id: 'weather-automation',
       title: { en: 'Weather Report Automation', ar: 'أتمتة تقارير الطقس' },
       shortDescription: {
@@ -470,11 +373,7 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['data-engineering'],
       visual: 'pipeline',
       technologies: ['Python', 'Pandas', 'Regex', 'DuckDB', 'Docker'],
-      brief: {
-        problem: { en: 'Hourly weather reports were entered by hand.', ar: 'تقارير الطقس الساعية كانت تُدخل يدويًا.' },
-        approach: { en: 'Reports parsed with Pandas and Regex; SQL tuned in DuckDB; Docker for consistent environments.', ar: 'تحليل التقارير بـ Pandas وRegex، وتحسين SQL في DuckDB، وDocker لتوحيد البيئات.' },
-        result: { en: 'Manual entry eliminated and database performance improved.', ar: 'إلغاء الإدخال اليدوي وتحسين أداء قاعدة البيانات.' },
-      },
+      highlights: [{ en: 'Zero manual entry', ar: 'بلا إدخال يدوي' }],
       metrics: [],
       overview: { en: 'Automated processing of hourly weather reports.', ar: 'أتمتة معالجة تقارير الطقس الساعية.' },
       problem: { en: 'Hourly weather reports were entered manually.', ar: 'كانت تقارير الطقس الساعية تُدخل يدويًا.' },
@@ -483,7 +382,7 @@ export const content: Bilingual<PortfolioData> = {
         ar: 'تحليل التقارير عبر Pandas وRegex، وتحسين الاستعلامات في DuckDB، وتوحيد البيئات عبر Docker وGit.',
       },
       methodology: [
-        { en: 'Report parsing (Regex, Pandas)', ar: 'تحليل التقارير عبر Regex وPandas' },
+        { en: 'Report parsing (Regex, Pandas)', ar: 'تحليل التقارير (Regex وPandas)' },
         { en: 'SQL optimization in DuckDB', ar: 'تحسين SQL في DuckDB' },
         { en: 'Docker and Git', ar: 'Docker وGit' },
       ],
@@ -491,6 +390,40 @@ export const content: Bilingual<PortfolioData> = {
         { en: 'Eliminated manual entry.', ar: 'إلغاء الإدخال اليدوي.' },
         { en: 'Improved database performance.', ar: 'تحسين أداء قاعدة البيانات.' },
       ],
+      githubUrl: '',
+      demoUrl: '',
+    },
+    {
+      id: 'maarefah-plus',
+      title: { en: 'Maarefah Plus Platform', ar: 'منصة معرفة بلس' },
+      shortDescription: {
+        en: 'Internal knowledge platform centralizing access across teams, built with Python and SQLite.',
+        ar: 'منصة معرفية داخلية تمركز الوصول إلى المعرفة بين الفرق، مبنية بـ Python وSQLite.',
+      },
+      context: { en: 'Holy Makkah Municipality', ar: 'أمانة العاصمة المقدسة' },
+      kind: 'professional',
+      start: '2025-12',
+      end: 'Present',
+      categories: ['data-engineering'],
+      visual: 'platform',
+      technologies: ['Python', 'SQLite', { en: 'Full-stack web', ar: 'تطوير ويب متكامل' }],
+      highlights: [{ en: 'Cross-team knowledge hub', ar: 'مرجع معرفي موحّد' }],
+      metrics: [],
+      overview: { en: 'A centralized knowledge platform for municipality teams.', ar: 'منصة معرفية مركزية لفرق الأمانة.' },
+      problem: {
+        en: 'Knowledge access was not centralized, limiting collaboration across teams.',
+        ar: 'الوصول إلى المعرفة لم يكن مركزيًا، مما حدّ من التعاون بين الفرق.',
+      },
+      solution: {
+        en: 'A Python and SQLite platform with a full-stack web interface as one place to find knowledge.',
+        ar: 'منصة بـ Python وSQLite وواجهة ويب متكاملة كمرجع واحد للمعرفة.',
+      },
+      methodology: [
+        { en: 'Python application layer', ar: 'طبقة تطبيق بـ Python' },
+        { en: 'SQLite storage', ar: 'تخزين في SQLite' },
+        { en: 'Full-stack web interface', ar: 'واجهة ويب متكاملة' },
+      ],
+      impact: [{ en: 'Centralized knowledge access and better collaboration.', ar: 'مركزة الوصول إلى المعرفة وتحسين التعاون.' }],
       githubUrl: '',
       demoUrl: '',
     },
@@ -508,11 +441,7 @@ export const content: Bilingual<PortfolioData> = {
       categories: ['data-science'],
       visual: 'timeseries',
       technologies: ['Python', 'Pandas', { en: 'Time-series analysis', ar: 'السلاسل الزمنية' }],
-      brief: {
-        problem: { en: 'Flight-arrival ICAO messages needed to be classified automatically.', ar: 'رسائل ICAO الخاصة بوصول الرحلات كانت بحاجة إلى تصنيف آلي.' },
-        approach: { en: 'Time-series analysis of ICAO messages with Python and Pandas.', ar: 'تحليل السلاسل الزمنية لرسائل ICAO باستخدام Python وPandas.' },
-        result: { en: 'A classification system for flight-arrival messages.', ar: 'نظام لتصنيف رسائل وصول الرحلات.' },
-      },
+      highlights: [{ en: 'Time-series classification', ar: 'تصنيف بالسلاسل الزمنية' }],
       metrics: [],
       overview: { en: 'A system that classifies ICAO messages for flight arrivals.', ar: 'نظام يصنّف رسائل ICAO الخاصة بوصول الرحلات.' },
       solution: {
@@ -529,68 +458,55 @@ export const content: Bilingual<PortfolioData> = {
   ],
 
   skillCategories: [
-    {
-      id: 'analytics',
-      label: { en: 'Data Analytics', ar: 'تحليل البيانات' },
-      description: { en: 'Querying, analysing and reporting', ar: 'الاستعلام والتحليل وإعداد التقارير' },
-      primary: true,
-    },
-    {
-      id: 'bi',
-      label: { en: 'Business Intelligence', ar: 'ذكاء الأعمال' },
-      description: { en: 'Modelling, dashboards and KPIs', ar: 'النمذجة ولوحات المعلومات ومؤشرات الأداء' },
-    },
-    {
-      id: 'ai',
-      label: { en: 'Data Science & AI', ar: 'علم البيانات والذكاء الاصطناعي' },
-      description: { en: 'Models, LLMs and computer vision', ar: 'النماذج والنماذج اللغوية والرؤية الحاسوبية' },
-    },
-    {
-      id: 'engineering',
-      label: { en: 'Data Engineering', ar: 'هندسة البيانات' },
-      description: { en: 'Pipelines, integration and tooling', ar: 'مسارات البيانات والتكامل والأدوات' },
-    },
+    { id: 'analytics', label: { en: 'Analytics & BI', ar: 'التحليل وذكاء الأعمال' } },
+    { id: 'languages', label: { en: 'Languages', ar: 'لغات البرمجة' } },
+    { id: 'data-engineering', label: { en: 'Data Engineering', ar: 'هندسة البيانات' } },
+    { id: 'ai', label: { en: 'Machine Learning', ar: 'تعلم الآلة' } },
+    { id: 'llm', label: { en: 'LLMs & GenAI', ar: 'النماذج اللغوية' } },
+    { id: 'tools', label: { en: 'Tools', ar: 'الأدوات' } },
   ],
 
   skills: [
     { name: 'Power BI', icon: 'powerbi', category: 'analytics' },
     { name: 'Excel', icon: 'excel', category: 'analytics' },
-    { name: 'SQL', icon: 'sql', category: 'analytics' },
-    { name: 'Python', icon: 'python', category: 'analytics' },
+    { name: 'SAP', icon: 'sap', category: 'analytics' },
+    { name: { en: 'Dashboards & KPIs', ar: 'لوحات ومؤشرات أداء' }, icon: 'gauge', category: 'analytics' },
+    { name: { en: 'Data Visualization', ar: 'تصوير البيانات' }, icon: 'dashboard', category: 'analytics' },
 
-    { name: 'DAX', icon: 'sigma', category: 'bi' },
-    { name: 'Power Query', icon: 'filter', category: 'bi' },
-    { name: { en: 'Data Visualization', ar: 'تصوير البيانات' }, icon: 'dashboard', category: 'bi' },
+    { name: 'Python', icon: 'python', category: 'languages' },
+    { name: 'SQL', icon: 'sql', category: 'languages' },
+    { name: 'JavaScript', icon: 'javascript', category: 'languages' },
+    { name: 'TypeScript', icon: 'typescript', category: 'languages' },
+    { name: 'Regex', icon: 'regex', category: 'languages' },
+
+    { name: { en: 'ETL Pipelines', ar: 'خطوط ETL' }, icon: 'workflow', category: 'data-engineering' },
+    { name: 'Pandas', icon: 'pandas', category: 'data-engineering' },
+    { name: 'DuckDB', icon: 'duckdb', category: 'data-engineering' },
+    { name: 'SQLite', icon: 'sqlite', category: 'data-engineering' },
+    { name: 'Toad', icon: 'table', category: 'data-engineering' },
 
     { name: { en: 'Machine Learning', ar: 'تعلم الآلة' }, icon: 'brain', category: 'ai' },
+    { name: { en: 'Deep Learning', ar: 'التعلم العميق' }, icon: 'network', category: 'ai' },
     { name: 'NLP', icon: 'message', category: 'ai' },
     { name: { en: 'Computer Vision', ar: 'الرؤية الحاسوبية' }, icon: 'eye', category: 'ai' },
-    { name: { en: 'Generative AI', ar: 'الذكاء الاصطناعي التوليدي' }, icon: 'sparkles', category: 'ai' },
-    { name: 'RAG', icon: 'search', category: 'ai' },
-    { name: 'LLMs', icon: 'bot', category: 'ai' },
+    { name: 'YOLOv8', icon: 'yolo', category: 'ai' },
+    { name: 'EfficientNetB0', icon: 'layers', category: 'ai' },
+    { name: 'OpenCV', icon: 'opencv', category: 'ai' },
 
-    { name: 'ETL', icon: 'workflow', category: 'engineering' },
-    { name: 'APIs', icon: 'terminal', category: 'engineering' },
-    { name: 'Docker', icon: 'docker', category: 'engineering' },
-    { name: 'Git', icon: 'git', category: 'engineering' },
-  ],
+    { name: 'LLMs', icon: 'sparkles', category: 'llm' },
+    { name: 'RAG', icon: 'search', category: 'llm' },
+    { name: { en: 'Prompt Engineering', ar: 'هندسة الأوامر' }, icon: 'terminal', category: 'llm' },
+    { name: 'LangChain', icon: 'langchain', category: 'llm' },
+    { name: 'ChromaDB', icon: 'database', category: 'llm' },
+    { name: 'OpenAI API', icon: 'bot', category: 'llm' },
+    { name: 'Claude API', icon: 'claude', category: 'llm' },
+    { name: 'Pydantic', icon: 'pydantic', category: 'llm' },
 
-  /** Other tools from the CV and roles, listed without emphasis. */
-  tools: [
-    'SAP',
-    'Toad',
-    'Pandas',
-    'DuckDB',
-    'SQLite',
-    'Delta Lake',
-    'Streamlit',
-    'LangChain',
-    'YOLOv8',
-    'OpenCV',
-    { en: 'Deep Learning', ar: 'التعلم العميق' },
-    { en: 'Prompt Engineering', ar: 'هندسة الأوامر' },
-    'JavaScript',
-    'TypeScript',
+    { name: 'Docker', icon: 'docker', category: 'tools' },
+    { name: 'Git', icon: 'git', category: 'tools' },
+    { name: 'GitHub', icon: 'github', category: 'tools' },
+    { name: 'Streamlit', icon: 'streamlit', category: 'tools' },
+    { name: 'Gradio', icon: 'gradio', category: 'tools' },
   ],
 
   softSkills: [
@@ -625,36 +541,12 @@ export const content: Bilingual<PortfolioData> = {
 
   certifications: [
     {
-      id: 'google-ada',
-      name: { en: 'Google Advanced Data Analytics Specialization', ar: 'تخصص Google المتقدم في تحليل البيانات' },
-      issuer: 'Google',
-      issuerIcon: 'google',
-      date: '2024-02',
-      category: { en: 'Data Analytics', ar: 'تحليل البيانات' },
-    },
-    {
       id: 'datacamp-ada',
       name: { en: 'Associate Data Analyst', ar: 'محلل بيانات مشارك' },
       issuer: 'DataCamp',
       issuerIcon: 'datacamp',
       date: '2025-04',
       category: { en: 'Data Analytics', ar: 'تحليل البيانات' },
-    },
-    {
-      id: 'ibm-ds',
-      name: { en: 'IBM Data Science Specialization', ar: 'تخصص IBM في علم البيانات' },
-      issuer: 'IBM',
-      issuerIcon: 'ibm',
-      date: '2023-05',
-      category: { en: 'Data Science', ar: 'علم البيانات' },
-    },
-    {
-      id: 'dlai-nlp',
-      name: { en: 'Natural Language Processing Specialization', ar: 'تخصص معالجة اللغة الطبيعية' },
-      issuer: 'DeepLearning.AI',
-      issuerIcon: 'deeplearningai',
-      date: '2024-02',
-      category: { en: 'NLP', ar: 'معالجة اللغة' },
     },
     {
       id: 'ibm-tuwaiq-genai',
@@ -666,6 +558,30 @@ export const content: Bilingual<PortfolioData> = {
       issuerIcon: 'ibm',
       date: '2025-02',
       category: { en: 'Generative AI', ar: 'الذكاء الاصطناعي التوليدي' },
+    },
+    {
+      id: 'dlai-nlp',
+      name: { en: 'Natural Language Processing Specialization', ar: 'تخصص معالجة اللغة الطبيعية' },
+      issuer: 'DeepLearning.AI',
+      issuerIcon: 'deeplearningai',
+      date: '2024-02',
+      category: { en: 'NLP', ar: 'معالجة اللغة' },
+    },
+    {
+      id: 'google-ada',
+      name: { en: 'Google Advanced Data Analytics Specialization', ar: 'تخصص Google المتقدم في تحليل البيانات' },
+      issuer: 'Google',
+      issuerIcon: 'google',
+      date: '2024-02',
+      category: { en: 'Data Analytics', ar: 'تحليل البيانات' },
+    },
+    {
+      id: 'ibm-ds',
+      name: { en: 'IBM Data Science Specialization', ar: 'تخصص IBM في علم البيانات' },
+      issuer: 'IBM',
+      issuerIcon: 'ibm',
+      date: '2023-05',
+      category: { en: 'Data Science', ar: 'علم البيانات' },
     },
   ],
 

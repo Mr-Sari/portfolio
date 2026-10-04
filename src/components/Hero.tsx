@@ -1,213 +1,198 @@
-import { animate, motion, useInView, useReducedMotion } from 'framer-motion';
-import { ArrowDown, Download, Mail } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import type { HeroStat } from '../data/types';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowDown, ArrowRight, Download, MapPin, Send } from 'lucide-react';
+import { content } from '../data/content';
+import { localize, type PortfolioData } from '../data/types';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { asset } from '../lib/assets';
-import { GitHubIcon, LinkedInIcon } from '../lib/icons';
+import { TechIcon } from '../lib/icons';
 import { scrollToSection } from '../lib/scroll';
+import { Button, LinkButton } from './ui/Button';
 import { ease } from './ui/motion';
 
+// Icon keys of the skills highlighted in the hero (stable across languages).
+const heroSkills = ['powerbi', 'sql', 'python', 'excel', 'sparkles'];
+
+// The profile card is code, so it always reads the English content.
+const codeData = localize<PortfolioData>(content, 'en');
+
 export function Hero() {
-  const { t, data, locale } = useLanguage();
+  const { t, data } = useLanguage();
   const reduce = useReducedMotion();
-  const { personal, statements } = data;
-  const ar = locale === 'ar';
+  const { personal } = data;
+  const highlights = heroSkills
+    .map((icon) => data.skills.find((s) => s.icon === icon))
+    .filter((s): s is NonNullable<typeof s> => Boolean(s));
 
   const item = {
-    hidden: { opacity: 0, y: reduce ? 0 : 22 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
+    hidden: { opacity: 0, y: reduce ? 0 : 22, filter: reduce ? 'none' : 'blur(6px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease } },
   };
 
-  const jump = (id: 'projects' | 'contact') => (e: React.MouseEvent) => {
-    e.preventDefault();
-    scrollToSection(id);
-  };
-
-  const iconLink =
-    'grid size-10 place-items-center rounded-lg text-fg-muted transition-[color,background-color] hover:bg-accent-soft hover:text-accent';
+  const nameParts = personal.name.split(' ');
+  const last = nameParts.pop();
 
   return (
-    <section id="home" tabIndex={-1} aria-labelledby="home-title" className="relative isolate overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-20 lg:pt-40 lg:pb-24">
-      {/* Chart gridlines fading out, and a soft signal glow */}
-      <div aria-hidden className="bg-rules absolute inset-0 -z-10 [mask-image:linear-gradient(to_bottom,#000,transparent_85%)]" />
-      <div aria-hidden className="absolute -top-40 end-[-10%] -z-10 size-[36rem] rounded-full bg-[radial-gradient(closest-side,var(--accent-glow),transparent)]" />
+    <section id="home" tabIndex={-1} aria-labelledby="home-title" className="relative isolate overflow-hidden pt-24 pb-10 sm:pt-32 sm:pb-16 lg:min-h-[88svh] lg:pt-36">
+      <HeroBackdrop />
+      <div className="container-page grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-10">
+        <motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } } }}>
+          <motion.div variants={item} className="mb-5 inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1 ps-1 pe-3 text-xs text-fg-muted backdrop-blur">
+            <span className="rounded-full bg-accent-soft px-2 py-0.5 font-mono text-[0.68rem] font-medium text-accent">{personal.title}</span>
+            <span className="hidden items-center gap-1 min-[420px]:inline-flex">
+              <MapPin size={12} aria-hidden />
+              {personal.location}
+            </span>
+          </motion.div>
 
-      <div className="container-page grid items-center gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-14">
-        <motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } } }}>
-          <motion.p variants={item} className="flex items-center gap-2 font-mono text-[0.72rem] text-fg-muted">
-            <span className="animate-pulse-dot size-1.5 rounded-full bg-accent" aria-hidden />
-            {t.hero.location}
+          <motion.h1 id="home-title" variants={item} className="text-[2.1rem] leading-[1.05] font-semibold tracking-[-0.04em] text-fg min-[390px]:text-[2.4rem] sm:text-5xl lg:text-[4.2rem]">
+            <span className="block">{nameParts.join(' ')}</span>
+            <span className="block text-fg-subtle">{last}</span>
+          </motion.h1>
+
+          <motion.p variants={item} className="mt-4 max-w-xl text-balance text-lg font-medium leading-snug tracking-[-0.015em] text-fg sm:mt-5 sm:text-2xl">
+            {personal.headline}
           </motion.p>
 
-          {/* Person → profession */}
-          <h1 id="home-title" className="mt-5">
-            <motion.span
-              variants={item}
-              className={`block text-balance font-serif text-fg ${
-                ar ? 'text-[2.7rem] min-[400px]:text-[3rem] sm:text-6xl lg:text-[4.4rem]' : 'text-[3.1rem] leading-[0.95] tracking-[-0.02em] min-[400px]:text-[3.5rem] sm:text-7xl lg:text-[5.4rem]'
-              }`}
-            >
-              {personal.name}
-            </motion.span>
-            <motion.span
-              variants={item}
-              lang={ar ? 'en' : 'ar'}
-              className={`mt-2 block text-fg-subtle ${ar ? 'font-serif text-xl' : 'text-lg font-medium sm:text-xl'}`}
-              style={ar ? undefined : { fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}
-            >
-              <span dir={ar ? 'ltr' : 'rtl'} className="inline-block">
-                {personal.altName}
-              </span>
-            </motion.span>
-            <motion.span variants={item} className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span className="text-[1.6rem] leading-tight font-semibold tracking-tight text-accent sm:text-[2rem]">{personal.title}</span>
-              <span className="text-[0.85rem] text-fg-muted sm:text-[0.95rem]">{t.hero.disciplines}</span>
-            </motion.span>
-          </h1>
+          <motion.p variants={item} className="mt-3 max-w-xl text-[0.95rem] leading-relaxed text-fg-muted sm:text-base">
+            {personal.summary}
+          </motion.p>
 
-          {/* Value */}
-          <motion.div variants={item} className="mt-8 max-w-xl border-s-2 border-accent/60 ps-4">
-            <p className="font-serif text-[1.6rem] leading-snug text-fg italic sm:text-[1.85rem]">{statements.tagline}</p>
-            <p className="mt-2 text-pretty text-base leading-relaxed text-fg-muted sm:text-[1.05rem]">{statements.intro}</p>
-          </motion.div>
-
-          {/* Action */}
-          <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-2.5">
-            <a
-              href="#projects"
-              onClick={jump('projects')}
-              className="group inline-flex min-h-12 items-center gap-2 rounded-xl bg-accent px-5 text-sm font-semibold text-accent-fg shadow-[0_10px_30px_-14px_var(--accent)] transition-[transform,box-shadow] hover:-translate-y-0.5 active:scale-[0.98]"
-            >
-              {t.hero.explore}
-              <ArrowDown size={16} aria-hidden className="transition-transform group-hover:translate-y-0.5" />
-            </a>
-            <a
+          <motion.div variants={item} className="mt-6 flex flex-wrap items-center gap-2.5 sm:mt-8 sm:gap-3">
+            <Button onClick={() => scrollToSection('projects')} icon={<ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" aria-hidden />}>
+              {t.hero.viewProjects}
+            </Button>
+            <LinkButton
+              variant="secondary"
               href={asset(personal.resume)}
-              download
-              className="inline-flex min-h-12 items-center gap-2 rounded-xl border border-line-strong bg-bg-elevated px-5 text-sm font-medium text-fg transition-[color,border-color,translate] hover:-translate-y-0.5 hover:border-accent/60 hover:text-accent"
+              download="Sari-Owaid-Alsulami-Resume.pdf"
+              icon={<Download size={16} className="transition-transform group-hover:translate-y-0.5" aria-hidden />}
             >
-              <Download size={16} aria-hidden />
               {t.hero.downloadResume}
-            </a>
-            <a
-              href="#contact"
-              onClick={jump('contact')}
-              className="inline-flex min-h-12 items-center gap-2 rounded-xl px-4 text-sm font-medium text-fg transition-colors hover:text-accent"
-            >
-              <Mail size={16} aria-hidden />
+            </LinkButton>
+            <Button variant="ghost" onClick={() => scrollToSection('contact')} icon={<Send size={15} aria-hidden />}>
               {t.hero.contact}
-            </a>
+            </Button>
           </motion.div>
-          <motion.ul variants={item} className="mt-5 flex gap-1" aria-label={t.a11y.social}>
-            <li>
-              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`LinkedIn ${t.a11y.opensNewTab}`} className={iconLink}>
-                <LinkedInIcon size={18} />
-              </a>
-            </li>
-            <li>
-              <a href={personal.github} target="_blank" rel="noopener noreferrer" aria-label={`GitHub ${t.a11y.opensNewTab}`} className={iconLink}>
-                <GitHubIcon size={18} />
-              </a>
-            </li>
+
+          <motion.ul variants={item} className="mt-6 flex flex-wrap gap-1.5 sm:mt-8 sm:gap-2" aria-label={t.a11y.coreTech}>
+            {highlights.map((s) => (
+              <li key={s.name} className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface px-2.5 py-1.5 text-xs text-fg-muted backdrop-blur transition-colors hover:border-accent/40 hover:text-fg">
+                <TechIcon name={s.icon} size={13} />
+                {s.name}
+              </li>
+            ))}
           </motion.ul>
         </motion.div>
 
-        <HeroPanel />
+        <ProfileCard />
       </div>
+
+      <motion.button
+        type="button"
+        onClick={() => scrollToSection('about')}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4 }}
+        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 cursor-pointer flex-col items-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] text-fg-subtle uppercase transition-colors hover:text-fg lg:flex"
+      >
+        {t.hero.scroll}
+        <motion.span animate={reduce ? undefined : { y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}>
+          <ArrowDown size={14} aria-hidden />
+        </motion.span>
+      </motion.button>
     </section>
   );
 }
 
-/** Dashboard-style card of real, sourced figures. */
-function HeroPanel() {
-  const { t, data } = useLanguage();
-  const reduce = useReducedMotion();
-  const edu = data.education[0];
-  const gpa = edu.gpa;
-
+function HeroBackdrop() {
   return (
-    <motion.aside
-      aria-label={t.hero.panelTitle}
-      initial={{ opacity: 0, y: reduce ? 0 : 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.9, ease, delay: 0.45 }}
-      className="card relative overflow-hidden p-5 sm:p-6"
-    >
-      <div className="flex items-baseline justify-between gap-3 border-b border-line pb-4">
-        <h2 className="text-sm font-semibold text-fg">{t.hero.panelTitle}</h2>
-        <p className="font-mono text-[0.68rem] text-fg-subtle">{t.hero.panelNote}</p>
-      </div>
-
-      <dl className="grid grid-cols-2 gap-px overflow-hidden border-b border-line bg-line">
-        {data.heroStats.map((stat, i) => (
-          <StatTile key={stat.label} stat={stat} delay={0.55 + i * 0.08} />
-        ))}
-      </dl>
-
-      {gpa && (
-        <div className="border-b border-line py-4">
-          <div className="flex items-baseline justify-between gap-3">
-            <p className="text-[0.8rem] text-fg-muted">{t.hero.gpa}</p>
-            <p className="font-mono text-sm font-medium text-fg" dir="ltr">
-              <span className="text-figure">{gpa.value.toFixed(2)}</span> / {gpa.scale}
-            </p>
-          </div>
-          <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-bg-sunken" aria-hidden>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: gpa.value / gpa.scale }}
-              transition={{ duration: reduce ? 0 : 1.2, ease, delay: 0.9 }}
-              className="h-full origin-left rounded-full bg-figure rtl:origin-right"
-            />
-          </div>
-        </div>
-      )}
-
-      <div className="pt-4">
-        <p className="mb-2 font-mono text-[0.68rem] text-fg-subtle">{t.hero.toolkit}</p>
-        <ul className="flex flex-wrap gap-1.5">
-          {data.heroStack.map((tool) => (
-            <li key={tool} className="rounded-md border border-line bg-bg-sunken/60 px-2 py-1 font-mono text-[0.72rem] text-fg">
-              {tool}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </motion.aside>
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+      <div className="bg-grid mask-fade absolute inset-0" />
+      <div className="absolute -top-40 left-1/2 h-[36rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--accent-glow),transparent)] opacity-80" />
+      <div className="absolute top-1/3 -right-40 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(closest-side,rgb(56_189_248/0.10),transparent)]" />
+    </div>
   );
 }
 
-function StatTile({ stat, delay }: { stat: HeroStat; delay: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true });
+/** Decorative code-editor card rendered from the (English) data. Desktop only:
+ * on phones it would only push the content down. */
+function ProfileCard() {
+  const data = codeData;
   const reduce = useReducedMotion();
-  const [shown, setShown] = useState(reduce ? stat.value : 0);
+  const { personal, experience, education } = data;
+  const current = experience.find((e) => e.end === null) ?? experience[0];
+  const degree = education[0];
 
-  useEffect(() => {
-    if (!inView) return;
-    if (reduce) {
-      setShown(stat.value);
-      return;
-    }
-    const controls = animate(0, stat.value, { duration: 1.4, ease, delay, onUpdate: (v) => setShown(Math.round(v)) });
-    return () => controls.stop();
-  }, [inView, reduce, stat.value, delay]);
+  const lines: { k: string; v: string | string[] }[] = [
+    { k: 'name', v: personal.shortName },
+    { k: 'role', v: personal.title },
+    { k: 'current', v: `${current.role} @ ${current.company}` },
+    { k: 'focus', v: ['Data Analysis', 'BI', 'KPIs', 'AI & LLMs'] },
+    { k: 'stack', v: ['Power BI', 'SQL', 'Python', 'Excel'] },
+    { k: 'education', v: `${degree.degree}, ${degree.institution}` },
+  ];
 
   return (
-    <div ref={ref} className="flex flex-col bg-bg-elevated px-1 py-4 even:ps-4 odd:pe-4">
-      <dt className="order-2 mt-1 text-[0.8rem] leading-snug text-fg">{stat.label}</dt>
-      <dd className="order-1 font-mono text-[2rem] leading-none font-medium tracking-tight text-figure tabular-nums sm:text-[2.3rem]">
-        <span className="sr-only">
-          {stat.value}
-          {stat.suffix}
-        </span>
-        <span aria-hidden dir="ltr" className="inline-block">
-          {shown}
-          {stat.suffix}
-        </span>
-      </dd>
-      <dd className="order-3 mt-0.5 text-[0.7rem] text-fg-subtle">{stat.source}</dd>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: reduce ? 0 : 30, rotate: reduce ? 0 : 1.5 }}
+      animate={{ opacity: 1, y: 0, rotate: 0 }}
+      transition={{ duration: 1, ease, delay: 0.45 }}
+      className="relative hidden w-full lg:block"
+      dir="ltr"
+      aria-hidden
+    >
+      <div className="absolute -inset-px -z-10 rounded-[1.4rem] bg-gradient-to-b from-accent/30 via-transparent to-transparent opacity-60 blur-[1px]" />
+      <div className="card overflow-hidden rounded-[1.35rem] bg-surface-strong/80 backdrop-blur-xl">
+        <div className="flex items-center gap-2 border-b border-line px-4 py-3">
+          <span className="size-2.5 rounded-full bg-fg-subtle/30" />
+          <span className="size-2.5 rounded-full bg-fg-subtle/30" />
+          <span className="size-2.5 rounded-full bg-fg-subtle/30" />
+          <span className="ms-3 font-mono text-[0.7rem] text-fg-subtle">profile.py</span>
+        </div>
+        <pre className="overflow-x-auto p-6 font-mono text-[0.8rem] leading-[1.85]">
+          <code>
+            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="block">
+              <span className="text-fg-subtle">sari</span> <span className="text-accent">=</span> <span className="text-fg">Profile</span>(
+            </motion.span>
+            {lines.map((line, i) => (
+              <motion.span
+                key={line.k}
+                className="block ps-4"
+                initial={{ opacity: 0, x: reduce ? 0 : -6 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.9 + i * 0.09, duration: 0.4 }}
+              >
+                <span className="text-fg-muted">{line.k}</span>
+                <span className="text-accent">=</span>
+                {Array.isArray(line.v) ? (
+                  <span className="text-fg">
+                    [{line.v.map((v, j) => (
+                      <span key={v}>
+                        <span className="text-[color:var(--accent)] opacity-90">"{v}"</span>
+                        {j < line.v.length - 1 && ', '}
+                      </span>
+                    ))}]
+                  </span>
+                ) : (
+                  <span className="text-[color:var(--accent)] opacity-90">"{line.v}"</span>
+                )}
+                ,
+              </motion.span>
+            ))}
+            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="block">
+              )
+            </motion.span>
+            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.65 }} className="mt-3 block text-fg-subtle">
+              <span className="text-accent">&gt;&gt;&gt;</span> sari.turn(data).into(<span className="text-fg">insight</span>)
+              <motion.span
+                className="ms-0.5 inline-block h-[1.05em] w-[0.5ch] translate-y-[0.18em] bg-accent"
+                animate={reduce ? undefined : { opacity: [1, 0, 1] }}
+                transition={{ repeat: Infinity, duration: 1.1 }}
+              />
+            </motion.span>
+          </code>
+        </pre>
+      </div>
+    </motion.div>
   );
 }

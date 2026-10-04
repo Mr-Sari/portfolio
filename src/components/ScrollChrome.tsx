@@ -23,7 +23,7 @@ export function ScrollChrome() {
             exit={{ opacity: 0, y: 12, scale: 0.9 }}
             onClick={() => scrollToSection('home')}
             aria-label={t.a11y.backToTop}
-            className="glass fixed end-4 bottom-4 z-40 grid size-11 cursor-pointer place-items-center rounded-lg border border-line text-fg shadow-card transition-colors hover:text-accent sm:end-6 sm:bottom-6"
+            className="glass fixed end-4 bottom-4 z-40 grid size-11 cursor-pointer place-items-center rounded-full text-fg shadow-card transition-colors hover:text-accent sm:end-6 sm:bottom-6"
           >
             <ArrowUp size={18} aria-hidden />
           </motion.button>
