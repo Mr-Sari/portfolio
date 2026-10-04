@@ -28,8 +28,8 @@ export default function App() {
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <About />
-        <Projects />
         <Experience />
+        <Projects />
         <Skills />
         <Education />
         <Certifications />

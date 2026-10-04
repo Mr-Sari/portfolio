@@ -1,9 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Check, CircleAlert, CircleCheck, Copy, Info, LoaderCircle, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { ArrowUpRight, Check, CircleAlert, CircleCheck, Copy, Download, Info, LoaderCircle, Mail, Phone, Send } from 'lucide-react';
 import { cloneElement, useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { contactProvider, submitContactForm, validateContact, type ContactErrors, type ContactMessage } from '../lib/contact';
 import { GitHubIcon, LinkedInIcon } from '../lib/icons';
+import { asset } from '../lib/assets';
 import { Button } from './ui/Button';
 import { Reveal, RevealGroup } from './ui/Reveal';
 import { Section } from './ui/Section';
@@ -35,6 +36,34 @@ export function Contact() {
     <Section id="contact">
       <SectionHeading id="contact" kicker={t.contact.kicker} title={t.contact.title} intro={t.contact.intro} />
 
+      {/* Final call to action */}
+      <Reveal className="card relative mb-4 overflow-hidden border-accent/30 p-5 sm:p-7">
+        <div aria-hidden className="absolute -top-24 end-0 size-72 rounded-full bg-[radial-gradient(closest-side,var(--accent-glow),transparent)]" />
+        <div className="relative flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-2xl font-semibold tracking-[-0.025em] text-fg sm:text-3xl">{t.contact.lead}</p>
+            <p className="mt-1 text-sm text-fg-muted">{personal.name} · {personal.title}</p>
+          </div>
+          <div className="flex flex-wrap gap-2.5">
+            <a
+              href={`mailto:${personal.email}`}
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-medium text-accent-fg shadow-[0_8px_24px_-10px_var(--accent)] transition-transform hover:-translate-y-0.5"
+            >
+              <Mail size={16} aria-hidden />
+              {t.contact.email}
+            </a>
+            <a
+              href={asset(personal.resume)}
+              download="Sari-Owaid-Alsulami-Resume.pdf"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line-strong bg-surface px-5 text-sm font-medium text-fg transition-[color,border-color,translate] hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent"
+            >
+              <Download size={16} aria-hidden />
+              {t.hero.downloadResume}
+            </a>
+          </div>
+        </div>
+      </Reveal>
+
       <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-6">
         <RevealGroup as="ul" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 lg:content-start">
           <ContactRow icon={<Mail size={18} />} label={t.contact.email}>
@@ -64,8 +93,10 @@ export function Contact() {
               {personal.phone}
             </a>
           </ContactRow>
-          <ContactRow icon={<MapPin size={18} />} label={t.contact.location}>
-            <span className="text-fg">{personal.location}</span>
+          <ContactRow icon={<Download size={18} />} label={t.contact.cv}>
+            <a href={asset(personal.resume)} download="Sari-Owaid-Alsulami-Resume.pdf" className="text-fg after:absolute after:inset-0 after:rounded-2xl hover:text-accent">
+              {t.hero.downloadResume}
+            </a>
           </ContactRow>
         </RevealGroup>
 

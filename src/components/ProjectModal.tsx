@@ -119,7 +119,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                 {project.metrics.map((m) => (
                   <div key={m.label} className="flex flex-col rounded-xl border border-line bg-accent-soft/60 p-3">
                     <dt className="order-2 mt-0.5 text-xs text-fg-subtle">{m.label}</dt>
-                    <dd className="text-xl font-semibold tracking-tight text-fg">{m.value}</dd>
+                    <dd className="font-mono text-xl font-semibold tracking-tight text-figure"><span dir="ltr" className="inline-block">{m.value}</span></dd>
                   </div>
                 ))}
               </dl>
@@ -130,13 +130,11 @@ export default function ProjectModal({ project, onClose }: Props) {
             <p>{project.overview}</p>
           </Block>
 
-          <div className={`grid gap-x-8 ${project.problem ? 'sm:grid-cols-2' : ''}`}>
-            {project.problem && (
-              <Block title={t.projects.problem}>
-                <p>{project.problem}</p>
-              </Block>
-            )}
-            <Block title={t.projects.solution}>
+          <div className="grid gap-x-8 sm:grid-cols-2">
+            <Block title={t.projects.problem}>
+              <p>{project.problem ?? project.brief.problem}</p>
+            </Block>
+            <Block title={t.projects.approach}>
               <p>{project.solution}</p>
             </Block>
           </div>

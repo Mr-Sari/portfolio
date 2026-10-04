@@ -1,14 +1,17 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Download, Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useActiveSection } from '../hooks/useActiveSection';
 import { useScrolled } from '../hooks/useScrolled';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { sectionIds, type SectionId } from '../i18n/strings';
+import { asset } from '../lib/assets';
 import { scrollToSection } from '../lib/scroll';
 import { LanguageToggle } from './LanguageToggle';
 import { ThemeToggle } from './ThemeToggle';
 import { ease } from './ui/motion';
+
+const linkIds = sectionIds.filter((id) => id !== 'home');
 
 export function Navbar() {
   const { t, data } = useLanguage();
@@ -73,7 +76,7 @@ export function Navbar() {
 
         <nav aria-label={t.a11y.mainNav} className="hidden lg:block">
           <ul className="flex items-center gap-0.5">
-            {sectionIds.map((id) => {
+            {linkIds.map((id) => {
               const isActive = active === id;
               return (
                 <li key={id}>
@@ -81,7 +84,7 @@ export function Navbar() {
                     href={`#${id}`}
                     onClick={go(id)}
                     aria-current={isActive ? 'true' : undefined}
-                    className={`relative isolate block rounded-full px-3 py-2 text-[0.8rem] font-medium transition-colors duration-200 ${
+                    className={`relative isolate block rounded-full px-2.5 py-2 text-[0.8rem] font-medium xl:px-3 transition-colors duration-200 ${
                       isActive ? 'text-fg' : 'text-fg-muted hover:text-fg'
                     }`}
                   >
@@ -103,6 +106,14 @@ export function Navbar() {
         <div className="flex items-center gap-0.5">
           <LanguageToggle />
           <ThemeToggle />
+          <a
+            href={asset(data.personal.resume)}
+            download="Sari-Owaid-Alsulami-Resume.pdf"
+            className="ms-1 hidden h-9 items-center gap-1.5 rounded-full border border-line-strong px-3 text-[0.8rem] font-medium text-fg transition-colors hover:border-accent/50 hover:text-accent sm:inline-flex"
+          >
+            <Download size={14} aria-hidden />
+            {t.cv}
+          </a>
           <button
             ref={menuButton}
             type="button"
@@ -134,7 +145,7 @@ export function Navbar() {
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.035 } } }}
               className="grid grid-cols-2 gap-1 p-2 sm:grid-cols-4"
             >
-              {sectionIds.map((id, i) => (
+              {linkIds.map((id, i) => (
                 <motion.li key={id} variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }}>
                   <a
                     href={`#${id}`}
@@ -144,12 +155,22 @@ export function Navbar() {
                       active === id ? 'bg-accent-soft text-fg' : 'text-fg-muted hover:bg-accent-soft hover:text-fg'
                     }`}
                   >
-                    <span className="font-mono text-[0.7rem] text-fg-subtle">{String(i).padStart(2, '0')}</span>
+                    <span lang="en" className="font-mono text-[0.7rem] text-fg-subtle">{String(i + 1).padStart(2, '0')}</span>
                     {t.nav[id]}
                   </a>
                 </motion.li>
               ))}
             </motion.ul>
+            <div className="border-t border-line p-2 sm:hidden">
+              <a
+                href={asset(data.personal.resume)}
+                download="Sari-Owaid-Alsulami-Resume.pdf"
+                className="flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-accent text-[0.95rem] font-medium text-accent-fg"
+              >
+                <Download size={16} aria-hidden />
+                {t.hero.downloadResume}
+              </a>
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>

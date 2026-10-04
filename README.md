@@ -11,8 +11,12 @@ Components render that data; none of them hard-code CV content.
 
 ## Features
 
-- **Sections:** Hero, About, Projects (filterable, with detail modal), Experience timeline,
-  Skills, Education, Certifications, Contact, Footer
+- **Sections:** Hero (name → Data Analyst → value → actions, beside an impact panel of CV
+  figures), About (Analytics → BI → Data Science → AI), Experience (career path + timeline),
+  Projects (filterable case-study viewer: Problem → Approach → Technology → Result, plus a
+  detail modal), Skills (Data Analytics emphasised), Education, Certifications, Contact, Footer
+- **Visual system:** slate neutrals and a teal accent, with one sand-gold reserved for real
+  figures; Inter, JetBrains Mono and IBM Plex Sans Arabic. All text colours meet WCAG AA.
 - **Theme:** dark / light, following the system preference on first visit, saved per visitor, no flash on load
 - **Language:** English (default, LTR) / Arabic (RTL) toggle covering both the interface and the content
 - **Concise layout:** each metric appears once; project cards show a short summary, highlights and
@@ -92,7 +96,7 @@ technologies: ['YOLOv8', 'OpenCV'], // technology names stay as plain strings
 against the content model. The default language is `DEFAULT_LOCALE` in
 `src/i18n/LanguageProvider.tsx` (mirrored in the pre-paint script in `index.html`).
 
-- **Projects:** each has `categories` (drives the filter tabs), `highlights` (card), `metrics`,
+- **Projects:** each has `categories` (drives the filter tabs), `brief` (problem, approach, result), `metrics`,
   `methodology` and optional `problem` / `impact` (modal; omitted sections are hidden).
   `githubUrl` and `demoUrl` show their buttons only when non-empty, so leave them `''` until a real
   URL exists. The first six projects are shown, and the rest are behind "Show all".

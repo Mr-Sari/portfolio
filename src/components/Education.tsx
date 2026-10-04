@@ -66,7 +66,7 @@ function GpaRing({ value, scale, label, outOf }: { value: number; scale: number;
             cy="64"
             r={r}
             fill="none"
-            stroke="var(--accent)"
+            stroke="var(--figure)"
             strokeWidth="10"
             strokeLinecap="round"
             strokeDasharray={c}
@@ -76,7 +76,7 @@ function GpaRing({ value, scale, label, outOf }: { value: number; scale: number;
             transition={{ duration: 1.2, ease, delay: 0.2 }}
           />
         </svg>
-        <div className="absolute inset-0 grid place-items-center text-base font-semibold tracking-tight text-fg sm:text-xl">{value.toFixed(2)}</div>
+        <div className="absolute inset-0 grid place-items-center font-mono text-base font-semibold tracking-tight text-figure sm:text-xl">{value.toFixed(2)}</div>
       </div>
       <figcaption className="text-center text-[0.68rem] leading-tight text-fg-subtle">
         {label}

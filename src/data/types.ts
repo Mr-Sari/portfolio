@@ -13,6 +13,7 @@ export type IconKey = string;
 export interface Personal {
   name: string;
   shortName: string;
+  altName: string;
   initials: string;
   title: string;
   headline: string;
@@ -28,7 +29,15 @@ export interface Personal {
 
 export interface About {
   paragraphs: string[];
-  focusAreas: { title: string; description: string; icon: IconKey }[];
+  /** Analytics → BI → Data Science → AI, in order of emphasis. */
+  chain: { title: string; description: string; icon: IconKey }[];
+}
+
+/** A real, sourced figure shown in the hero. */
+export interface HeroStat {
+  value: string;
+  label: string;
+  source: string;
 }
 
 export interface Experience {
@@ -41,6 +50,8 @@ export interface Experience {
   end: string | null; // null = present
   employmentType?: string;
   sector: string;
+  /** The discipline this role represents in the career path. */
+  stage: string;
   summary: string;
   /** Bullets from the CV. Figures such as "10+" are highlighted automatically. */
   achievements: string[];
@@ -65,7 +76,9 @@ export interface Project {
   technologies: string[];
   /** 1–3 short phrases shown on the card. */
   highlights: string[];
-  /** Quantified results, shown only in the project modal. */
+  /** Problem → Approach → Result, one line each. */
+  brief: { problem: string; approach: string; result: string };
+  /** Quantified results from the CV. */
   metrics: { value: string; label: string }[];
   overview: string;
   /** Only set when the CV states or directly implies the problem. */
@@ -80,7 +93,7 @@ export interface Project {
   demoUrl: string;
 }
 
-export type SkillCategoryId = 'analytics' | 'languages' | 'data-engineering' | 'ai' | 'llm' | 'tools';
+export type SkillCategoryId = 'analytics' | 'bi' | 'ai' | 'engineering';
 
 export interface Skill {
   name: string;
@@ -91,6 +104,9 @@ export interface Skill {
 export interface SkillCategory {
   id: SkillCategoryId;
   label: string;
+  description: string;
+  /** The primary group gets the strongest emphasis. */
+  primary?: boolean;
 }
 
 export interface Education {
@@ -118,12 +134,14 @@ export interface Certification {
 
 export interface PortfolioData {
   personal: Personal;
+  heroStats: HeroStat[];
   about: About;
   experience: Experience[];
   projects: Project[];
   projectCategories: { id: ProjectCategory; label: string }[];
   skillCategories: SkillCategory[];
   skills: Skill[];
+  tools: string[];
   softSkills: string[];
   education: Education[];
   certifications: Certification[];

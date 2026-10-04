@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
-import { Briefcase, ChevronDown } from 'lucide-react';
+import { ArrowRight, Briefcase, ChevronDown } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type { Experience as ExperienceItem } from '../data/types';
 import { spotlightMove } from '../hooks/useSpotlight';
@@ -38,7 +38,8 @@ export function Experience() {
 
   return (
     <Section id="experience" className="bg-[linear-gradient(to_bottom,transparent,var(--accent-soft)_50%,transparent)]">
-      <SectionHeading id="experience" kicker={t.experience.kicker} title={t.experience.title} />
+      <SectionHeading id="experience" kicker={t.experience.kicker} title={t.experience.title} intro={t.experience.intro} />
+      <CareerPath items={[...items].reverse()} />
 
       <div ref={list} className="relative">
         <div aria-hidden className="absolute top-4 bottom-4 start-[15px] w-px bg-line sm:start-[19px]" />
@@ -73,7 +74,7 @@ function TimelineItem({ item, index, isOpen, onToggle }: { item: ExperienceItem;
       className="relative ps-10 pb-4 last:pb-0 sm:ps-14 sm:pb-5"
     >
       <span aria-hidden className="absolute start-0 top-4 grid size-8 place-items-center sm:size-10">
-        {isCurrent && !reduce && <span className="absolute inset-0 animate-ping rounded-full bg-accent/25 [animation-duration:2.4s]" />}
+        {isCurrent && <span className="absolute -inset-1 rounded-full ring-1 ring-accent/30" />}
         <span
           className={`relative grid size-8 place-items-center rounded-full border sm:size-10 ${
             isCurrent ? 'border-accent bg-accent text-accent-fg' : 'border-line-strong bg-bg-elevated text-fg-muted'
@@ -91,13 +92,14 @@ function TimelineItem({ item, index, isOpen, onToggle }: { item: ExperienceItem;
       >
         <header className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
           <div className="min-w-0">
-            <h3 className="flex flex-wrap items-center gap-2 text-base font-semibold tracking-tight text-fg sm:text-lg">
+            <p className={`mb-1 text-[0.72rem] font-medium ${isCurrent ? 'text-accent' : 'text-fg-subtle'}`}>{item.stage}</p>
+            <h3 className="flex flex-wrap items-center gap-2 text-lg font-semibold tracking-tight text-fg sm:text-xl">
               {item.role}
               {isCurrent && <Tag tone="accent">● {t.experience.current}</Tag>}
               {item.employmentType && <Tag>{item.employmentType}</Tag>}
             </h3>
             <p className="mt-0.5 text-sm text-fg-muted">
-              <span className="font-medium text-fg">{item.company}</span>
+              <span className="font-medium text-accent">{item.company}</span>
               {item.via && (
                 <span className="text-fg-subtle">
                   {' '}
@@ -109,7 +111,8 @@ function TimelineItem({ item, index, isOpen, onToggle }: { item: ExperienceItem;
           <p className="font-mono text-[0.7rem] leading-relaxed text-fg-subtle">{meta.join(' · ')}</p>
         </header>
 
-        <ul className="mt-3 space-y-1.5 text-sm leading-relaxed text-fg-muted">
+        <p className="mt-2 text-sm text-fg-muted">{item.summary}</p>
+        <ul className="mt-3 space-y-1.5 text-[0.92rem] leading-relaxed text-fg">
           {item.achievements.map((line) => (
             <li key={line} className="flex gap-2.5">
               <span className="mt-[0.55rem] size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
@@ -139,16 +142,17 @@ function TimelineItem({ item, index, isOpen, onToggle }: { item: ExperienceItem;
                   </li>
                 ))}
               </ul>
-              <ul className="mt-3 flex flex-wrap gap-1" aria-label={t.projects.technologies}>
-                {item.technologies.map((tech) => (
-                  <li key={tech}>
-                    <Tag>{tech}</Tag>
-                  </li>
-                ))}
-              </ul>
             </motion.div>
           )}
         </AnimatePresence>
+
+        <ul className="mt-4 flex flex-wrap gap-1" aria-label={t.projects.technologies}>
+          {item.technologies.map((tech) => (
+            <li key={tech}>
+              <Tag>{tech}</Tag>
+            </li>
+          ))}
+        </ul>
 
         <button
           type="button"
@@ -174,7 +178,7 @@ function Highlight({ text }: { text: string }) {
     <>
       {text.split(/(\d[\d,.]*\+?%?)/).map((part, i) =>
         i % 2 ? (
-          <strong key={i} className="font-semibold text-fg">
+          <strong key={i} className="font-mono font-semibold text-figure">
             {part}
           </strong>
         ) : (
@@ -182,5 +186,60 @@ function Highlight({ text }: { text: string }) {
         ),
       )}
     </>
+  );
+}
+
+/**
+ * Oldest → newest progression. Bars rise with each role; the dashed step
+ * points on to the 2026 AI projects (not a job).
+ */
+function CareerPath({ items }: { items: ExperienceItem[] }) {
+  const { t, formatDate } = useLanguage();
+  const reduce = useReducedMotion();
+  const heights = ['h-6', 'h-10', 'h-14'];
+  const bar = { hidden: { scaleY: 0 }, show: { scaleY: 1, transition: { duration: reduce ? 0 : 0.7, ease } } };
+
+  return (
+    <motion.ol
+      aria-label={t.experience.path}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15 } } }}
+      className="card mb-8 grid grid-cols-2 gap-x-4 gap-y-6 p-5 sm:mb-10 sm:grid-cols-4 sm:p-6"
+    >
+      {items.map((item, i) => {
+        const current = item.end === null;
+        return (
+          <li key={item.id} className="relative flex flex-col justify-end">
+            <motion.span
+              aria-hidden
+              variants={bar}
+              className={`block w-full origin-bottom rounded-t-md ${heights[Math.min(i, 2)]} ${current ? 'bg-accent' : i === 0 ? 'bg-accent/25' : 'bg-accent/55'}`}
+            />
+            <span className="mt-3 border-t border-line-strong pt-2.5">
+              <span className={`block text-[0.72rem] font-medium ${current ? 'text-accent' : 'text-fg-muted'}`}>{item.stage}</span>
+              <span className="mt-0.5 block text-sm font-semibold text-fg">{item.role}</span>
+              <span className="block truncate text-xs text-fg-subtle">
+                {item.company.replace(/ \(.*\)$/, '')} · {formatDate(item.start).split(' ').pop()}
+              </span>
+            </span>
+            {i < 2 && (
+              <ArrowRight size={14} aria-hidden className="absolute -end-3.5 bottom-12 hidden text-fg-subtle sm:block rtl:rotate-180" />
+            )}
+          </li>
+        );
+      })}
+      <li className="relative flex flex-col justify-end">
+        <motion.span aria-hidden variants={bar} className="block h-[4.5rem] w-full origin-bottom rounded-t-md border border-b-0 border-dashed border-figure/70 bg-figure-soft" />
+        <span className="mt-3 border-t border-dashed border-line-strong pt-2.5">
+          <span className="block text-[0.72rem] font-medium text-figure">{t.experience.next.stage}</span>
+          <a href="#projects" className="mt-0.5 block text-sm font-semibold text-fg transition-colors hover:text-accent">
+            {t.experience.next.detail}
+          </a>
+          <span className="block text-xs text-fg-subtle">2026</span>
+        </span>
+      </li>
+    </motion.ol>
   );
 }

@@ -2,7 +2,9 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ---------- Design tokens ---------- */
+/* ---------- Design tokens ----------
+   Slate neutrals and a teal signal colour (kept from the approved design),
+   plus one sand-gold reserved for real figures. Every text pair meets WCAG AA. */
 :root {
   --bg: #f6f7f9;
   --bg-elevated: #ffffff;
@@ -10,7 +12,7 @@
   --surface-strong: #ffffff;
   --fg: #0b1220;
   --fg-muted: #4a5465;
-  --fg-subtle: #6b7484;
+  --fg-subtle: #5f6878;
   --border: rgb(15 23 42 / 0.09);
   --border-strong: rgb(15 23 42 / 0.16);
   --accent: #0f766e;
@@ -18,6 +20,8 @@
   --accent-soft: rgb(15 118 110 / 0.08);
   --accent-glow: rgb(20 184 166 / 0.18);
   --grid-line: rgb(15 23 42 / 0.045);
+  --figure: #8a6414;
+  --figure-soft: rgb(138 100 20 / 0.09);
   --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12);
   --shadow-lift: 0 2px 4px rgb(15 23 42 / 0.04), 0 24px 48px -20px rgb(15 23 42 / 0.22);
 }
@@ -29,14 +33,16 @@
   --surface-strong: #0f141b;
   --fg: #e8ecf1;
   --fg-muted: #a2acba;
-  --fg-subtle: #7d8796;
+  --fg-subtle: #8a93a1;
   --border: rgb(255 255 255 / 0.075);
   --border-strong: rgb(255 255 255 / 0.14);
-  --accent: #2dd4bf;
+  --accent: #3cc7b0;
   --accent-fg: #03201c;
-  --accent-soft: rgb(45 212 191 / 0.09);
-  --accent-glow: rgb(45 212 191 / 0.16);
+  --accent-soft: rgb(60 199 176 / 0.09);
+  --accent-glow: rgb(60 199 176 / 0.14);
   --grid-line: rgb(255 255 255 / 0.035);
+  --figure: #dcb46a;
+  --figure-soft: rgb(220 180 106 / 0.1);
   --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -16px rgb(0 0 0 / 0.6);
   --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 28px 60px -24px rgb(0 0 0 / 0.8);
 }
@@ -54,6 +60,8 @@
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
   --color-accent-soft: var(--accent-soft);
+  --color-figure: var(--figure);
+  --color-figure-soft: var(--figure-soft);
   --font-sans: 'Inter', 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --shadow-card: var(--shadow-card);
@@ -62,14 +70,14 @@
 
 /* ---------- Base ---------- */
 html {
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 5rem;
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
 }
 
 /* Monospace fonts have no Arabic glyphs and space them out; use the Arabic
-   face for labels, but keep real code (the profile card) monospaced. */
-html[lang='ar'] :is(.font-mono, .kicker):not(pre, pre *) {
+   face for labels. */
+html[lang='ar'] :is(.font-mono, .kicker) {
   font-family: 'IBM Plex Sans Arabic', 'JetBrains Mono', ui-monospace, monospace;
 }
 
@@ -200,9 +208,11 @@ section:focus {
   }
 }
 
-/* In Arabic mode the page chrome is RTL while CV content stays English:
-   resolve each text block's direction from its own content so punctuation
-   and Latin runs render correctly. */
-html[dir='rtl'] :is(p, h1, h2, h3, h4, li, dd, dt, label) {
-  unicode-bidi: plaintext;
+/* Arabic has no true italic; a synthetic slant distorts the letterforms. */
+html[lang='ar'] :is(em, .italic) {
+  font-style: normal;
+}
+
+@utility text-pretty {
+  text-wrap: pretty;
 }
