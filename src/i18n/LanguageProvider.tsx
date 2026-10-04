@@ -6,7 +6,7 @@ import { strings, type Locale, type Strings } from './strings';
 
 const STORAGE_KEY = 'portfolio-locale';
 
-export const DEFAULT_LOCALE: Locale = 'en';
+export const DEFAULT_LOCALE: Locale = 'ar';
 
 const dataByLocale: Record<Locale, PortfolioData> = {
   en: localize<PortfolioData>(content, 'en'),
