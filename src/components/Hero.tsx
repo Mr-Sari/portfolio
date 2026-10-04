@@ -54,17 +54,6 @@ export function Hero() {
             >
               {personal.name}
             </motion.span>
-            <motion.span variants={item} className="mt-3 flex items-center gap-3">
-              <span aria-hidden className="h-px w-8 bg-figure" />
-              <span
-                lang={ar ? 'en' : 'ar'}
-                dir={ar ? 'ltr' : 'rtl'}
-                className="text-base font-medium text-fg-subtle sm:text-lg"
-                style={ar ? undefined : { fontFamily: "'IBM Plex Sans Arabic', sans-serif" }}
-              >
-                {personal.altName}
-              </span>
-            </motion.span>
             {/* Profession */}
             <motion.span variants={item} className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
               <span className="text-[1.75rem] leading-tight font-semibold tracking-[-0.02em] text-accent sm:text-[2.1rem]">{personal.title}</span>
