@@ -11,25 +11,30 @@ Components render that data; none of them hard-code CV content.
 
 ## Features
 
-- **Sections:** Hero → About (bento: who I am, education, philosophy, location, focus) → Experience
-  (centre timeline) → Projects (snap carousel + detail modal) → statement interlude → Skills → Certifications →
-  Contact (closing statement, contact chips, form) → one-line footer
-- **Positioning:** Data Analyst first; BI, data engineering and AI/ML as supporting skills. Skills are grouped
-  by priority, and the Data Analytics group gets larger, emphasised chips.
-- **Personal voice:** a few short statements (hero, About philosophy, interlude, closing), edited in
+- **Design direction — "the analyst's report":** an editorial, data-journalism look. Instrument Serif
+  headlines, Geist body, Geist Mono for figures and labels, numbered sections (01–06), chart gridlines,
+  a teal signal colour for interaction and an amber colour reserved for real figures.
+- **Sections:** Hero (statement + "By the numbers" panel of sourced figures) → About (personal narrative +
+  Analytics → BI → Data Science → AI chain) → Experience (rising career-path chart + detailed roles) →
+  Selected Work (coverflow + Problem → Approach → Technology → Result case strip + case-study modal) →
+  "raw data → insight" interlude → Skills (tiered matrix, Data Analytics first) → Education & Certifications →
+  Contact (closing statement, direct channels, form) → footer
+- **Positioning:** Data Analyst first; business intelligence, data science, AI/ML and data engineering in
+  support. Only figures stated in the CV are shown (10+, 25+, 15+, 20+, 4.43/5, 81% / 93% / 100% / 21).
+- **Personal voice:** short statements (hero, About, interlude, closing, footer signature), edited in
   `statements` inside `src/data/content.ts`
-- **Projects:** cards read Problem → Solution → Result (`brief` field, only where the CV supports it);
-  methodology, metrics and links live in the modal. GitHub/Live Demo buttons render only for real URLs.
-- **Motion (Framer Motion):** blur-to-sharp section titles, staggered reveals, typing stack line in the hero,
-  hero parallax, timeline line that grows with scroll, side-entering timeline cards, carousel focus scaling,
-  self-drawing skill dividers, soft-skills marquee. Everything is reduced or static under `prefers-reduced-motion`.
+- **Projects:** eight projects, newest first. Each has a `brief` (problem, approach, result) and optional
+  `metrics`; GitHub/Live Demo buttons render only for real URLs.
+- **Motion (Framer Motion):** staggered hero entrance, counting figures, drawn section rules, rising
+  career-path bars, a self-drawing trend line, coverflow transitions and subtle hover lifts. Everything is
+  static under `prefers-reduced-motion`.
 - **Theme:** dark / light, following the system preference on first visit, saved per visitor, no flash on load
 - **Language:** English (default, LTR) / Arabic (RTL), with both interface and content translated
-- **Navigation:** floating pill navbar with active-section indicator, Contact CTA, language and theme toggles,
-  animated mobile menu, reading-progress bar, back-to-top
+- **Navigation:** report-style top bar with numbered links and active indicator, résumé button, language and
+  theme toggles, full-screen mobile menu, reading-progress bar, back-to-top
 - **Accessibility:** semantic landmarks, skip link, ordered headings, keyboard-operable filters, carousel
-  (arrows, scrubber, arrow keys), accordions and dialog (focus trap, Escape, focus return), visible focus rings,
-  labelled form fields with inline errors
+  (arrows, dots, arrow keys, swipe), accordions and dialog (focus trap, Escape, focus return), visible focus
+  rings, labelled form fields with inline errors
 - **SEO:** title, description, keywords, author, Open Graph / Twitter tags, a 1200×630 OG image and
   `Person` JSON-LD, all generated at build time from the same data file
 
@@ -56,7 +61,7 @@ Components render that data; none of them hard-code CV content.
     ├── i18n/
     │   ├── strings.ts          # UI strings (en, ar) and section ids
     │   └── LanguageProvider.tsx
-    ├── hooks/                  # useTheme, useActiveSection, useScrolled, useSpotlight
+    ├── hooks/                  # useTheme, useActiveSection, useScrolled
     ├── lib/
     │   ├── contact.ts          # Contact form validation + submission (isolated)
     │   ├── icons.tsx           # Tech/brand icon registry
@@ -65,11 +70,11 @@ Components render that data; none of them hard-code CV content.
     │   └── assets.ts           # Base-path-aware public asset URLs
     └── components/
         ├── Navbar.tsx  ThemeToggle.tsx  LanguageToggle.tsx  ScrollChrome.tsx
-        ├── Hero.tsx  About.tsx  Interlude.tsx
+        ├── Hero.tsx  About.tsx  Experience.tsx
         ├── Projects.tsx  ProjectCard.tsx  ProjectModal.tsx  ProjectVisual.tsx
-        ├── Experience.tsx  Skills.tsx  Certifications.tsx
+        ├── Interlude.tsx  Skills.tsx  Education.tsx
         ├── Contact.tsx  Footer.tsx
-        └── ui/                 # BigTitle, Button, Tag, Section, Reveal, motion presets
+        └── ui/                 # Section + SectionHeader, BrandMark, Button, Tag, Reveal, motion presets
 ```
 
 ## Getting started

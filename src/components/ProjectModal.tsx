@@ -79,7 +79,7 @@ export default function ProjectModal({ project, onClose }: Props) {
         initial={{ opacity: 0, y: reduce ? 0 : 40, scale: reduce ? 1 : 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease } }}
         exit={{ opacity: 0, y: reduce ? 0 : 24, scale: reduce ? 1 : 0.98, transition: { duration: 0.2 } }}
-        className="relative flex max-h-[92svh] w-full max-w-3xl flex-col overflow-hidden rounded-t-[1.75rem] border border-line bg-bg-elevated shadow-lift sm:rounded-[1.75rem]"
+        className="relative flex max-h-[92svh] w-full max-w-3xl flex-col overflow-hidden rounded-t-2xl border border-line bg-bg-elevated shadow-lift sm:rounded-2xl"
       >
         <div className="relative shrink-0">
           <ProjectVisual visual={project.visual} className="h-28 border-b border-line sm:h-40" />
@@ -89,7 +89,7 @@ export default function ProjectModal({ project, onClose }: Props) {
             type="button"
             onClick={onClose}
             aria-label={t.a11y.closeDialog}
-            className="absolute top-3 end-3 grid size-10 cursor-pointer place-items-center rounded-full border border-line bg-bg-elevated/85 text-fg backdrop-blur transition-[transform,color] hover:rotate-90 hover:text-accent"
+            className="absolute top-3 end-3 grid size-10 cursor-pointer place-items-center rounded-lg border border-line bg-bg-elevated/90 text-fg backdrop-blur transition-[transform,color] hover:rotate-90 hover:text-accent"
           >
             <X size={18} aria-hidden />
           </button>
@@ -105,7 +105,7 @@ export default function ProjectModal({ project, onClose }: Props) {
               {formatDate(project.start)} – {end}
             </span>
           </div>
-          <h2 id={titleId} className="mt-3 text-balance text-xl font-semibold tracking-[-0.025em] text-fg sm:text-2xl">
+          <h2 id={titleId} className="mt-3 text-balance font-serif text-[2rem] leading-[1.05] text-fg sm:text-[2.5rem]">
             {project.title}
           </h2>
           <p className="mt-1 text-sm text-fg-subtle">{project.context}</p>
@@ -117,9 +117,9 @@ export default function ProjectModal({ project, onClose }: Props) {
             <Block title={t.projects.metrics}>
               <dl className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {project.metrics.map((m) => (
-                  <div key={m.label} className="flex flex-col rounded-xl border border-line bg-accent-soft/60 p-3">
-                    <dt className="order-2 mt-0.5 text-xs text-fg-subtle">{m.label}</dt>
-                    <dd className="text-xl font-semibold tracking-tight text-fg">{m.value}</dd>
+                  <div key={m.label} className="flex flex-col rounded-lg border border-line bg-figure-soft p-3">
+                    <dt className="order-2 mt-1 text-xs text-fg-subtle">{m.label}</dt>
+                    <dd className="font-mono text-xl font-medium text-figure">{m.value}</dd>
                   </div>
                 ))}
               </dl>
@@ -130,13 +130,11 @@ export default function ProjectModal({ project, onClose }: Props) {
             <p>{project.overview}</p>
           </Block>
 
-          <div className={`grid gap-x-8 ${project.problem ? 'sm:grid-cols-2' : ''}`}>
-            {project.problem && (
-              <Block title={t.projects.problem}>
-                <p>{project.problem}</p>
-              </Block>
-            )}
-            <Block title={t.projects.solution}>
+          <div className="grid gap-x-8 sm:grid-cols-2">
+            <Block title={t.projects.problem}>
+              <p>{project.problem ?? project.brief.problem}</p>
+            </Block>
+            <Block title={t.projects.approach}>
               <p>{project.solution}</p>
             </Block>
           </div>
@@ -152,10 +150,10 @@ export default function ProjectModal({ project, onClose }: Props) {
             </ol>
           </Block>
 
-          {project.impact?.length ? (
+          {project.impact?.length || project.brief.result ? (
             <Block title={t.projects.impact}>
               <ul className="space-y-1.5">
-                {project.impact.map((line) => (
+                {(project.impact?.length ? project.impact : [project.brief.result!]).map((line) => (
                   <li key={line} className="flex gap-3">
                     <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
                     {line}
@@ -165,7 +163,7 @@ export default function ProjectModal({ project, onClose }: Props) {
             </Block>
           ) : null}
 
-          <Block title={t.projects.technologies}>
+          <Block title={t.projects.technology}>
             <ul className="flex flex-wrap gap-1.5">
               {project.technologies.map((tech) => (
                 <li key={tech}>

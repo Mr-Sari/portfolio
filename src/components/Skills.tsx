@@ -1,8 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { TechIcon } from '../lib/icons';
-import { BigTitle } from './ui/BigTitle';
-import { Section } from './ui/Section';
+import { Section, SectionHeader } from './ui/Section';
 import { ease } from './ui/motion';
 
 export function Skills() {
@@ -10,11 +9,11 @@ export function Skills() {
   const reduce = useReducedMotion();
 
   return (
-    <Section id="skills" className="overflow-hidden">
-      <BigTitle id="skills" lead={t.skills.title.lead} accent={t.skills.title.accent} sub={t.skills.sub} className="mb-6 sm:mb-8" />
+    <Section id="skills" className="border-t border-line">
+      <SectionHeader id="skills" index="04" title={t.skills.title} lede={t.skills.lede} />
 
-      <div className="mx-auto grid max-w-5xl gap-x-8 gap-y-4 sm:gap-y-5 md:grid-cols-2">
-        {data.skillCategories.map((cat) => {
+      <div className="border-t border-line">
+        {data.skillCategories.map((cat, i) => {
           const skills = data.skills.filter((s) => s.category === cat.id);
           return (
             <motion.section
@@ -23,39 +22,37 @@ export function Skills() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.035 } } }}
-              className={cat.primary ? 'md:col-span-2' : ''}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.03 } } }}
+              className="grid gap-4 border-b border-line py-6 sm:py-8 md:grid-cols-[17rem_minmax(0,1fr)] md:gap-10"
             >
-              <div className="mb-1.5 flex items-center gap-2.5">
-                <h3 id={`skills-${cat.id}`} className={`shrink-0 font-mono text-[0.7rem] tracking-[0.1em] uppercase ${cat.primary ? 'text-accent' : 'text-fg-subtle'}`}>
-                  {'// '}
+              <div>
+                <p className="flex items-center gap-2 font-mono text-[0.68rem] text-fg-subtle">
+                  <span lang="en">0{i + 1}</span>
+                  {cat.primary && <span className="rounded bg-accent px-1.5 py-0.5 text-[0.62rem] text-accent-fg">{t.skills.core}</span>}
+                </p>
+                <h3 id={`skills-${cat.id}`} className={`mt-1.5 font-semibold tracking-tight text-fg ${cat.primary ? 'text-2xl' : 'text-lg'}`}>
                   {cat.label}
                 </h3>
-                {/* Line draws itself across as the row enters */}
-                <motion.span
-                  aria-hidden
-                  variants={{ hidden: { scaleX: 0 }, show: { scaleX: 1, transition: { duration: reduce ? 0 : 0.9, ease } } }}
-                  className={`h-px flex-1 origin-left rtl:origin-right ${cat.primary ? 'bg-gradient-to-r from-accent/60 to-transparent rtl:bg-gradient-to-l' : 'bg-line'}`}
-                />
+                <p className="mt-1 text-[0.85rem] text-fg-muted">{cat.description}</p>
               </div>
-              <ul className="flex flex-wrap gap-1.5">
+              <ul className="flex flex-wrap content-start gap-2">
                 {skills.map((skill) => (
                   <motion.li
                     key={skill.name}
                     variants={{
-                      hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.96 },
-                      show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.45, ease } },
+                      hidden: { opacity: 0, y: reduce ? 0 : 8 },
+                      show: { opacity: 1, y: 0, transition: { duration: 0.4, ease } },
                     }}
-                    className={`group inline-flex items-center gap-1.5 rounded-lg border transition-[border-color,color,translate] duration-200 hover:-translate-y-0.5 ${
+                    className={`group inline-flex items-center gap-2 rounded-lg border transition-[border-color,color,translate] duration-200 hover:-translate-y-0.5 ${
                       cat.primary
-                        ? 'border-accent/35 bg-accent-soft px-3 py-1.5 text-[0.92rem] font-semibold text-fg sm:text-[0.95rem]'
-                        : 'border-line bg-surface px-2 py-0.5 text-[0.8rem] text-fg hover:border-accent/40'
+                        ? 'border-accent/40 bg-accent-soft px-4 py-2.5 text-base font-semibold text-fg'
+                        : 'border-line bg-bg-elevated px-2.5 py-1.5 text-[0.85rem] text-fg hover:border-accent/40'
                     }`}
                   >
                     <TechIcon
                       name={skill.icon}
-                      size={cat.primary ? 16 : 13}
-                      className={`transition-colors ${cat.primary ? 'text-accent' : 'text-fg-muted group-hover:text-accent'}`}
+                      size={cat.primary ? 18 : 14}
+                      className={`transition-colors ${cat.primary ? 'text-accent' : 'text-fg-subtle group-hover:text-accent'}`}
                     />
                     {skill.name}
                   </motion.li>
@@ -66,37 +63,21 @@ export function Skills() {
         })}
       </div>
 
-      <SoftSkillsMarquee label={t.skills.soft} items={data.softSkills} />
-    </Section>
-  );
-}
-
-/** Endless strip of soft skills; static (wrapped) under reduced motion, pauses on hover. */
-function SoftSkillsMarquee({ label, items }: { label: string; items: string[] }) {
-  const reduce = useReducedMotion();
-  const pill = 'shrink-0 rounded-full border border-line bg-surface px-3 py-1 text-[0.82rem] text-fg-muted';
-  return (
-    <div className="mt-6 sm:mt-8">
-      <h3 className="sr-only">{label}</h3>
-      {reduce ? (
-        <ul className="flex flex-wrap justify-center gap-2">
-          {items.map((s) => (
-            <li key={s} className={pill}>
+      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:gap-6">
+        <h3 className="shrink-0 font-mono text-[0.72rem] text-fg-subtle">{t.skills.soft}</h3>
+        <ul className="flex flex-wrap gap-x-2 gap-y-1 text-[0.95rem] text-fg-muted">
+          {data.softSkills.map((s, i) => (
+            <li key={s} className="flex items-center gap-2">
+              {i > 0 && (
+                <span aria-hidden className="text-fg-subtle">
+                  ·
+                </span>
+              )}
               {s}
             </li>
           ))}
         </ul>
-      ) : (
-        <div className="relative -mx-5 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)] sm:mx-0">
-          <ul className="animate-marquee flex w-max gap-2 hover:[animation-play-state:paused]" aria-label={label}>
-            {[...items, ...items, ...items, ...items].map((s, i) => (
-              <li key={i} className={`${pill} ${i % items.length === 0 ? 'border-accent/40 text-accent' : ''}`} aria-hidden={i >= items.length}>
-                {s}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+      </div>
+    </Section>
   );
 }

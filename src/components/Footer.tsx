@@ -1,25 +1,33 @@
 import { ArrowUp } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { scrollToSection } from '../lib/scroll';
+import { BrandMark } from './ui/BrandMark';
 
-/** One-line footer: attribution · back to top · copyright. */
 export function Footer() {
   const { t, data } = useLanguage();
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-line">
-      <div className="container-page flex flex-col items-center gap-3 py-5 text-xs text-fg-subtle sm:flex-row sm:justify-between">
-        <p className="order-3 font-mono text-[0.68rem] sm:order-1">{t.footer.built}</p>
-        <button
-          type="button"
-          onClick={() => scrollToSection('home')}
-          className="order-1 inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full border border-line px-3.5 text-fg-muted transition-colors hover:border-accent/50 hover:text-accent sm:order-2"
-        >
-          <ArrowUp size={13} aria-hidden />
-          {t.footer.top}
-        </button>
-        <p className="order-2 sm:order-3">
+    <footer className="border-t border-line bg-bg-sunken/40">
+      <div className="container-page py-10">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex items-center gap-3">
+            <BrandMark className="size-9 shrink-0" />
+            <div>
+              <p className="font-semibold text-fg">{data.personal.name}</p>
+              <p className="font-serif text-lg text-fg-muted italic">{data.statements.signature}</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => scrollToSection('home')}
+            className="inline-flex min-h-10 w-fit cursor-pointer items-center gap-1.5 rounded-lg border border-line-strong px-3.5 text-[0.8rem] text-fg-muted transition-colors hover:border-accent/60 hover:text-accent"
+          >
+            <ArrowUp size={14} aria-hidden />
+            {t.footer.top}
+          </button>
+        </div>
+        <p className="mt-8 border-t border-line pt-5 text-xs text-fg-subtle">
           © {year} {data.personal.name} · {data.personal.title}. {t.footer.rights}
         </p>
       </div>

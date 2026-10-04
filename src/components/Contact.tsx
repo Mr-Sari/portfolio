@@ -1,12 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Check, CircleAlert, CircleCheck, Copy, Info, LoaderCircle, Mail, Phone, Send } from 'lucide-react';
+import { ArrowUpRight, Check, CircleAlert, CircleCheck, Copy, Download, Info, LoaderCircle, Mail, Phone, Send } from 'lucide-react';
 import { cloneElement, useId, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useLanguage } from '../i18n/LanguageProvider';
 import { contactProvider, submitContactForm, validateContact, type ContactErrors, type ContactMessage } from '../lib/contact';
 import { GitHubIcon, LinkedInIcon } from '../lib/icons';
 import { Button } from './ui/Button';
 import { Reveal, RevealGroup } from './ui/Reveal';
-import { BigTitle } from './ui/BigTitle';
+import { Section, SectionHeader } from './ui/Section';
+import { asset } from '../lib/assets';
 import { ease, fadeUp } from './ui/motion';
 
 const empty: ContactMessage = { name: '', email: '', subject: '', message: '' };
@@ -27,64 +28,98 @@ export function Contact() {
     }
   };
 
-  const chip =
-    'inline-flex min-h-10 items-center gap-2 rounded-full border border-line-strong bg-surface px-4 text-sm text-fg backdrop-blur transition-[color,border-color,translate] hover:-translate-y-0.5 hover:border-accent/50 hover:text-accent';
+  const row =
+    'group flex min-h-14 flex-1 items-center gap-4 py-3 text-fg transition-colors hover:text-accent';
+  const label = 'block font-mono text-[0.68rem] text-fg-subtle';
 
   return (
-    <section id="contact" tabIndex={-1} aria-labelledby="contact-title" className="relative isolate scroll-mt-20 overflow-hidden pt-14 pb-12 sm:pt-20 sm:pb-16">
-      <div aria-hidden className="absolute inset-x-0 top-10 -z-10 mx-auto h-72 max-w-3xl rounded-full bg-[radial-gradient(closest-side,var(--accent-glow),transparent)]" />
-      <div className="container-page">
-        <h2 id="contact-title" className="mb-3 text-center font-mono text-[0.7rem] tracking-[0.18em] text-accent uppercase">
-          {t.contact.title}
-        </h2>
-        <BigTitle id="closing" as="p" size="display" lead={statements.closing.lead} accent={statements.closing.accent} sub={statements.closing.sub} />
+    <Section id="contact" className="border-t border-line">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-16">
+        <div>
+          <SectionHeader id="contact" index="06" title={t.contact.title} />
+          <Reveal>
+            <p className="font-serif text-[1.9rem] leading-tight text-fg sm:text-[2.3rem]">
+              {statements.closing.lead} <em className="text-accent">{statements.closing.accent}</em>
+            </p>
+            <p className="mt-3 max-w-md text-[0.98rem] leading-relaxed text-fg-muted">{statements.closing.sub}</p>
+          </Reveal>
 
-        {/* Contact chips */}
-        <RevealGroup as="ul" step={0.06} className="mt-7 flex flex-wrap items-center justify-center gap-2">
-          <motion.li variants={fadeUp}>
-            <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className={chip}>
-              <LinkedInIcon size={15} /> LinkedIn<span className="sr-only">{t.a11y.opensNewTab}</span>
-            </a>
-          </motion.li>
-          <motion.li variants={fadeUp}>
-            <a href={personal.github} target="_blank" rel="noopener noreferrer" className={chip}>
-              <GitHubIcon size={15} /> GitHub<span className="sr-only">{t.a11y.opensNewTab}</span>
-            </a>
-          </motion.li>
-          <motion.li variants={fadeUp}>
-            <a href={`tel:${personal.phone.replace(/\s/g, '')}`} className={chip} aria-label={`${t.contact.phone}: ${personal.phone}`}>
-              <Phone size={15} aria-hidden />
-              <span dir="ltr">{personal.phone}</span>
-            </a>
-          </motion.li>
-          <motion.li variants={fadeUp} className="flex items-center gap-1">
-            <a
-              href={`mailto:${personal.email}`}
-              className="inline-flex min-h-10 items-center gap-2 rounded-full bg-accent px-4 text-sm font-medium text-accent-fg shadow-[0_8px_24px_-10px_var(--accent)] transition-transform hover:-translate-y-0.5"
-            >
-              <Mail size={15} aria-hidden />
-              {personal.email}
-            </a>
-            <button
-              type="button"
-              onClick={copyEmail}
-              aria-label={t.a11y.copyEmail}
-              className="grid size-10 cursor-pointer place-items-center rounded-full border border-line-strong bg-surface text-fg-muted transition-colors hover:text-accent"
-            >
-              {copied ? <Check size={15} className="text-accent" aria-hidden /> : <Copy size={15} aria-hidden />}
-            </button>
-            <span className="sr-only" aria-live="polite">
-              {copied ? t.contact.copied : ''}
-            </span>
-          </motion.li>
-        </RevealGroup>
+          <RevealGroup as="ul" step={0.06} className="mt-8 divide-y divide-line border-y border-line">
+            <motion.li variants={fadeUp} className="flex items-center gap-2">
+              <a href={`mailto:${personal.email}`} className={row}>
+                <Mail size={18} aria-hidden className="shrink-0 text-accent" />
+                <span className="min-w-0">
+                  <span className={label}>{t.contact.email}</span>
+                  <span className="block truncate font-medium">{personal.email}</span>
+                </span>
+              </a>
+              <button
+                type="button"
+                onClick={copyEmail}
+                aria-label={t.a11y.copyEmail}
+                className="grid size-10 shrink-0 cursor-pointer place-items-center rounded-lg border border-line-strong text-fg-muted transition-colors hover:border-accent/60 hover:text-accent"
+              >
+                {copied ? <Check size={15} className="text-accent" aria-hidden /> : <Copy size={15} aria-hidden />}
+              </button>
+              <span className="sr-only" aria-live="polite">
+                {copied ? t.contact.copied : ''}
+              </span>
+            </motion.li>
+            <motion.li variants={fadeUp} className="flex">
+              <a href={`tel:${personal.phone.replace(/\s/g, '')}`} className={row}>
+                <Phone size={18} aria-hidden className="shrink-0 text-accent" />
+                <span>
+                  <span className={label}>{t.contact.phone}</span>
+                  <span dir="ltr" className="block font-medium">
+                    {personal.phone}
+                  </span>
+                </span>
+              </a>
+            </motion.li>
+            <motion.li variants={fadeUp} className="flex">
+              <a href={personal.linkedin} target="_blank" rel="noopener noreferrer" className={row}>
+                <LinkedInIcon size={18} className="shrink-0 text-accent" />
+                <span className="min-w-0">
+                  <span className={label}>LinkedIn</span>
+                  <span className="block truncate font-medium" dir="ltr">
+                    {personal.linkedin.replace(/^https:\/\/(www\.)?/, '')}
+                  </span>
+                </span>
+                <span className="sr-only">{t.a11y.opensNewTab}</span>
+                <ArrowUpRight size={16} aria-hidden className="ms-auto shrink-0 text-fg-subtle transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 rtl:-scale-x-100" />
+              </a>
+            </motion.li>
+            <motion.li variants={fadeUp} className="flex">
+              <a href={personal.github} target="_blank" rel="noopener noreferrer" className={row}>
+                <GitHubIcon size={18} className="shrink-0 text-accent" />
+                <span className="min-w-0">
+                  <span className={label}>GitHub</span>
+                  <span className="block truncate font-medium" dir="ltr">
+                    {personal.github.replace(/^https:\/\//, '')}
+                  </span>
+                </span>
+                <span className="sr-only">{t.a11y.opensNewTab}</span>
+                <ArrowUpRight size={16} aria-hidden className="ms-auto shrink-0 text-fg-subtle transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 rtl:-scale-x-100" />
+              </a>
+            </motion.li>
+            <motion.li variants={fadeUp} className="flex">
+              <a href={asset(personal.resume)} download className={row}>
+                <Download size={18} aria-hidden className="shrink-0 text-accent" />
+                <span>
+                  <span className={label}>PDF</span>
+                  <span className="block font-medium">{t.hero.downloadResume}</span>
+                </span>
+              </a>
+            </motion.li>
+          </RevealGroup>
+        </div>
 
-        <Reveal delay={0.1} className="mx-auto mt-8 max-w-2xl sm:mt-10">
-          <h3 className="mb-3 text-center font-mono text-[0.68rem] tracking-[0.14em] text-fg-subtle uppercase">{t.contact.formTitle}</h3>
+        <Reveal delay={0.1} className="lg:pt-24">
+          <h3 className="mb-3 font-mono text-[0.72rem] text-fg-subtle">{t.contact.formTitle}</h3>
           <ContactForm to={personal.email} />
         </Reveal>
       </div>
-    </section>
+    </Section>
   );
 }
 
@@ -140,7 +175,7 @@ function ContactForm({ to }: { to: string }) {
   };
 
   return (
-    <div className="card relative overflow-hidden p-4 sm:p-6">
+    <div className="card relative overflow-hidden p-5 sm:p-7">
       <AnimatePresence mode="wait" initial={false}>
         {status === 'sent' || status === 'mailto' ? (
           <StatusPanel
@@ -240,7 +275,7 @@ function Field({ id, label, error, children }: { id: string; label: string; erro
       required: true,
       'aria-invalid': error ? true : undefined,
       'aria-describedby': error ? errorId : undefined,
-      className: `w-full rounded-xl border bg-bg-elevated px-3.5 py-2.5 text-[0.95rem] text-fg placeholder:text-fg-subtle transition-[border-color,box-shadow] duration-200 outline-none focus:border-accent focus:ring-4 focus:ring-accent/15 ${
+      className: `w-full rounded-lg border bg-bg px-3.5 py-2.5 text-[0.95rem] text-fg placeholder:text-fg-subtle transition-[border-color,box-shadow] duration-200 outline-none focus:border-accent focus:ring-4 focus:ring-accent/15 ${
         error ? 'border-red-500/60' : 'border-line-strong hover:border-fg-subtle/60'
       } ${children.type === 'textarea' ? 'min-h-28 resize-y' : 'min-h-11'}`,
   });

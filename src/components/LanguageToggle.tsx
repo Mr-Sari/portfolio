@@ -11,7 +11,7 @@ export function LanguageToggle() {
       onClick={toggleLocale}
       aria-label={t.a11y.language}
       title={t.a11y.language}
-      className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-full border border-line-strong bg-surface px-2.5 text-[0.8rem] font-medium text-fg transition-colors hover:border-accent/50 hover:text-accent"
+      className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-lg border border-line-strong px-2.5 text-[0.8rem] font-medium text-fg transition-colors hover:border-accent/50 hover:text-accent"
     >
       <Languages size={15} aria-hidden />
       <span lang={target} className="hidden sm:inline">

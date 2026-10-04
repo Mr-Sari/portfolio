@@ -28,18 +28,30 @@ export interface Personal {
 
 export interface About {
   paragraphs: string[];
-  /** Words inside `paragraphs` to emphasise in the accent colour. */
-  keywords: string[];
-  focusAreas: { title: string; description: string; icon: IconKey }[];
+  /** How the disciplines build on each other: analytics first, AI last. */
+  chain: { title: string; description: string }[];
 }
 
-/** Short personal statements placed at a few points in the page. */
+/** A real, sourced figure shown in the hero panel. */
+export interface HeroStat {
+  value: number;
+  /** Shown after the counted number, e.g. "+" or " / 5". */
+  suffix?: string;
+  decimals?: number;
+  label: string;
+  /** Where the figure comes from (role or institution). */
+  source: string;
+}
+
+/** Short personal statements, each used once at a deliberate point in the page. */
 export interface Statements {
-  hero: string;
-  heroSub: string;
+  /** Hero statement split so the middle phrase can be emphasised. */
+  hero: { lead: string; accent: string; tail: string };
+  intro: string;
   philosophy: string;
   interlude: { lead: string; accent: string };
   closing: { lead: string; accent: string; sub: string };
+  signature: string;
 }
 
 export interface Experience {
@@ -74,8 +86,8 @@ export interface Project {
   categories: ProjectCategory[];
   visual: 'rag' | 'resume' | 'vision' | 'platform' | 'dashboard' | 'reporting' | 'pipeline' | 'timeseries';
   technologies: string[];
-  /** One-line Problem → Solution → Result summary for the card (only what the CV supports). */
-  brief: { problem?: string; solution: string; result?: string };
+  /** One-line Problem → Approach → Result summary (only what the CV supports). */
+  brief: { problem: string; approach: string; result?: string };
   /** Quantified results, shown only in the project modal. */
   metrics: { value: string; label: string }[];
   overview: string;
@@ -91,7 +103,7 @@ export interface Project {
   demoUrl: string;
 }
 
-export type SkillCategoryId = 'analytics' | 'bi' | 'data' | 'ai' | 'engineering';
+export type SkillCategoryId = 'analytics' | 'bi' | 'ai' | 'engineering';
 
 export interface Skill {
   name: string;
@@ -102,6 +114,8 @@ export interface Skill {
 export interface SkillCategory {
   id: SkillCategoryId;
   label: string;
+  /** What the group is used for, one short line. */
+  description: string;
   /** Primary categories get larger, emphasised chips. */
   primary?: boolean;
 }
@@ -132,6 +146,7 @@ export interface Certification {
 export interface PortfolioData {
   personal: Personal;
   statements: Statements;
+  heroStats: HeroStat[];
   heroStack: string[];
   about: About;
   experience: Experience[];

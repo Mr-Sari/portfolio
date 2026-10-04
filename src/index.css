@@ -2,50 +2,56 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ---------- Design tokens ---------- */
+/* ---------- Design tokens ----------
+   "Analyst's report": warm paper / deep ink neutrals, a teal signal colour
+   for interaction and an amber highlight reserved for real figures. */
 :root {
-  --bg: #f6f7f9;
+  --bg: #f5f4ef;
   --bg-elevated: #ffffff;
-  --surface: rgb(255 255 255 / 0.72);
-  --surface-strong: #ffffff;
-  --fg: #0b1220;
-  --fg-muted: #4a5465;
-  --fg-subtle: #6b7484;
-  --border: rgb(15 23 42 / 0.09);
-  --border-strong: rgb(15 23 42 / 0.16);
-  --accent: #0f766e;
+  --bg-sunken: #ecebe4;
+  --surface: rgb(255 255 255 / 0.7);
+  --fg: #12161c;
+  --fg-muted: #4b535e;
+  --fg-subtle: #737b86;
+  --border: rgb(18 22 28 / 0.1);
+  --border-strong: rgb(18 22 28 / 0.18);
+  --accent: #0b7366;
   --accent-fg: #ffffff;
-  --accent-soft: rgb(15 118 110 / 0.08);
-  --accent-glow: rgb(20 184 166 / 0.18);
-  --grid-line: rgb(15 23 42 / 0.045);
-  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12);
-  --shadow-lift: 0 2px 4px rgb(15 23 42 / 0.04), 0 24px 48px -20px rgb(15 23 42 / 0.22);
+  --accent-soft: rgb(11 115 102 / 0.08);
+  --accent-glow: rgb(11 115 102 / 0.18);
+  --figure: #a85a07;
+  --figure-soft: rgb(168 90 7 / 0.09);
+  --grid-line: rgb(18 22 28 / 0.06);
+  --shadow-card: 0 1px 2px rgb(18 22 28 / 0.04), 0 10px 30px -18px rgb(18 22 28 / 0.18);
+  --shadow-lift: 0 2px 6px rgb(18 22 28 / 0.05), 0 30px 60px -28px rgb(18 22 28 / 0.3);
 }
 
 .dark {
-  --bg: #07090d;
-  --bg-elevated: #0d1117;
-  --surface: rgb(255 255 255 / 0.028);
-  --surface-strong: #0f141b;
-  --fg: #e8ecf1;
-  --fg-muted: #a2acba;
-  --fg-subtle: #7d8796;
-  --border: rgb(255 255 255 / 0.075);
-  --border-strong: rgb(255 255 255 / 0.14);
-  --accent: #2dd4bf;
-  --accent-fg: #03201c;
-  --accent-soft: rgb(45 212 191 / 0.09);
-  --accent-glow: rgb(45 212 191 / 0.16);
-  --grid-line: rgb(255 255 255 / 0.035);
-  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 32px -16px rgb(0 0 0 / 0.6);
-  --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 28px 60px -24px rgb(0 0 0 / 0.8);
+  --bg: #0b0e12;
+  --bg-elevated: #12161c;
+  --bg-sunken: #080a0d;
+  --surface: rgb(255 255 255 / 0.03);
+  --fg: #ecebe5;
+  --fg-muted: #a8aeb6;
+  --fg-subtle: #7e858e;
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(255 255 255 / 0.15);
+  --accent: #3fd0b6;
+  --accent-fg: #04201b;
+  --accent-soft: rgb(63 208 182 / 0.09);
+  --accent-glow: rgb(63 208 182 / 0.16);
+  --figure: #f2b04c;
+  --figure-soft: rgb(242 176 76 / 0.1);
+  --grid-line: rgb(255 255 255 / 0.045);
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 14px 36px -20px rgb(0 0 0 / 0.7);
+  --shadow-lift: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 30px 70px -30px rgb(0 0 0 / 0.85);
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-elevated: var(--bg-elevated);
+  --color-bg-sunken: var(--bg-sunken);
   --color-surface: var(--surface);
-  --color-surface-strong: var(--surface-strong);
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
   --color-fg-subtle: var(--fg-subtle);
@@ -54,42 +60,53 @@
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
   --color-accent-soft: var(--accent-soft);
-  --font-sans: 'Inter', 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-figure: var(--figure);
+  --color-figure-soft: var(--figure-soft);
+  --font-sans: 'Geist', 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
   --shadow-card: var(--shadow-card);
   --shadow-lift: var(--shadow-lift);
 }
 
 /* ---------- Base ---------- */
 html {
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 4.5rem;
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
-}
-
-/* Monospace fonts have no Arabic glyphs and space them out; use the Arabic
-   face for labels, but keep real code (the profile card) monospaced. */
-html[lang='ar'] :is(.font-mono, .kicker):not(pre, pre *) {
-  font-family: 'IBM Plex Sans Arabic', 'JetBrains Mono', ui-monospace, monospace;
-}
-
-/* Letter-spacing breaks the joins between Arabic letters. */
-html[lang='ar'] * {
-  letter-spacing: 0 !important;
-}
-
-html[dir='rtl'] body {
-  font-family: 'IBM Plex Sans Arabic', 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: 'Inter', 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+
+/* ---------- Arabic ---------- */
+html[dir='rtl'] body {
+  font-family: 'IBM Plex Sans Arabic', 'Geist', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Latin serif/mono faces have no Arabic glyphs: use the Arabic face, but
+   keep figures and code-like labels that are pure Latin unaffected. */
+html[lang='ar'] :is(.font-serif, .font-mono, .kicker) {
+  font-family: 'IBM Plex Sans Arabic', 'Geist', ui-sans-serif, sans-serif;
+}
+html[lang='ar'] .font-serif {
+  font-weight: 600;
+  font-style: normal;
+}
+html[lang='ar'] :is(.font-serif, .font-mono, .kicker)[lang='en'],
+html[lang='ar'] [lang='en'] :is(.font-mono, .kicker) {
+  font-family: 'Geist Mono', ui-monospace, monospace;
+}
+
+/* Letter-spacing breaks the joins between Arabic letters. */
+html[lang='ar'] * {
+  letter-spacing: 0 !important;
 }
 
 ::selection {
@@ -121,70 +138,104 @@ section:focus {
 /* ---------- Utilities ---------- */
 @utility container-page {
   width: 100%;
-  max-width: 72rem;
+  max-width: 76rem;
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: 1rem;
   @media (width >= 40rem) {
     padding-inline: 2rem;
   }
-}
-
-@utility glass {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  backdrop-filter: blur(16px) saturate(140%);
+  @media (width >= 64rem) {
+    padding-inline: 2.5rem;
+  }
 }
 
 @utility card {
-  background: var(--surface);
+  background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 1.25rem;
+  border-radius: 1.1rem;
   box-shadow: var(--shadow-card);
 }
 
-@utility bg-grid {
-  background-image:
-    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 56px 56px;
+@utility glass {
+  background: color-mix(in oklab, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
 }
 
-@utility mask-fade {
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 100%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 100%);
+/* Horizontal chart gridlines. */
+@utility bg-rules {
+  background-image: linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 100% 64px;
 }
 
 @utility text-balance {
   text-wrap: balance;
 }
 
-@utility kicker {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
+@utility text-pretty {
+  text-wrap: pretty;
 }
 
-/* Card spotlight that follows the pointer (set via --mx/--my). */
-@utility spotlight {
-  position: relative;
-  isolation: isolate;
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), var(--accent-glow), transparent 60%);
-    opacity: 0;
-    transition: opacity 300ms ease;
-    z-index: -1;
-    pointer-events: none;
+@utility kicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Animated underline for inline links. */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 300ms ease;
+  html[dir='rtl'] & {
+    background-position: 100% 100%;
   }
-  &:hover::before {
-    opacity: 1;
+  &:hover {
+    background-size: 100% 1px;
   }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Statement ticker under the hero. Direction flips in RTL. */
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes ticker-rtl {
+  to {
+    transform: translateX(50%);
+  }
+}
+@utility animate-ticker {
+  animation: ticker 48s linear infinite;
+  html[dir='rtl'] & {
+    animation-name: ticker-rtl;
+  }
+}
+
+@keyframes pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 var(--accent-glow);
+  }
+  70% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+@utility animate-pulse-dot {
+  animation: pulse-dot 2.2s ease-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -200,49 +251,20 @@ section:focus {
   }
 }
 
-
-/* Two-tone headline accent — derived only from the existing tokens. */
-@utility text-gradient {
-  background-image: linear-gradient(100deg, var(--accent) 10%, color-mix(in oklab, var(--accent) 55%, var(--fg)) 90%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  /* Keeps descenders/diacritics inside the painted box (Arabic). */
-  padding-block: 0.08em;
+/* Arabic display text needs room for ascenders and diacritics. */
+html[lang='ar'] .font-serif {
+  line-height: 1.3;
 }
 
-/* Infinite marquee (soft skills). Direction flips in RTL. */
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-@keyframes marquee-rtl {
-  to {
-    transform: translateX(50%);
-  }
-}
-@utility animate-marquee {
-  animation: marquee 38s linear infinite;
-  html[dir='rtl'] & {
-    animation-name: marquee-rtl;
-  }
+/* Square grid behind project illustrations. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
-/* Blinking terminal caret. */
-@keyframes caret {
-  50% {
-    opacity: 0;
-  }
-}
-@utility animate-caret {
-  animation: caret 1s steps(1) infinite;
-}
-
-/* Hide native scrollbars on the project track while keeping it scrollable. */
-@utility no-scrollbar {
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+/* Arabic has no true italic; a synthetic slant distorts the letterforms. */
+html[lang='ar'] :is(em, .italic) {
+  font-style: normal;
 }

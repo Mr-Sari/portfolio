@@ -17,7 +17,7 @@ export function ProjectVisual({ visual, className = '' }: { visual: Project['vis
 
 const A = 'var(--accent)';
 const L = 'var(--fg-subtle)';
-const F = 'var(--surface-strong)';
+const F = 'var(--bg-elevated)';
 
 const motifs: Record<Project['visual'], React.ReactNode> = {
   rag: (
