@@ -62,7 +62,7 @@ function seo(siteUrl: string, base: string): Plugin {
 // Cloudflare Pages) or under a sub-path such as /portfolio/ on GitHub Pages.
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const base = env.BASE_PATH || '/portfolio/';
+  const base = env.BASE_PATH || '/';
   return {
     base,
     plugins: [react(), tailwindcss(), seo(env.VITE_SITE_URL ?? '', base)],
