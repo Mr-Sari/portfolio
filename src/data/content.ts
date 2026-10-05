@@ -84,7 +84,6 @@ export const content: Bilingual<PortfolioData> = {
     {
       id: 'makkah-municipality',
       company: { en: 'Holy Makkah Municipality', ar: 'أمانة العاصمة المقدسة' },
-      via: { en: 'Al-Khaleej Company', ar: 'شركة الخليج' },
       role: { en: 'Data Analyst', ar: 'محلل بيانات' },
       location: { en: 'Makkah', ar: 'مكة المكرمة' },
       start: '2025-12',
