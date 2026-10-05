@@ -44,16 +44,16 @@ export const content: Bilingual<PortfolioData> = {
   about: {
     paragraphs: [
       {
-        en: 'I’m a Data Analyst in Saudi Arabia, currently with Holy Makkah Municipality, where I build Power BI dashboards and KPI reporting. Before that I worked with SAP data and executive reporting at Saudi Ground Services, and I started as a data engineering intern at the National Center for Meteorology.',
-        ar: 'محلل بيانات، أعمل حاليًا في أمانة العاصمة المقدسة على لوحات Power BI وتقارير مؤشرات الأداء. سبقتها تجربة مع بيانات SAP والتقارير التنفيذية في الخدمات الأرضية السعودية، وبدايتي كانت في هندسة البيانات بالمركز الوطني للأرصاد.',
+        en: 'I’m a Data Analyst currently at Holy Makkah Municipality, where I develop Power BI dashboards and KPI reports that turn data into clear results to support decision-making. Before that, I analysed SAP data and prepared executive reports at Saudi Ground Services, and I began my career in data engineering at the National Center for Meteorology.',
+        ar: 'محلل بيانات أعمل حاليًا في أمانة العاصمة المقدسة، أطور لوحات Power BI وتقارير مؤشرات الأداء لتحويل البيانات إلى نتائج واضحة تدعم اتخاذ القرار. سبقت ذلك تجربة في تحليل بيانات SAP وإعداد التقارير التنفيذية في الخدمات الأرضية السعودية، وكانت بدايتي المهنية في هندسة البيانات بالمركز الوطني للأرصاد.',
       },
       {
-        en: 'My degree is in Data Science from the University of Jeddah. In practice, much of the work happens before the dashboard: bringing data from several sources into one clean model, so the final report can be read in a minute — and trusted.',
-        ar: 'تخرجت في علم البيانات من جامعة جدة. وأكثر العمل يسبق لوحة المعلومات: أجمع البيانات من مصادر مختلفة في نموذج نظيف واحد، لتُقرأ النتيجة في دقيقة ويُعتمد عليها.',
+        en: 'I hold a Bachelor’s degree in Data Science from the University of Jeddah. My focus is turning data from multiple sources into reliable, clear information — collecting, cleaning and analysing it, then building dashboards that support decision-making.',
+        ar: 'تخرجت بدرجة البكالوريوس في علم البيانات من جامعة جدة، وأركز على تحويل البيانات من مصادر متعددة إلى معلومات موثوقة وواضحة، من خلال جمعها وتنظيفها وتحليلها وبناء لوحات معلومات تدعم اتخاذ القرار.',
       },
       {
-        en: 'Alongside analytics, I build with machine learning and LLMs — from computer vision on 23,000+ images to RAG systems — and use them where they make analysis faster.',
-        ar: 'وإلى جانب التحليل أعمل بتعلم الآلة والنماذج اللغوية، من الرؤية الحاسوبية على أكثر من 23 ألف صورة إلى أنظمة RAG، وأوظفها حيث تختصر التحليل.',
+        en: 'I also have experience in machine learning and large language models, from computer-vision applications working with more than 23,000 images to building RAG systems. I use these technologies when they add real value and save time in analysis.',
+        ar: 'كما أمتلك خبرة في تعلم الآلة والنماذج اللغوية، من تطبيقات الرؤية الحاسوبية التي تعاملت مع أكثر من 23 ألف صورة إلى بناء أنظمة RAG، وأوظف هذه التقنيات عندما تضيف قيمة حقيقية وتختصر وقت التحليل.',
       },
     ],
     chain: [
